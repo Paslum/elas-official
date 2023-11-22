@@ -51,7 +51,7 @@ export default function NoteBot() {
           <Grid container justifyContent="center" spacing={2}>
             <Grid item xs>
               <Typography variant="h5" align="center" gutterBottom>
-                NoteBot is a learnsourcing application Test.
+                NoteBot is a learnsourcing application.
               </Typography>
 
               {user.user.username ? (
