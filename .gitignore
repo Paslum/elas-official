@@ -48,6 +48,7 @@ typings/
 *.tsbuildinfo
 
 # Optional npm cache directory
+.npm
 
 # Optional eslint cache
 .eslintcache
@@ -109,6 +110,7 @@ __pycache__/
 .envrc
 .flaskenv
 .idea
+.vite/
 .vscode/
 */venv/*
 db.sqlite3

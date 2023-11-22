@@ -1,5 +1,5 @@
 start "ServiceRegistry" cmd.exe /k "cd backend\1-service-registry && java -jar target/ServiceRegistry.jar"
 start "ApiGateway" cmd.exe /k "cd backend\2-api-gateway && java -jar target/ApiGateway.jar"
-start "Django" cmd.exe /k "cd backend\3-auth && py -m pipenv shell "/c python manage.py runserver""
+start "Django" cmd.exe /k "cd backend\3-auth && pipenv shell "/c python manage.py runserver""
 start "Notebot" cmd.exe /k "cd backend\7-notebot && npm start"
 start "Frontend" cmd.exe /k "cd frontend && npm start"
