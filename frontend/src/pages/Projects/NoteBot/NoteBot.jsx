@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Grid, Typography } from "@mui/material";
-import { getUserInfo } from "./utils/api.js";
+import { getUserInfo, getNotes } from "./utils/api.js";
 
 import noteBotLogo from "../../../assets/images/noteBot-logo.png";
 
@@ -56,7 +56,13 @@ export default function NoteBot() {
 
               {user.user.username ? (
                 <Typography variant="h5" align="center">
-                  Welcome <i>{user.user.name} </i>
+                  Welcome <i>{user.user.name} </i><br/><br/>
+                  --HIER ENTSTEHT EIN TEST--<br/>
+                  username: <b>{user.user.username}</b><br/>
+                  userId: {user.user.uid}<br/>
+                  user name: {user.user.name}<br/>
+                  message: {user.message}<br/>
+                  --------------------------------------------
                 </Typography>
               ) : (
                 <Typography variant="h5" align="center">

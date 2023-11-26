@@ -55,6 +55,10 @@ let apiURL = "/api/notebot";
 
 const userRoutes = require("./routes/user.routes");
 app.use(apiURL, userRoutes);
+const noteRoutes = require("./routes/notes.route");
+app.use(apiURL, noteRoutes);
+const courseRoutes = require("./routes/courses.route");
+app.use(apiURL, courseRoutes);
 // Add more routes here
 
 /***************** END: IMPORT ROUTES *****************/
