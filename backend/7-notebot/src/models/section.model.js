@@ -12,13 +12,11 @@ const Schema = mongoose.Schema;
  * @documentation
  * A user schema for MongoDB.
  */
-const User = new Schema({
-  uid: { type: String, required: true },
-  name: { type: String, required: true },
-  username: { type: String, required: true },
-  courses: [{ type: mongoose.Types.ObjectId, ref:'course' },],
-  notes: [{ type: mongoose.Types.ObjectId, ref:'note' },],
+const Section = new Schema({
+  layout_field: { type: [Number] },
+  note: { type: mongoose.Types.ObjectId, required: true, ref:'note' },
+  widgets: [{type: mongoose.Types.ObjectId, ref: 'widget'},],
 });
 /***************** END: DEFINE A SCHEMA *****************/
 
-module.exports = mongoose.model("user", User);
+module.exports = mongoose.model("section", Section);

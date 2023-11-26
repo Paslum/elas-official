@@ -33,7 +33,7 @@ export default function NoteBot() {
 
   return (
     <Grid container justifyContent="center" sx={{ py: 4, px: 2 }}>
-      <Grid container sx={{ maxWidth: 1500, width: "100%" }} spacing={2}>
+      <Grid container sx={{ maxWidth: 600, width: "100%" }} spacing={2}>
         <Grid item xs={12}>
           <Grid container justifyContent={"center"}>
             <Grid
