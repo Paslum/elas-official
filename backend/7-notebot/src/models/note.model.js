@@ -15,7 +15,7 @@ const Schema = mongoose.Schema;
 const Note = new Schema({
   uid: { type: mongoose.Types.ObjectId, required: true, ref:'user' },
   title: { type: String, required: true },
-  favorites: { type: Number, required: true, default: 0 },
+  favorites: { type: Number, default: 0 },
   favored_by: [{ type: mongoose.Types.ObjectId, ref:'user'},],
   course: { type: mongoose.Types.ObjectId, required: true, ref:'course' },
   sections: [{ type: mongoose.Types.ObjectId, required: true, ref:'section'},],
