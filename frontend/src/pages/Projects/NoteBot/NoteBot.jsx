@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Grid, Typography } from "@mui/material";
-import { getUserInfo, getNotes } from "./utils/api.js";
+import { getUserInfo } from "./utils/api.js";
 
 import noteBotLogo from "../../../assets/images/noteBot-logo.png";
 
