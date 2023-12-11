@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Grid, Typography } from "@mui/material";
 import { getUserInfo } from "./utils/api.js";
 
+import Navigation from "./Navigation/navbox";
+
 import noteBotLogo from "../../../assets/images/noteBot-logo.png";
 
 export default function NoteBot() {
@@ -33,7 +35,7 @@ export default function NoteBot() {
 
   return (
     <Grid container justifyContent="center" sx={{ py: 4, px: 2 }}>
-      <Grid container sx={{ maxWidth: 600, width: "100%" }} spacing={2}>
+      <Grid container sx={{ width: "100%" }} spacing={2}>
         <Grid item xs={12}>
           <Grid container justifyContent={"center"}>
             <Grid
@@ -48,22 +50,25 @@ export default function NoteBot() {
             />
           </Grid>
 
-          <Grid container justifyContent="center" spacing={2}>
+          <Grid container sx={{ width: "100%" }} spacing={2}>
             <Grid item xs>
               <Typography variant="h5" align="center" gutterBottom>
                 NoteBot is a learnsourcing application.
               </Typography>
 
               {user.user.username ? (
-                <Typography variant="h5" align="center">
-                  Welcome <i>{user.user.name} </i><br/><br/>
-                  --HIER ENTSTEHT EIN TEST--<br/>
-                  username: <b>{user.user.username}</b><br/>
-                  userId: {user.user.uid}<br/>
-                  user name: {user.user.name}<br/>
-                  message: {user.message}<br/>
-                  --------------------------------------------
-                </Typography>
+                  <div>
+                    {/*<Typography variant="h5" align="center">
+                      Welcome <i>{user.user.name} </i><br/><br/>
+                      --HIER ENTSTEHT EIN TEST--<br/>
+                      username: <b>{user.user.username}</b><br/>
+                      userId: {user.user.uid}<br/>
+                      user name: {user.user.name}<br/>
+                      message: {user.message}<br/>
+                      --------------------------------------------
+                    </Typography>*/}
+                    <Navigation />
+                  </div>
               ) : (
                 <Typography variant="h5" align="center">
                   Message from server <i>{user.message} </i>
