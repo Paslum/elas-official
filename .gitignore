@@ -119,3 +119,5 @@ entities_and_relationships/
 frontend/build/
 dist-server/
 start.bat
+target/
+node_modules/
