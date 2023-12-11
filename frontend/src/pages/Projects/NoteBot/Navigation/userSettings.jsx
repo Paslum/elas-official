@@ -11,7 +11,37 @@ import CloseIcon from "@mui/icons-material/Close";
 import EditIcon from "@mui/icons-material/Edit";
 import SettingsIcon from "@mui/icons-material/Settings";
 
+import { getUserInfo } from "../utils/api.js";
+import {useEffect, useState} from "react";
+
 export default function userSettings() {
+    const [user, setUser] = useState({
+        message: "Server not connected",
+        user: {
+            uid: "",
+            name: "",
+            username: "",
+        },
+    });
+
+    useEffect(() => {
+        let elasUser = JSON.parse(sessionStorage.getItem("elas-user"));
+        async function getUserInfoFunction(userId) {
+            let reponse = await getUserInfo(userId);
+            setUser((prevState) => ({
+                ...prevState,
+                message: reponse.message,
+                user: {
+                    uid: reponse.user.uid,
+                    name: reponse.user.name,
+                    username: reponse.user.username,
+                },
+            }));
+        }
+        getUserInfoFunction(elasUser.id);
+    }, []);
+
+
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     const handleClick = (event) => {
@@ -59,7 +89,7 @@ export default function userSettings() {
                         component="h2"
                         sx={{ fontWeight: "bold", marginBottom: "20px" }}
                     >
-                        testuser@mail.de
+                        {user.user.username}
                     </Typography>
                     <Badge
                         overlap="circular"
@@ -86,7 +116,7 @@ export default function userSettings() {
                         component="h2"
                         sx={{ fontWeight: "bold", marginBottom: "20px", marginTop: "20px" }}
                     >
-                        Hello (Name)!
+                        Hello {user.user.name}!
                     </Typography>
                     <Button
                         variant="outlined"
