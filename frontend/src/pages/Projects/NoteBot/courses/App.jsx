@@ -6,7 +6,7 @@ import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 
-export default function app() {
+export default function app({uid}) {
     return (
         <div>
             <Box sx={{ flexGrow: 0 }}>

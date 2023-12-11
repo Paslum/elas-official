@@ -2,7 +2,6 @@ import * as React from "react";
 import Notes from "../notes/App";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import Divider from "@mui/material/Divider";
 
 export default function course() {
     return (

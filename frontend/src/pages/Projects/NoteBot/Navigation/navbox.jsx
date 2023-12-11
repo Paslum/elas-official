@@ -53,7 +53,7 @@ function a11yProps(index) {
     };
 }
 
-export default function navbox() {
+export default function navbox({user}) {
     const theme = useTheme();
     const [value, setValue] = React.useState(0);
 
@@ -77,7 +77,7 @@ export default function navbox() {
             >
                 <React.Fragment>
                     <Box sx={{ flexGrow: 0 }}>
-                        <UserSettings />
+                        <UserSettings user={user.user}/>
                         <Tabs
                             value={value}
                             onChange={handleChange}
@@ -92,7 +92,7 @@ export default function navbox() {
                     </Box>
                     <CardContent>
                         <TabPanel value={value} index={0} dir={theme.direction}>
-                            <Courses />
+                            <Courses uid={user.user.uid} />
                         </TabPanel>
                         <TabPanel value={value} index={1} dir={theme.direction}>
                             Item Two
