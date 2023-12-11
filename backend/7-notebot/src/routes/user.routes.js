@@ -41,8 +41,6 @@ userRouter.get("/users/:userId", controller.getUserById);
 userRouter.post("/users", controller.createNewUser);
 userRouter.put("/users/:userId", controller.updateUser);
 
-userRouter.get()
-
 /***************** END: CREATE ROUTES ****************************/
 
 module.exports = userRouter;

@@ -1,4 +1,4 @@
-var express = require("express");
+/*var express = require("express");
 var router = express.Router();
 var courseController = require("../controllers/course.controller");
 
@@ -11,4 +11,4 @@ router.delete('/:course_id', courseController.deleteCourseWithNotes); // Clickin
 router.get('/test', courseController.getAllCourses); // Show more link in the Courses page
 
 //export the router
-module.exports = router;
+module.exports = router;*/

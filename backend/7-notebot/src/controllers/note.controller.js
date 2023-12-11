@@ -5,7 +5,7 @@ const courseModel = require("../models/course.model");
 const widgetModel = require("../models/widget.model");
 const favoriteModel = require("../models/favorite.model");
 const mongoose = require("mongoose");
-const HttpError = require("../models/http-error");
+const HttpError = require("../models/http-error.model");
 
 // Get user notes by user_id
 const getNoteById = async (req, res, next) => {
