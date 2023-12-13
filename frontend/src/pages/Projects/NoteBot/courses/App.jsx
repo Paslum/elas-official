@@ -9,37 +9,45 @@ import Box from "@mui/material/Box";
 export default function app({uid}) {
     return (
         <div>
-            <Box sx={{ flexGrow: 0 }}>
-                <Button
-                    variant="contained"
-                    style={{ float: "right", backgroundColor: "#ED7D31" }}
-                >
-                    + Add Note
-                </Button>
-                <Button
-                    variant="outlined"
-                    style={{
-                        float: "right",
-                        color: "#ED7D31",
-                        borderColor: "#ED7D31",
-                        marginRight: 16,
-                    }}
-                >
-                    Recently Deleted
-                </Button>
-                <Typography
-                    variant="subtitle1"
-                    component="h2"
-                    sx={{
-                        fontWeight: "bold",
-                        color: "Black",
-                        fontSize: 28,
-                        paddingBottom: 1,
-                    }}
-                >
-                    My Notes
-                </Typography>
-            </Box>
+            <Grid container alignItems="center" justifyContent="space-between">
+                <Grid item>
+                    <Typography
+                        variant="subtitle1"
+                        component="h2"
+                        sx={{
+                            fontWeight: "bold",
+                            color: "Black",
+                            fontSize: 28,
+                            paddingBottom: 1,
+                        }}
+                    >
+                        My Notes
+                    </Typography>
+                </Grid>
+                <Grid item>
+                    <Grid container spacing={1}>
+                        <Grid item>
+                            <Button
+                                variant="outlined"
+                                style={{
+                                        color: "#ED7D31",
+                                        borderColor: "#ED7D31",
+                                    }}
+                            >
+                                Recently Deleted
+                            </Button>
+                        </Grid>
+                        <Grid item>
+                            <Button
+                                variant="contained"
+                                style={{ backgroundColor: "#ED7D31" }}
+                            >
+                                + Add Note
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Grid>
             <Divider />
             <Grid
                 container

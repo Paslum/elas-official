@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Grid, Typography } from "@mui/material";
+import { Grid, Typography, Button } from "@mui/material";
 import { getUserInfo } from "./utils/api.js";
 
 import Navigation from "./Navigation/navbox";
@@ -49,21 +49,11 @@ export default function NoteBot() {
               sx={{ width: "100%", pb: 2 }}
             />
           </Grid>
-
           <Grid container sx={{ width: "100%" }} spacing={2}>
             <Grid item xs>
 
               {user.user.username ? (
                   <div>
-                    {/*<Typography variant="h5" align="center">
-                      Welcome <i>{user.user.name} </i><br/><br/>
-                      --HIER ENTSTEHT EIN TEST--<br/>
-                      username: <b>{user.user.username}</b><br/>
-                      userId: {user.user.uid}<br/>
-                      user name: {user.user.name}<br/>
-                      message: {user.message}<br/>
-                      --------------------------------------------
-                    </Typography>*/}
                     <Navigation user={user}/>
                   </div>
               ) : (
