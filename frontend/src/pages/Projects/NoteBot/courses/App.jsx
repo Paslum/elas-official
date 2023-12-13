@@ -4,7 +4,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
+import Note from "../notes/note.jsx";
 
 export default function app({uid}) {
     return (
@@ -55,30 +55,18 @@ export default function app({uid}) {
                 justifyContent="flex-start"
                 alignItems="flex-start"
             >
-                <Grid container item>
-                    <Course />
-                </Grid>
-                <Grid container item>
-                    <Course />
-                </Grid>
-                <Grid container item>
-                    <Course />
-                </Grid>
-                <Grid container item>
-                    <Course />
-                </Grid>
-                <Grid container item>
-                    <Course />
-                </Grid>
-                <Grid container item>
-                    <Course />
-                </Grid>
-                <Grid container item>
-                    <Course />
-                </Grid>
-                <Grid container item>
-                    <Course />
-                </Grid>
+                {(function courses() {
+                    let courseAmount = Math.floor(Math.random() * (6 - 1 + 1)) + 1;
+                    let courses = [];
+                    for (let i = 0; i < courseAmount; i++) {
+                        let courseId = Math.floor(Math.random() * (99 - 1 + 1)) + 1;
+                        courses.push(
+                            <Grid container item>
+                                <Course courseId={courseId}/>
+                            </Grid>);
+                    }
+                    return courses;
+                })()}
             </Grid>
         </div>
     );

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Grid, Typography, Button } from "@mui/material";
+import { Grid, Typography} from "@mui/material";
 import { getUserInfo } from "./utils/api.js";
 
 import Navigation from "./Navigation/navbox";
@@ -52,13 +52,13 @@ export default function NoteBot() {
           <Grid container sx={{ width: "100%" }} spacing={2}>
             <Grid item xs>
 
-              {user.user.username ? (
+              {user.user.username ? ( //If Server connected and User logged in
                   <div>
                     <Navigation user={user}/>
                   </div>
-              ) : (
+              ) : ( //If Server not connected or User not logged in
                 <Typography variant="h5" align="center">
-                  <i>{user.message} </i>
+                  <i>{user.message}</i>
                 </Typography>
               )}
             </Grid>

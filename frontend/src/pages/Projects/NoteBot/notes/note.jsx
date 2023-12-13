@@ -1,5 +1,4 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
@@ -8,7 +7,7 @@ import IconButton from "@mui/material/IconButton";
 import SettingsIcon from "@mui/icons-material/Settings";
 import FavoriteIcon from "@mui/icons-material/FavoriteBorderOutlined";
 
-export default function note() {
+export default function note( {noteId} ) {
     return (
         <Card
             sx={{
@@ -32,7 +31,7 @@ export default function note() {
                             textAlign: "center",
                         }}
                     >
-                        My Note #{Math.floor(Math.random() * (99 - 1 + 1)) + 1}
+                        My Note #{noteId}
                     </Typography>
                 </CardContent>
                 <IconButton aria-label="Favor Note" style={{ float: "left" }}>

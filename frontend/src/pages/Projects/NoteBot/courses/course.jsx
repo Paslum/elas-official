@@ -3,7 +3,7 @@ import Notes from "../notes/App";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 
-export default function course() {
+export default function course( {courseId} ) {
     return (
         <Paper elevation={0} sx={{ height: 275 }}>
             <Typography
@@ -15,10 +15,10 @@ export default function course() {
                     paddingTop: 1,
                 }}
             >
-                My Course #{Math.floor(Math.random() * (99 - 1 + 1)) + 1}
+                My Course #{courseId}
             </Typography>
             <div style={{ overflowX: "auto" }}>
-                <Notes />
+                <Notes/>
             </div>
         </Paper>
     );

@@ -12,7 +12,8 @@ export default function app() {
                     let noteAmount = Math.floor(Math.random() * (6 - 1 + 1)) + 1;
                     let notes = [];
                     for (let i = 0; i < noteAmount; i++) {
-                        notes.push(<Note />);
+                        let noteId = Math.floor(Math.random() * (99 - 1 + 1)) + 1;
+                        notes.push(<Note noteId={noteId}/>);
                     }
                     return notes;
                 })()}
