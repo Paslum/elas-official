@@ -19,5 +19,5 @@ const Course = new Schema({
 });
 /***************** END: DEFINE A SCHEMA *****************/
 
-module.exports = mongoose.model("course", Course);
+module.exports = mongoose.model("courses", Course);
 

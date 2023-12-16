@@ -82,7 +82,7 @@ export default function navbox({user}) {
                             value={value}
                             onChange={handleChange}
                             centered
-                            textColor="#ED7D31"
+                            textColor="primary"
                             indicatorColor="secondary"
                         >
                             <Tab label="My Notes" {...a11yProps(0)} />

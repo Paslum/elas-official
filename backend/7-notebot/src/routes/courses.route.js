@@ -1,14 +1,48 @@
-/*var express = require("express");
-var router = express.Router();
-var courseController = require("../controllers/course.controller");
+/******
+ * @Note This is one example, you can create more route files under
+ * the routes folder and export them. Make sure you import the routes
+ * in the server.js file.
+ */
 
-//Registering courses route
-// the rest of the path , pointer to the function from courseController
-router.get('/user/:user_id', courseController.getCoursesByUserId); // Courses page (Grid view): when click on Courses in the Dashboard page
-router.post('/', courseController.createCourse); // AddCourse button in the Dashboard page
-router.delete('/:course_id', courseController.deleteCourseWithNotes); // Clicking on the delete icon in the Courses page
+const controller = require("../controllers/courses.controller");
 
-router.get('/test', courseController.getAllCourses); // Show more link in the Courses page
+/***************** START: INITIALIZE ROUTER MODULE *****************
+ * @documentation
+ * The code `let userRouter = require("express").Router();`
+ * is creating a new instance of the Express Router.
+ * The 'userRouter' in this example is acting like
+ * a middleware function that allows you to define routes
+ * for your application. Make sure to define the middleware,
+ * in this case 'userRouter.use()' function is used to
+ * define middleware.
+ */
+let courseRouter = require("express").Router();
+
+courseRouter.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Headers", "Origin, Content-Type, Accept");
+    next();
+});
+
+/***************** END: INITIALIZE ROUTER MODULE *****************/
+
+/***************** START: CREATE ROUTES **************************
+ * @documentation
+ * When creating a route, you need to define the HTTP method
+ * and the path. The HTTP method can be any of the following:
+ * GET, POST, PUT, DELETE, PATCH, HEAD, OPTIONS.
+ * In the example below, 'userRouter' is used to define the
+ * routes. The 'userRouter.get()' method is used to define a
+ * GET route. The first parameter '/users/:userId' is the path and
+ * the second parameter 'controller.saveUser' is the controller
+ * function. ":userId" is a parameter send through the url
+ * The controller function is define in the 'user.controller.js'
+ * file under controllers folder.
+ */
+courseRouter.get('/user/:user_id', controller.getCoursesByUserId); // Courses page (Grid view): when click on Courses in the Dashboard page
+courseRouter.post('/', controller.createCourse); // AddCourse button in the Dashboard page
+courseRouter.delete('/:course_id', controller.deleteCourseWithNotes); // Clicking on the delete icon in the Courses page
+
+courseRouter.get('/test', controller.getAllCourses); // Show more link in the Courses page
 
 //export the router
-module.exports = router;*/
+module.exports = courseRouter;

@@ -2,6 +2,7 @@ import * as React from "react";
 import Note from "./note";
 import Stack from "@mui/material/Stack";
 import {useEffect, useState} from "react";
+import {getUserInfo} from "../utils/api.js";
 
 
 export default function app() {
