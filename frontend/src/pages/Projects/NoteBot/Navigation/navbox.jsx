@@ -9,8 +9,6 @@ import PropTypes from "prop-types";
 import { useTheme } from "@mui/material/styles";
 import UserSettings from "./userSettings";
 import Courses from "../courses/App";
-import Favorites from "../favorites/App";
-import MyCourses from "../my_courses/App";
 
 import { createTheme } from "@mui/material/styles";
 
@@ -88,8 +86,8 @@ export default function navbox({user}) {
                             indicatorColor="secondary"
                         >
                             <Tab label="My Notes" {...a11yProps(0)} />
-                            <Tab label="My Courses" {...a11yProps(1)} />
-                            <Tab label="Favorites" {...a11yProps(2)} />
+                            <Tab label="Favorites" {...a11yProps(1)} />
+                            <Tab label="My Courses" {...a11yProps(2)} />
                         </Tabs>
                     </Box>
                     <CardContent>
@@ -97,10 +95,10 @@ export default function navbox({user}) {
                             <Courses uid={user.user.uid} />
                         </TabPanel>
                         <TabPanel value={value} index={1} dir={theme.direction}>
-                        <MyCourses />
+                            Item Two
                         </TabPanel>
                         <TabPanel value={value} index={2} dir={theme.direction}>
-                        <Favorites />
+                            Item Three
                         </TabPanel>
                     </CardContent>
                 </React.Fragment>
