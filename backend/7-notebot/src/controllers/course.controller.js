@@ -1,5 +1,6 @@
-const courseModel = require("../models/course.model");
-const noteModel = require("../models/note.model");
+const db = require("../models");
+const courseModel = db.course;
+const noteModel = require("../models/note.model"); //replace with db.*
 const userModel = require("../models/user.model");
 const HttpError = require("../models/http-error.model");
 const mongoose = require("mongoose");
@@ -65,10 +66,9 @@ const getCoursesByUserId = async (req, res, next) => {
 
 //Create a new course
 const createCourse = async (req, res) => {
-    console.log(req.body.title);
     try {
         let course = new courseModel({
-            uid: req.body.uid,
+            userId: req.body.uid,
             title: req.body.title,
         });
         await course.save();

@@ -13,9 +13,9 @@ const Schema = mongoose.Schema;
  * A user schema for MongoDB.
  */
 const Course = new Schema({
-  uid: { type: mongoose.Types.ObjectId, required: true, ref:'user' },
+  userId: { type: String, required: true},
   title: { type: String, required: true },
-  notes: { type: mongoose.Types.ObjectId, ref:'note' },
+  /*notes: [{ type: mongoose.Types.ObjectId, ref:'note' }],*/
 });
 /***************** END: DEFINE A SCHEMA *****************/
 

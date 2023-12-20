@@ -1,4 +1,4 @@
-import { Backend } from "../../../../utils/apiConfig";
+import {Backend, setAuthToken} from "../../../../utils/apiConfig";
 
 export const getUserInfo = async (userId) => {
   try {
@@ -22,7 +22,7 @@ export const getUserInfo = async (userId) => {
 
 export const getCoursesByUserId = async (user_id) => {
   try {
-    const response = await Backend.get(`/notebot/courses/uid/${user_id}`);
+    const response = await Backend.get(`/getById/${user_id}`);
     const courses = response.data.courses;
 
     // Add the id property to each course object
@@ -39,10 +39,7 @@ export const getCoursesByUserId = async (user_id) => {
 
 export const createCourse = async (user, title) => {
   try {
-    const response = await Backend.post(`/notebot/courses/`, {
-      headers: { "Content-type": "application/json" },
-      body: JSON.stringify({ uid: user, title: title }),
-    });
+    const response = await Backend.post(`/notebot/course/`, { uid: user, title: title })
     console.log("Course title: ", title);
     const data = await response.json();
 
