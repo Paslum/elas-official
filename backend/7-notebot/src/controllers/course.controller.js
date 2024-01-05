@@ -3,8 +3,6 @@ const courseModel = db.course;
 const userModel = db.user;
 const noteModel = require("../models/note.model"); //replace with db.*
 const HttpError = require("../models/http-error.model");
-const mongoose = require("mongoose");
-const { json } = require("body-parser");
 
 //get all courses : test
 const getAllCourses = async (req, res, next) => {
@@ -28,6 +26,19 @@ const getCoursesByUserId = async (req, res) => {
     const user_id = req.params.user_id;
     try {
         const foundCourses = await courseModel.find({userId: user_id}).select('title');
+        if (foundCourses) {
+            return res.status(200).send({message: `Courses found!`, course: foundCourses.map((course) => course.toObject({ getters: true}))});
+        }
+        return res.status(200).send({message: `No Courses found!`});
+    } catch (err) {
+        return res.status(500).send({ message: `Error saving user to your MongoDB database` });
+    }
+};
+
+const getCoursesByTitle = async (req, res) => {
+    const searchParam = req.params.searchParam;
+    try {
+        const foundCourses = await courseModel.find({title: {$regex: searchParam}});
         if (foundCourses) {
             return res.status(200).send({message: `Courses found!`, course: foundCourses.map((course) => course.toObject({ getters: true}))});
         }
@@ -73,5 +84,6 @@ const createCourse = async (req, res) => {
 
 exports.getAllCourses = getAllCourses;
 exports.getCoursesByUserId = getCoursesByUserId;
+exports.getCoursesByTitle = getCoursesByTitle;
 exports.deleteCourse = deleteCourse;
 exports.createCourse = createCourse;
