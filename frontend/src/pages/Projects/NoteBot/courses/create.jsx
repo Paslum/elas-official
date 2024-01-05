@@ -20,7 +20,7 @@ export const CreateCourseDialog = ({ isOpen, onClose,courses , user_id, setCours
             console.log("Created course:", newCourse);
 
             // Update the courses list state
-            setCourses((prevCourses) => [...prevCourses, newCourse]);
+            //setCourses((prevCourses) => [...prevCourses, newCourse]);
 
             console.log('courses === ' , courses)
 

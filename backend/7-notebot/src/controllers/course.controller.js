@@ -1,7 +1,7 @@
 const db = require("../models");
 const courseModel = db.course;
+const userModel = db.user;
 const noteModel = require("../models/note.model"); //replace with db.*
-const userModel = require("../models/user.model");
 const HttpError = require("../models/http-error.model");
 const mongoose = require("mongoose");
 const { json } = require("body-parser");
@@ -24,44 +24,32 @@ const getAllCourses = async (req, res, next) => {
 };
 
 //Get courses by user_id
-const getCoursesByUserId = async (req, res, next) => {
-    const user_id = req.params.userId;
-
+const getCoursesByUserId = async (req, res) => {
+    const user_id = req.params.user_id;
     try {
-        const user = await userModel.findById(user_id).populate("courses");
-
-        if (!user) {
-            return res
-                .status(404)
-                .json({ message: "Could not find user for the provided user id." });
+        const foundCourses = await courseModel.find({userId: user_id}).select('title');
+        if (foundCourses) {
+            return res.status(200).send({message: `Courses found!`, course: foundCourses.map((course) => course.toObject({ getters: true}))});
         }
-
-        const courses = user.courses.map((course) =>
-            course.toObject({ getters: true })
-        );
-
-        await Promise.all(
-            courses.map((course) => {
-                return noteModel
-                    .find({
-                        course_id: course._id,
-                    })
-                    .then((list) => {
-                        course.notes_count = list.length;
-                    });
-            })
-        );
-
-        res.json({
-            courses,
-        });
+        return res.status(200).send({message: `No Courses found!`});
     } catch (err) {
-        const error = new HttpError(
-            "An error occurred while fetching courses.",
-            500
-        );
-        return next(error);
+        return res.status(500).send({ message: `Error saving user to your MongoDB database` });
     }
+};
+
+//Delete course by id
+const deleteCourse = async (req, res) => {
+  const course_id = req.params.course_id;
+  try {
+      const foundCourse = await courseModel.findOne({_id: course_id});
+      if (foundCourse) {
+          await courseModel.deleteOne({_id: course_id});
+          return res.status(200).send({message: `Course deleted!`});
+      }
+      return res.status(500).send({ message: `Cannot delete Course! Course does not exist.` });
+  } catch (err) {
+      return res.status(500).send({ message: `Couldn't delete Course!` });
+  }
 };
 
 //Create a new course
@@ -81,55 +69,9 @@ const createCourse = async (req, res) => {
     };
 };
 
-//delete course and its notes
-const deleteCourseWithNotes = async (req, res, next) => {
-    const { course_id } = req.params;
 
-    try {
-        const session = await mongoose.startSession();
-        session.startTransaction();
-
-        try {
-            const course = await courseModel.findById(course_id);
-
-            if (!course) {
-                return res
-                    .status(404)
-                    .json({ message: "Could not find course for the provided id." });
-            }
-
-            const noteIds = course.notes;
-            console.log(noteIds);
-            // Delete the course and its associated notes
-            await Promise.all([
-                courseModel.findByIdAndDelete(course_id, { session }),
-                noteModel.deleteMany({ course_id: course_id }, { session }),
-            ]);
-
-            await session.commitTransaction();
-
-            res.status(200).json({ message: "Course and associated notes deleted." });
-        } catch (error) {
-            console.log(error);
-            // await session.abortTransaction();
-            const httpError = new HttpError(
-                `An error occurred while deleting the course: ${error.message}`,
-                500
-            );
-            return next(httpError);
-        } finally {
-            session.endSession();
-        }
-    } catch (err) {
-        const error = new HttpError(
-            "Deleting course failed, please try again later.",
-            500
-        );
-        return next(error);
-    }
-};
 
 exports.getAllCourses = getAllCourses;
 exports.getCoursesByUserId = getCoursesByUserId;
-exports.deleteCourseWithNotes = deleteCourseWithNotes;
+exports.deleteCourse = deleteCourse;
 exports.createCourse = createCourse;

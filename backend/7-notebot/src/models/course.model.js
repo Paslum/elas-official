@@ -15,9 +15,9 @@ const Schema = mongoose.Schema;
 const Course = new Schema({
   userId: { type: String, required: true},
   title: { type: String, required: true },
-  /*notes: [{ type: mongoose.Types.ObjectId, ref:'note' }],*/
+  notes: [{ type: Schema.Types.ObjectId, ref:'note' },],
 });
 /***************** END: DEFINE A SCHEMA *****************/
 
-module.exports = mongoose.model("courses", Course);
+module.exports = mongoose.model("course", Course);
 

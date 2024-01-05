@@ -22,32 +22,40 @@ export const getUserInfo = async (userId) => {
 
 export const getCoursesByUserId = async (user_id) => {
   try {
-    const response = await Backend.get(`/getById/${user_id}`);
-    const courses = response.data.courses;
+    const response = await Backend.get(`/notebot/course/${user_id}`);
+    const {
+      data: { message, course },
+    } = response;
+    return { message, course };
+  } catch (err) {
+    console.log(err);
+    return {
+      message: "Server not connected",
+      course: {
+        uid: "",
+        title: "",
+      },
+    };
+  }
+};
 
-    // Add the id property to each course object
-    const coursesWithId = courses.map((course) => ({
-      id: course._id,
-      ...course,
-    }));
+export const deleteCourse = async (course_id) => {
+  try {
+    const response = await Backend.delete(`/notebot/course/delete/${course_id}`)
+    const data = await response.data;
 
-    return coursesWithId;
+    return data.course;
   } catch (error) {
-    throw new Error("Failed to fetch courses.");
+    throw new Error(`Failed to delete course. Error: ${error.message}`);
   }
 };
 
 export const createCourse = async (user, title) => {
   try {
     const response = await Backend.post(`/notebot/course/`, { uid: user, title: title })
-    console.log("Course title: ", title);
-    const data = await response.json();
+    const data = await response.data;
 
-    if (response.ok) {
-      return data.course;
-    } else {
-      throw new Error(data.message || 'Failed to create a new course.');
-    }
+    return data.course;
   } catch (error) {
     throw new Error(`Failed to create a new course. Error: ${error.message}`);
   }

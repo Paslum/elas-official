@@ -38,9 +38,10 @@ courseRouter.use(function (req, res, next) {
  * The controller function is define in the 'user.controller.js'
  * file under controllers folder.
  */
-courseRouter.get('/getById/:user_id', controller.getCoursesByUserId); // Courses page (Grid view): when click on Courses in the Dashboard page
+//courseRouter.get('/getById/:user_id', controller.getCoursesByUserId); // Courses page (Grid view): when click on Courses in the Dashboard page
+courseRouter.get('/course/:user_id', controller.getCoursesByUserId); // Info of one Course
 courseRouter.post('/course', controller.createCourse); // AddCourse button in the Dashboard page
-courseRouter.delete('/:course_id', controller.deleteCourseWithNotes); // Clicking on the delete icon in the Courses page
+courseRouter.delete('/course/delete/:course_id', controller.deleteCourse); // Clicking on the delete icon in the Courses page
 
 courseRouter.get('/test', controller.getAllCourses); // Show more link in the Courses page
 
