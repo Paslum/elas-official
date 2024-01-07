@@ -38,12 +38,15 @@ courseRouter.use(function (req, res, next) {
  * The controller function is define in the 'user.controller.js'
  * file under controllers folder.
  */
+courseRouter.get('/courses', controller.getAllCourses); // Show more link in the Courses page
 courseRouter.get('/course/:user_id', controller.getCoursesByUserId); // Info of one Course
 courseRouter.get('/course/search/:searchParam', controller.getCoursesByTitle); // Info of one Course
-courseRouter.post('/course', controller.createCourse); // AddCourse button in the Dashboard page
-courseRouter.delete('/course/delete/:course_id', controller.deleteCourse); // Clicking on the delete icon in the Courses page
 
-courseRouter.get('/test', controller.getAllCourses); // Show more link in the Courses page
+courseRouter.post('/course', controller.createCourse); // AddCourse button in the Dashboard page
+
+courseRouter.put('/course/update', controller.updateCourse)
+
+courseRouter.delete('/course/delete/:course_id', controller.deleteCourse); // Clicking on the delete icon in the Courses page
 
 //export the router
 module.exports = courseRouter;

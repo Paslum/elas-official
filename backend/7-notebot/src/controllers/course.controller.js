@@ -1,28 +1,22 @@
 const db = require("../models");
 const courseModel = db.course;
-const userModel = db.user;
-const noteModel = require("../models/note.model"); //replace with db.*
-const HttpError = require("../models/http-error.model");
+const noteModel = db.note;
 
-//get all courses : test
-const getAllCourses = async (req, res, next) => {
+//get all courses
+export const getAllCourses = async (req, res) => {
     try {
-        const courses = await courseModel.find();
-
-        res.json({
-            courses: courses.map((course) => course.toObject({ getters: true })),
-        });
+        const foundCourses = await courseModel.find(); //loading every course into const
+        if (foundCourses) { //if at least one course found, return message and all courses
+            return res.status(200).send({message: `Courses found!`, course: foundCourses.map((course) => course.toObject({ getters: true}))});
+        } //if not return message
+        return res.status(200).send({message: `No Courses found!`});
     } catch (err) {
-        const error = new HttpError(
-            "Fetching courses failed, please try again later.",
-            500
-        );
-        return next(error);
+        return res.status(500).send({message: `Fetching courses failed, please try again later.`});
     }
 };
 
 //Get courses by user_id
-const getCoursesByUserId = async (req, res) => {
+export const getCoursesByUserId = async (req, res) => {
     const user_id = req.params.user_id;
     try {
         const foundCourses = await courseModel.find({userId: user_id}).select('title');
@@ -35,7 +29,7 @@ const getCoursesByUserId = async (req, res) => {
     }
 };
 
-const getCoursesByTitle = async (req, res) => {
+export const getCoursesByTitle = async (req, res) => {
     const searchParam = req.params.searchParam;
     try {
         const foundCourses = await courseModel.find({title: {$regex: searchParam}});
@@ -49,7 +43,7 @@ const getCoursesByTitle = async (req, res) => {
 };
 
 //Delete course by id
-const deleteCourse = async (req, res) => {
+export const deleteCourse = async (req, res) => {
   const course_id = req.params.course_id;
   try {
       const foundCourse = await courseModel.findOne({_id: course_id});
@@ -64,26 +58,30 @@ const deleteCourse = async (req, res) => {
 };
 
 //Create a new course
-const createCourse = async (req, res) => {
+export const createCourse = async (req, res) => {
     try {
         let course = new courseModel({
             userId: req.body.uid,
             title: req.body.title,
         });
         await course.save();
-        res.status(200).send({
+        return res.status(200).send({
             message: `Course ${req.body.title} created successfully!`,
         });
     } catch (err) {
-        res.status(500).send({ message: `Error saving course to DB`});
-        return;
-    };
+        return res.status(500).send({ message: `Error saving course to DB`});
+    }
 };
 
-
-
-exports.getAllCourses = getAllCourses;
-exports.getCoursesByUserId = getCoursesByUserId;
-exports.getCoursesByTitle = getCoursesByTitle;
-exports.deleteCourse = deleteCourse;
-exports.createCourse = createCourse;
+export const updateCourse = async (req, res) => {
+    const course_id = req.body.course_id;
+    try {
+        const foundCourse = await courseModel.findOne({_id: course_id});
+        if (foundCourse) {
+            await courseModel.updateOne({_id: course_id}, {$set: {title: req.body.title}});
+            return res.status(200).send({message: `Course ${course_id} has been updated`});
+        } return res.status(500).send({message: `Course ${course_id} does not exist`})
+    } catch (err) {
+        return res.status(500).send({ message: `Error updating course ${course_id}`});
+    }
+};

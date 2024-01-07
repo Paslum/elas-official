@@ -15,6 +15,7 @@ const Schema = mongoose.Schema;
 const Course = new Schema({
   userId: { type: String, required: true},
   title: { type: String, required: true },
+  description: {type: String},
   notes: [{ type: Schema.Types.ObjectId, ref:'note' },],
 });
 /***************** END: DEFINE A SCHEMA *****************/

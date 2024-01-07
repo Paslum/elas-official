@@ -38,7 +38,7 @@ export default function app({uid}) {
                 },
             }));
         }
-        getCoursesInfoFunction(uid);
+        //getCoursesInfoFunction(uid);
     }, []);
     return (
         <div>
