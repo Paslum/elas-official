@@ -6,7 +6,7 @@ import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
 import {useEffect, useState} from "react";
 import {getCoursesByUserId} from "../utils/api.js";
-import {CreateCourseDialog} from "./create.jsx";
+import {CreateCourseDialog} from "../my_courses/create.jsx";
 
 
 export default function app({uid}) {

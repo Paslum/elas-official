@@ -7,14 +7,50 @@ import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import MyCourses from "./mycourses";
+import Grid from "@mui/material/Grid";
+import Course from "../courses/course.jsx";
+import {useEffect, useState} from "react";
+import {getCoursesByUserId} from "../utils/api.js";
+import {CreateCourseDialog} from "./create.jsx";
 
-export default function App() {
-  // Beispielzufällige Einträge
-  const randomEntries = Array.from({ length: 50 }, (_, index) => ({
-    id: index,
-    name: `${index + 1}`,
-    count: Math.floor(Math.random() * 10),
-  }));
+export default function App({uid}) {
+    const [open, setOpen] = useState(false);
+
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const [courses, setCourses] = useState({
+        message: "Server not connected",
+        courses: [],
+    });
+
+    useEffect(() => {
+        async function getCoursesInfoFunction(userId) {
+            try {
+                let response = await getCoursesByUserId(userId);
+                setCourses(prevState => ({
+                    ...prevState,
+                    message: response.message,
+                    courses: response.course.map(course => ({
+                        title: course.title,
+                        courseId: course._id,
+                    })),
+                }));
+            } catch (error) {
+                console.error("Error fetching courses:", error);
+                setCourses(prevState => ({
+                    ...prevState,
+                    message: "Error fetching courses",
+                }));
+            }
+        }
+        getCoursesInfoFunction(uid);
+    }, []);
 
   return (
     <div>
@@ -22,9 +58,21 @@ export default function App() {
         <Button
           variant="contained"
           style={{ float: "right", backgroundColor: "#ED7D31" }}
+          onClick={() => {handleOpen()}}
         >
           + Add Course
         </Button>
+          <Grid item>
+              {open && (
+                  <CreateCourseDialog
+                      isOpen={open}
+                      onClose={handleClose}
+                      courses={courses}
+                      user_id={uid}
+                      setCourses={setCourses}
+                  />
+              )}
+          </Grid>
         <Button
           variant="outlined"
           style={{
@@ -76,10 +124,15 @@ export default function App() {
             Number of notes
           </Typography>
         </Box>
-
-        {randomEntries.map((entry) => (
-          <MyCourses courseId={entry.name} />
-        ))}
+          {(function courseLoader(courses) {
+              let courseAmount = courses.courses.length;
+              let coursesArr = [];
+              for (let i = 0; i < courseAmount; i++) {
+                  coursesArr.push(
+                      <MyCourses course={courses.courses[i]}/>);
+              }
+              return coursesArr;
+          })(courses)}
       </Box>
     </div>
   );

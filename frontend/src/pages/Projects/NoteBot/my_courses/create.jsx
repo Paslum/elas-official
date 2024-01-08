@@ -11,18 +11,16 @@ import {
 } from "@mui/material";
 import { createCourse } from "../utils/api.js";
 
-export const CreateCourseDialog = ({ isOpen, onClose,courses , user_id, setCourses }) => {
+export const CreateCourseDialog = ({ isOpen, onClose, courses , user_id, setCourses }) => {
     const [courseTitle, setCourseTitle] = useState("");
     const handleAddCourse = async() => {
         try {
             const newCourse = await createCourse(user_id, courseTitle);
 
-            console.log("Created course:", newCourse);
-
             // Update the courses list state
             //setCourses((prevCourses) => [...prevCourses, newCourse]);
 
-            //console.log('courses = ' , courses);
+            //console.log('courses:' , courses);
 
 
 

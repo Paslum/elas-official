@@ -97,7 +97,7 @@ export default function navbox({user}) {
                             <Courses uid={user.user.uid} />
                         </TabPanel>
                         <TabPanel value={value} index={1} dir={theme.direction}>
-                        <MyCourses />
+                        <MyCourses uid={user.user.uid} />
                         </TabPanel>
                         <TabPanel value={value} index={2} dir={theme.direction}>
                         <Favorites />

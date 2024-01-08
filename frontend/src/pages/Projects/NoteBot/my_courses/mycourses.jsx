@@ -11,7 +11,7 @@ import Box from "@mui/material/Box";
 import {useEffect, useState} from "react";
 import {getCoursesByUserId} from "../utils/api.js";
 
-export default function mycourses({ courseId }) {
+export default function mycourses({ course }) {
   return (
     <Box sx={{ height: 75 }}>
       <Divider />
@@ -32,7 +32,7 @@ export default function mycourses({ courseId }) {
                   paddingTop: 1,
                 }}
               >
-                <b>My Course #{courseId}</b>
+                <b>{course.title}</b>
               </Typography>
             </Grid>
           </Grid>
