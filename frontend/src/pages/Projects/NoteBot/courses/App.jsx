@@ -22,23 +22,30 @@ export default function app({uid}) {
 
     const [courses, setCourses] = useState({
         message: "Server not connected",
-        courses: {
-            courseId: "",
-        },
+        courses: [],
     });
 
     useEffect(() => {
         async function getCoursesInfoFunction(userId) {
-            let reponse = await getCoursesByUserId(userId);
-            setCourses((prevState) => ({
-                ...prevState,
-                message: reponse.message,
-                courses: {
-                    CourseId: reponse.courses.courseId,
-                },
-            }));
+            try {
+                let response = await getCoursesByUserId(userId);
+                setCourses(prevState => ({
+                    ...prevState,
+                    message: response.message,
+                    courses: response.course.map(course => ({
+                        title: course.title,
+                        courseId: course._id,
+                    })),
+                }));
+            } catch (error) {
+                console.error("Error fetching courses:", error);
+                setCourses(prevState => ({
+                    ...prevState,
+                    message: "Error fetching courses",
+                }));
+            }
         }
-        //getCoursesInfoFunction(uid);
+        getCoursesInfoFunction(uid);
     }, []);
     return (
         <div>
@@ -99,18 +106,17 @@ export default function app({uid}) {
                 justifyContent="flex-start"
                 alignItems="flex-start"
             >
-                {(function courses() {
-                    let courseAmount = Math.floor(Math.random() * (6 - 1 + 1)) + 1;
-                    let courses = [];
+                {(function courseLoader(courses) {
+                    let courseAmount = courses.courses.length;
+                    let coursesArr = [];
                     for (let i = 0; i < courseAmount; i++) {
-                        let courseId = Math.floor(Math.random() * (99 - 1 + 1)) + 1;
-                        courses.push(
-                            <Grid item key={courseId}>
-                                <Course courseId={courseId}/>
+                        coursesArr.push(
+                            <Grid item key={i}>
+                                <Course courseId={courses.courses[i]?.title}/>
                             </Grid>);
                     }
-                    return courses;
-                })()}
+                    return coursesArr;
+                })(courses)}
             </Grid>
         </div>
     );

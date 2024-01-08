@@ -1,5 +1,6 @@
 import {Backend, setAuthToken} from "../../../../utils/apiConfig";
 
+/** Users **/
 export const getUserInfo = async (userId) => {
   try {
     const response = await Backend.get(`/notebot/users/${userId}`);
@@ -20,9 +21,10 @@ export const getUserInfo = async (userId) => {
   }
 };
 
-export const getCoursesByUserId = async (user_id) => {
+/** Courses **/
+export const getAllCourses = async () => {
   try {
-    const response = await Backend.get(`/notebot/course/${user_id}`);
+    const response = await Backend.get(`/notebot/courses`);
     const {
       data: { message, course },
     } = response;
@@ -38,7 +40,42 @@ export const getCoursesByUserId = async (user_id) => {
     };
   }
 };
-
+export const getCoursesByUserId = async (userId) => {
+  try {
+    const response = await Backend.get(`/notebot/course/${userId}`);
+    const {
+      data: { message, course },
+    } = response;
+    return { message, course };
+  } catch (err) {
+    console.log(err);
+    return {
+      message: "Server not connected",
+      course: {
+        uid: "",
+        title: "",
+      },
+    };
+  }
+};
+export const getCoursesByTitle = async (title) => {
+  try {
+    const response = await Backend.get(`/notebot/course/search/${title}`);
+    const {
+      data: { message, course },
+    } = response;
+    return { message, course };
+  } catch (err) {
+    console.log(err);
+    return {
+      message: "Server not connected",
+      course: {
+        uid: "",
+        title: "",
+      },
+    };
+  }
+};
 export const deleteCourse = async (course_id) => {
   try {
     const response = await Backend.delete(`/notebot/course/delete/${course_id}`)
@@ -49,7 +86,6 @@ export const deleteCourse = async (course_id) => {
     throw new Error(`Failed to delete course. Error: ${error.message}`);
   }
 };
-
 export const createCourse = async (user, title) => {
   try {
     const response = await Backend.post(`/notebot/course/`, { uid: user, title: title })
@@ -60,7 +96,18 @@ export const createCourse = async (user, title) => {
     throw new Error(`Failed to create a new course. Error: ${error.message}`);
   }
 };
+export const updateCourse = async (courseId, title) => {
+  try {
+    const response = await Backend.put(`/notebot/course/update`, { courseId: courseId, title: title })
+    const data = await response.data;
 
+    return data.course;
+  } catch (error) {
+    throw new Error(`Failed to update course. Error: ${error.message}`);
+  }
+};
+
+/** Notes **/
 export const getNotes = async (token, userId) => {
   const response = await fetch(`/notes/user/${userId}`, {
     method: "GET",

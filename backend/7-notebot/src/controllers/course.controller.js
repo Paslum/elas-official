@@ -74,14 +74,14 @@ export const createCourse = async (req, res) => {
 };
 
 export const updateCourse = async (req, res) => {
-    const course_id = req.body.course_id;
+    const courseId = req.body.courseId;
     try {
-        const foundCourse = await courseModel.findOne({_id: course_id});
+        const foundCourse = await courseModel.findOne({_id: courseId});
         if (foundCourse) {
-            await courseModel.updateOne({_id: course_id}, {$set: {title: req.body.title}});
-            return res.status(200).send({message: `Course ${course_id} has been updated`});
-        } return res.status(500).send({message: `Course ${course_id} does not exist`})
+            await courseModel.updateOne({_id: courseId}, {$set: {title: req.body.title}});
+            return res.status(200).send({message: `Course ${courseId} has been updated`});
+        } return res.status(500).send({message: `Course ${courseId} does not exist`})
     } catch (err) {
-        return res.status(500).send({ message: `Error updating course ${course_id}`});
+        return res.status(500).send({ message: `Error updating course ${courseId}`});
     }
 };

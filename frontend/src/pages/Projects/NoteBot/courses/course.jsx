@@ -15,7 +15,7 @@ export default function course( {courseId} ) {
                     paddingTop: 1,
                 }}
             >
-                My Course #{courseId}
+                {courseId}
             </Typography>
             <div style={{ overflowX: "auto" }}>
                 <Notes/>
