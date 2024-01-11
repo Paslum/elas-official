@@ -1,14 +1,8 @@
-/******
- * @Note This is one example, you can create more route files under
- * the routes folder and export them. Make sure you import the routes
- * in the server.js file.
- */
-
 const controller = require("../controllers/course.controller");
 
 /***************** START: INITIALIZE ROUTER MODULE *****************
  * @documentation
- * The code `let userRouter = require("express").Router();`
+ * The code `let courseRouter = require("express").Router();`
  * is creating a new instance of the Express Router.
  * The 'userRouter' in this example is acting like
  * a middleware function that allows you to define routes
@@ -38,15 +32,15 @@ courseRouter.use(function (req, res, next) {
  * The controller function is define in the 'user.controller.js'
  * file under controllers folder.
  */
-courseRouter.get('/courses', controller.getAllCourses); // Show more link in the Courses page
-courseRouter.get('/course/:user_id', controller.getCoursesByUserId); // Info of one Course
-courseRouter.get('/course/search/:searchParam', controller.getCoursesByTitle); // Info of one Course
+courseRouter.get('/courses', controller.getAllCourses); // Currently not used
+courseRouter.get('/course/:user_id', controller.getCoursesByUserId); // Get all Courses by UserId
+courseRouter.get('/course/search/:searchParam', controller.getCoursesByTitle); // Search Courses by Title
 
-courseRouter.post('/course', controller.createCourse); // AddCourse button in the Dashboard page
+courseRouter.post('/course', controller.createCourse); // AddCourse buttons
 
-courseRouter.put('/course/update', controller.updateCourse)
+courseRouter.put('/course/update', controller.updateCourse) //Change Course title
 
-courseRouter.delete('/course/delete/:course_id', controller.deleteCourse); // Clicking on the delete icon in the Courses page
+courseRouter.delete('/course/delete/:course_id', controller.deleteCourse); // Deleting a Course by _id
 
 //export the router
 module.exports = courseRouter;

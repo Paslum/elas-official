@@ -13,15 +13,14 @@ import {deleteCourse} from "../utils/api.js";
 
 export default function mycourses({ course, removeCourses}) {
   const handleDelete = async () => {
+    //Hier vor fehlt noch ein confirmation PopUp
     try {
-      console.log(course);
       await deleteCourse(course.courseId);
       removeCourses(course.courseId);
-    } catch(err){
-
+    } catch(error){
+      console.log("Failed to delete course:", error);
     };
   };
-
   return (
     <Box sx={{ height: 75 }}>
       <Divider />
@@ -51,7 +50,7 @@ export default function mycourses({ course, removeCourses}) {
           <Grid container alignItems="center">
             <Grid item>
               <Typography variant="subtitle1">
-                <b>{Math.floor(Math.random() * (10 - 1 + 1)) + 1}</b>
+                <b>{course.notes?.length ?? 0}</b>
               </Typography>
             </Grid>
             <Grid item>

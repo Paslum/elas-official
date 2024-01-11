@@ -13,13 +13,10 @@ const Schema = mongoose.Schema;
  * A user schema for MongoDB.
  */
 const Note = new Schema({
-  uid: { type: mongoose.Types.ObjectId, required: true, ref:'user' },
+  userId: { type: String, required: true },
   title: { type: String, required: true },
   favorites: { type: Number, default: 0 },
-  favored_by: [{ type: mongoose.Types.ObjectId, ref:'user'},],
-  course: { type: mongoose.Types.ObjectId, required: true, ref:'course' },
-  sections: [{ type: mongoose.Types.ObjectId, required: true, ref:'section'},],
-}, { timestamps: true }
+  }, { timestamps: true }
 );
 /***************** END: DEFINE A SCHEMA *****************/
 

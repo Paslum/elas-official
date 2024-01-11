@@ -1,6 +1,5 @@
 const db = require("../models");
 const courseModel = db.course;
-const noteModel = db.note;
 
 //get all courses
 export const getAllCourses = async (req, res) => {
@@ -19,7 +18,7 @@ export const getAllCourses = async (req, res) => {
 export const getCoursesByUserId = async (req, res) => {
     const user_id = req.params.user_id;
     try {
-        const foundCourses = await courseModel.find({userId: user_id}).select('title');
+        const foundCourses = await courseModel.find({userId: user_id});
         if (foundCourses) {
             return res.status(200).send({message: `Courses found!`, course: foundCourses.map((course) => course.toObject({ getters: true}))});
         }

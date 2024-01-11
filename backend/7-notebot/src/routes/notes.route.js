@@ -1,30 +1,43 @@
-var express = require("express");
-var router = express.Router();
-const noteController = require("../controllers/note.controller");
-const favController = require("../controllers/favorite.controller");
+const controller = require("../controllers/note.controller");
 
-//Registering notes route
-router.get("/:note_id/widgets", noteController.getNoteWidgets); // Grid view SavedNotes page
-// the rest of the path , pointer to the function from noteController
-router.get("/user/:user_id", noteController.getNoteByUserId); //Grid view of the Dashboard page
-router.post("/", noteController.createNote); // AddNote button in the Dashboard page
-router.put("/:note_id", noteController.updateNote); // Clicking on a note in the Dashboard page
+/***************** START: INITIALIZE ROUTER MODULE *****************
+ * @documentation
+ * The code `let noteRouter = require("express").Router();`
+ * is creating a new instance of the Express Router.
+ * The 'userRouter' in this example is acting like
+ * a middleware function that allows you to define routes
+ * for your application. Make sure to define the middleware,
+ * in this case 'userRouter.use()' function is used to
+ * define middleware.
+ */
+let noteRouter = require("express").Router();
 
-router.delete("/:note_id", noteController.deleteNote); // Clicking on the delete button in the NoteDetails page
-router.get("/users/:user_id/courses/:course_id/notes", noteController.getNotesByUserIdAndCourseId); // Show more link in the Dashboard page
-router.get("/search/:keyword", noteController.getNotesByCourseTitle); // Search bar in the Dashboard page
+noteRouter.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Headers", "Origin, Content-Type, Accept");
+    next();
+});
 
-router.get("/users/:user_id/savednotes", noteController.getSavedNotesByUserId); // Grid view SavedNotes page
+/***************** END: INITIALIZE ROUTER MODULE *****************/
 
-router.post("/users/:user_id/notes/:note_id/save", noteController.saveNote); // Clicking on the save button in the Search page
+/***************** START: CREATE ROUTES **************************
+ * @documentation
+ * When creating a route, you need to define the HTTP method
+ * and the path. The HTTP method can be any of the following:
+ * GET, POST, PUT, DELETE, PATCH, HEAD, OPTIONS.
+ * In the example below, 'userRouter' is used to define the
+ * routes. The 'userRouter.get()' method is used to define a
+ * GET route. The first parameter '/users/:userId' is the path and
+ * the second parameter 'controller.saveUser' is the controller
+ * function. ":userId" is a parameter send through the url
+ * The controller function is define in the 'user.controller.js'
+ * file under controllers folder.
+ */
 
-router.patch("/push_sections", noteController.pushSectionsToNote);
+//noteRouter.get('/notes', controller.getAllNotes); //Currently not used
+noteRouter.get('/notes/:userId', controller.getNotesByUserId); //Get all Notes by UserId
+//noteRouter.get('/notes/search/:searchParam', controller.getNotesByTitle); //Search Notes by title
 
-router.get("/note/:note_id", noteController.getNoteByNoteID);
-
-router.post("/:note_id/favorite", favController.toggetFavoriteNote);
-
-router.get("/users/:user_id/favorite", favController.getFavNoteByUserId);
+noteRouter.post('/note', controller.createNote); // AddNote buttons
 
 //export the router
-module.exports = router;
+module.exports = noteRouter;

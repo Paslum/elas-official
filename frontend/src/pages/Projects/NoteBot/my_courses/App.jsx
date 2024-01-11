@@ -52,6 +52,7 @@ export default function App({uid}) {
                     courses: response.course.map(course => ({
                         title: course.title,
                         courseId: course._id,
+                        notes: course.notes,
                     })),
                 }));
             } catch (error) {
