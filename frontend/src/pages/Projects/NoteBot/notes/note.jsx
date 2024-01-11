@@ -6,6 +6,7 @@ import DeleteIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import IconButton from "@mui/material/IconButton";
 import SettingsIcon from "@mui/icons-material/Settings";
 import FavoriteIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import {getNoteById} from "../utils/api.js";
 
 export default function note( {noteId} ) {
     return (
@@ -31,7 +32,7 @@ export default function note( {noteId} ) {
                             textAlign: "center",
                         }}
                     >
-                        My Note #{noteId}
+                        {noteId}
                     </Typography>
                 </CardContent>
                 <IconButton aria-label="Favor Note" style={{ float: "left" }}>

@@ -5,18 +5,17 @@ import {useEffect, useState} from "react";
 import {getUserInfo} from "../utils/api.js";
 
 
-export default function app() {
+export default function app( {notes}) {
     return (
         <div>
             <Stack direction="row" spacing={2}>
-                {(function notes() {
-                    let noteAmount = Math.floor(Math.random() * (6 - 1 + 1)) + 1;
-                    let notes = [];
-                    for (let i = 0; i < noteAmount; i++) {
-                        let noteId = Math.floor(Math.random() * (99 - 1 + 1)) + 1;
-                        notes.push(<Note noteId={noteId}/>);
+
+                {(function noteLoader() {
+                    let notesArr = [];
+                    for (let i = 0; i < notes.length; i++) {
+                        notesArr.push(<Note noteId={notes[i]}/>);
                     }
-                    return notes;
+                    return notesArr;
                 })()}
             </Stack>
         </div>

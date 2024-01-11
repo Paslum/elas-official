@@ -42,6 +42,7 @@ export default function app({uid}) {
                     courses: response.course.map(course => ({
                         title: course.title,
                         courseId: course._id,
+                        notes: course.notes,
                     })),
                 }));
             } catch (error) {
@@ -121,7 +122,7 @@ export default function app({uid}) {
                         for (let i = 0; i < courseAmount; i++) {
                             coursesArr.push(
                                 <Grid item key={i}>
-                                    <Course courseId={courses.courses[i]?.title}/>
+                                    <Course course={courses.courses[i]}/>
                                 </Grid>);
                         }
                         return coursesArr;
