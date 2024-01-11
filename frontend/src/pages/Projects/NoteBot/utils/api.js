@@ -117,23 +117,21 @@ export const updateCourse = async (courseId, title) => {
 };
 
 /** Notes **/
-export const getNotes = async (token, userId) => {
-  const response = await fetch(`/notes/user/${userId}`, {
-    method: "GET",
-    headers: {
-      "Content-type": "application/json",
-      Authorization: token,
-    },
-  });
-
-  const notes = await response.json();
-
-  if (!response.ok) {
-    let error = new Error("Http status code" + response.status);
-    error.data = notes;
-    error.status = response.status;
-    error.message = response.message;
+export const getNoteById = async (noteId) => {
+  try {
+    const response = await Backend.get(`notebot/note/${noteId}`)
+    const {
+      data: { message, note },
+    } = response;
+    return { message, note };
+  } catch (err) {
+    console.log(err);
+    return {
+      message: "Server not connected",
+      note: {
+        id: "",
+        title: "",
+      },
+    };
   }
-
-  return notes["notes"];
 };

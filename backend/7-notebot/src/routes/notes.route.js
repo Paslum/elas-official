@@ -35,6 +35,7 @@ noteRouter.use(function (req, res, next) {
 
 //noteRouter.get('/notes', controller.getAllNotes); //Currently not used
 noteRouter.get('/notes/:userId', controller.getNotesByUserId); //Get all Notes by UserId
+noteRouter.get('/note/:noteId', controller.getNoteById);
 //noteRouter.get('/notes/search/:searchParam', controller.getNotesByTitle); //Search Notes by title
 
 noteRouter.post('/note', controller.createNote); // AddNote buttons

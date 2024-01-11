@@ -16,6 +16,20 @@ export const getNotesByUserId = async (req, res) => {
     }
 };
 
+//Get Note by Id
+export const getNoteById = async (req, res) => {
+  const noteId = req.params.noteId;
+  try {
+      const foundNote = await noteModel.findOne({_id: noteId});
+      if (foundNote) {
+          return res.status(200).send({message: `Note found!`, note: foundNote});
+      }
+      return res.status(200).send({message: `No Note found!`});
+  } catch (err) {
+      return res.status(500).send({ message: `Error saving user to your MongoDB database` });
+  }
+};
+
 //Create a new note
 export const createNote = async (req, res) => {
     try {

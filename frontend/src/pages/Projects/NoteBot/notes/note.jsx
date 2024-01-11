@@ -6,9 +6,38 @@ import DeleteIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import IconButton from "@mui/material/IconButton";
 import SettingsIcon from "@mui/icons-material/Settings";
 import FavoriteIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import {getNoteById} from "../utils/api.js";
+import {getCoursesByUserId, getNoteById} from "../utils/api.js";
+import {useEffect, useState} from "react";
 
 export default function note( {noteId} ) {
+
+    const [note, setNote] = useState({
+        message: "Server not connected",
+        note: [], // Initialize as an empty array
+    });
+
+    useEffect(() => {
+        async function getNoteInfoFunction(noteId) {
+            try {
+                let response = await getNoteById(noteId);
+                setNote(prevState => ({
+                    ...prevState,
+                    message: response.message,
+                    note: ({
+                        title: response.note.title,
+                        noteId: response.note._id,
+                    }),
+                }));
+            } catch (error) {
+                console.error("Error fetching Note:", error);
+                setNote(prevState => ({
+                    ...prevState,
+                    message: "Error fetching Note",
+                }));
+            }
+        }
+        getNoteInfoFunction(noteId)
+    },[]);
     return (
         <Card
             sx={{
@@ -32,7 +61,7 @@ export default function note( {noteId} ) {
                             textAlign: "center",
                         }}
                     >
-                        {noteId}
+                        {note.note.title}
                     </Typography>
                 </CardContent>
                 <IconButton aria-label="Favor Note" style={{ float: "left" }}>
