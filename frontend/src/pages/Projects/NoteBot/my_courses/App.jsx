@@ -35,6 +35,12 @@ export default function App({uid}) {
             courses: [...prevCourses.courses, newCourse],
         }));
     };
+    const removeCourses = (oldCourse) => {
+        setCourses((prevCourses) => ({
+            ...prevCourses,
+            courses: prevCourses.courses.filter(course => course.courseId !== oldCourse),
+        }));
+    };
 
     useEffect(() => {
         async function getCoursesInfoFunction(userId) {
@@ -137,7 +143,7 @@ export default function App({uid}) {
               let coursesArr = [];
               for (let i = 0; i < courseAmount; i++) {
                   coursesArr.push(
-                      <MyCourses course={courses.courses[i]}/>);
+                      <MyCourses course={courses.courses[i]} removeCourses={removeCourses}/>);
               }
               return coursesArr;
           })(courses) : `no courses yet` //BITTE FÜGT HIER NOCH WAS EIN

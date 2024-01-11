@@ -9,9 +9,19 @@ import EditIcon from "@mui/icons-material/Edit";
 import Divider from "@mui/material/Divider";
 import Box from "@mui/material/Box";
 import {useEffect, useState} from "react";
-import {getCoursesByUserId} from "../utils/api.js";
+import {deleteCourse} from "../utils/api.js";
 
-export default function mycourses({ course }) {
+export default function mycourses({ course, removeCourses}) {
+  const handleDelete = async () => {
+    try {
+      console.log(course);
+      await deleteCourse(course.courseId);
+      removeCourses(course.courseId);
+    } catch(err){
+
+    };
+  };
+
   return (
     <Box sx={{ height: 75 }}>
       <Divider />
@@ -45,7 +55,7 @@ export default function mycourses({ course }) {
               </Typography>
             </Grid>
             <Grid item>
-              <IconButton>
+              <IconButton onClick={handleDelete}>
                 <DeleteIcon />
               </IconButton>
             </Grid>

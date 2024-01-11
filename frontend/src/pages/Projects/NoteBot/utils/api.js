@@ -94,9 +94,9 @@ export const createCourse = async (user, title) => {
     if (data.message && data.message.includes('created successfully')) {
       const courseInfo = {
         title: title,
+        courseId : data._id,
         // Add any other properties
       };
-
       return courseInfo;
     } else {
       throw new Error('Failed to extract course information from the response.');
