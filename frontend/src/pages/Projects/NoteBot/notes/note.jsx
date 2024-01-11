@@ -6,7 +6,7 @@ import DeleteIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import IconButton from "@mui/material/IconButton";
 import SettingsIcon from "@mui/icons-material/Settings";
 import FavoriteIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import {getCoursesByUserId, getNoteById} from "../utils/api.js";
+import {deleteNote, getCoursesByUserId, getNoteById} from "../utils/api.js";
 import {useEffect, useState} from "react";
 
 export default function note( {noteId} ) {
@@ -15,6 +15,15 @@ export default function note( {noteId} ) {
         message: "Server not connected",
         note: [], // Initialize as an empty array
     });
+
+    const handleDelete = async () => {
+        //Hier vor fehlt noch ein confirmation PopUp
+        try {
+            await deleteNote(noteId);
+        } catch(error){
+            console.log("Failed to delete Note:", error);
+        };
+    };
 
     useEffect(() => {
         async function getNoteInfoFunction(noteId) {
@@ -67,7 +76,7 @@ export default function note( {noteId} ) {
                 <IconButton aria-label="Favor Note" style={{ float: "left" }}>
                     <FavoriteIcon sx={{ color: "red" }} />
                 </IconButton>
-                <IconButton aria-label="Delete Note" style={{ float: "right" }}>
+                <IconButton onClick={handleDelete} aria-label="Delete Note" style={{ float: "right" }}>
                     <DeleteIcon />
                 </IconButton>
             </React.Fragment>

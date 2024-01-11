@@ -30,6 +30,23 @@ export const getNoteById = async (req, res) => {
   }
 };
 
+//Delete course by id
+export const deleteNote = async (req, res) => {
+    const noteId = req.params.noteId;
+    try {
+        const foundNote = await noteModel.findOne({_id: noteId});
+        if (foundNote) {
+            await noteModel.deleteOne({_id: noteId});
+            console.log(noteId);
+            await courseModel.updateMany({}, {$pull: {notes: noteId}});
+            return res.status(200).send({message: `Note deleted!`});
+        }
+        return res.status(500).send({ message: `Cannot delete Note! Note does not exist.` });
+    } catch (err) {
+        return res.status(500).send({ message: `Couldn't delete Note!` });
+    }
+};
+
 //Create a new note
 export const createNote = async (req, res) => {
     try {

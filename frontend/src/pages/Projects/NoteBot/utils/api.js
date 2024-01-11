@@ -135,3 +135,14 @@ export const getNoteById = async (noteId) => {
     };
   }
 };
+
+export const deleteNote = async (noteId) => {
+  try {
+    const response = await Backend.delete(`/notebot/note/delete/${noteId}`)
+    const data = await response.data;
+
+    return data.note;
+  } catch (error) {
+    throw new Error(`Failed to delete Note. Error: ${error.message}`);
+  }
+};
