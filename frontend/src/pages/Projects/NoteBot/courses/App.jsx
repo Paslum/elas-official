@@ -114,7 +114,7 @@ export default function app({uid}) {
                 justifyContent="flex-start"
                 alignItems="flex-start"
             >
-                {courses.courses.lenght === 0 ?
+                {courses.courses.length !== 0 ?
                     (function courseLoader(courses) {
                         let courseAmount = courses.courses.length;
                         let coursesArr = [];

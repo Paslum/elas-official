@@ -131,7 +131,8 @@ export default function App({uid}) {
             Number of notes
           </Typography>
         </Box>
-          {(function courseLoader(courses) {
+          {courses.courses.length !== 0 ?
+          (function courseLoader(courses) {
               let courseAmount = courses.courses.length;
               let coursesArr = [];
               for (let i = 0; i < courseAmount; i++) {
@@ -139,7 +140,8 @@ export default function App({uid}) {
                       <MyCourses course={courses.courses[i]}/>);
               }
               return coursesArr;
-          })(courses)}
+          })(courses) : `no courses yet` //BITTE FÜGT HIER NOCH WAS EIN
+          }
       </Box>
     </div>
   );
