@@ -114,17 +114,19 @@ export default function app({uid}) {
                 justifyContent="flex-start"
                 alignItems="flex-start"
             >
-                {(function courseLoader(courses) {
-                    let courseAmount = courses.courses.length;
-                    let coursesArr = [];
-                    for (let i = 0; i < courseAmount; i++) {
-                        coursesArr.push(
-                            <Grid item key={i}>
-                                <Course courseId={courses.courses[i]?.title}/>
-                            </Grid>);
-                    }
-                    return coursesArr;
-                })(courses)}
+                {courses.courses.lenght === 0 ?
+                    (function courseLoader(courses) {
+                        let courseAmount = courses.courses.length;
+                        let coursesArr = [];
+                        for (let i = 0; i < courseAmount; i++) {
+                            coursesArr.push(
+                                <Grid item key={i}>
+                                    <Course courseId={courses.courses[i]?.title}/>
+                                </Grid>);
+                        }
+                        return coursesArr;
+                    })(courses) : `no courses yet` //BITTE FÜGT HIER NOCH WAS EIN
+                }
             </Grid>
         </div>
     );
