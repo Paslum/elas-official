@@ -88,10 +88,19 @@ export const deleteCourse = async (course_id) => {
 };
 export const createCourse = async (user, title) => {
   try {
-    const response = await Backend.post(`/notebot/course/`, { uid: user, title: title })
+    const response = await Backend.post(`/notebot/course/`, { uid: user, title: title });
     const data = await response.data;
 
-    return data.course;
+    if (data.message && data.message.includes('created successfully')) {
+      const courseInfo = {
+        title: title,
+        // Add any other properties
+      };
+
+      return courseInfo;
+    } else {
+      throw new Error('Failed to extract course information from the response.');
+    }
   } catch (error) {
     throw new Error(`Failed to create a new course. Error: ${error.message}`);
   }

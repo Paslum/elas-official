@@ -22,8 +22,15 @@ export default function app({uid}) {
 
     const [courses, setCourses] = useState({
         message: "Server not connected",
-        courses: [],
+        courses: [], // Initialize as an empty array
     });
+
+    const updateCourses = (newCourse) => {
+        setCourses((prevCourses) => ({
+            ...prevCourses,
+            courses: [...prevCourses.courses, newCourse],
+        }));
+    };
 
     useEffect(() => {
         async function getCoursesInfoFunction(userId) {
@@ -93,6 +100,7 @@ export default function app({uid}) {
                                     courses={courses}
                                     user_id={uid}
                                     setCourses={setCourses}
+                                    updateCourses={updateCourses} // Pass the callback function
                                 />
                             )}
                         </Grid>

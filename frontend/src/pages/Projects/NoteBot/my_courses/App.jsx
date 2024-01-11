@@ -26,8 +26,15 @@ export default function App({uid}) {
 
     const [courses, setCourses] = useState({
         message: "Server not connected",
-        courses: [],
+        courses: [], // Initialize as an empty array
     });
+
+    const updateCourses = (newCourse) => {
+        setCourses((prevCourses) => ({
+            ...prevCourses,
+            courses: [...prevCourses.courses, newCourse],
+        }));
+    };
 
     useEffect(() => {
         async function getCoursesInfoFunction(userId) {
@@ -51,7 +58,6 @@ export default function App({uid}) {
         }
         getCoursesInfoFunction(uid);
     }, []);
-
   return (
     <div>
       <Box sx={{ flexGrow: 0 }}>
@@ -70,6 +76,7 @@ export default function App({uid}) {
                       courses={courses}
                       user_id={uid}
                       setCourses={setCourses}
+                      updateCourses={updateCourses} // Pass the callback function
                   />
               )}
           </Grid>
