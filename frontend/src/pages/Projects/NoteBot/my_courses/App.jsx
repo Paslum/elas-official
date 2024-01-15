@@ -117,6 +117,7 @@ export default function App({ uid }) {
                     </Grid>
                 </Grid>
             </Grid>
+        </Grid>
             <Divider />
             {/* Neue Box für Einträge */}
             <Grid
@@ -154,7 +155,6 @@ export default function App({ uid }) {
                     })(courses) : `no courses yet` //BITTE FÜGT HIER NOCH WAS EIN
                 }
             </Grid>
-        </Grid>
-    </div>
+        </div>
     );
 }
