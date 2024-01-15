@@ -72,8 +72,6 @@ export default function App({ uid }) {
         }
         getCoursesInfoFunction(uid);
     }, []);
-<<<<<<< Updated upstream
-
     return (
         <div>
             <Grid container alignItems="center" justifyContent="space-between">
