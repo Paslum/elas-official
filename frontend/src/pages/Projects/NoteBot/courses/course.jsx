@@ -17,9 +17,9 @@ export default function course( {course} ) {
             >
                 {course.title}
             </Typography>
-            <div style={{ overflowX: "auto" }}>
-                <Notes notes={course.notes}/>
-            </div>
+                <div style={{ overflowX: "auto" }}>
+                    <Notes notesInfo={course.notes}/>
+                </div>
         </Paper>
     );
 }

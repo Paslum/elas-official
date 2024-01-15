@@ -6,20 +6,21 @@ import DeleteIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import IconButton from "@mui/material/IconButton";
 import SettingsIcon from "@mui/icons-material/Settings";
 import FavoriteIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import {deleteNote, getCoursesByUserId, getNoteById} from "../utils/api.js";
+import {deleteNote, getNoteById} from "../utils/api.js";
 import {useEffect, useState} from "react";
 
-export default function note( {noteId} ) {
+export default function note( {noteId, removeNote} ) {
 
     const [note, setNote] = useState({
         message: "Server not connected",
         note: [], // Initialize as an empty array
     });
-
     const handleDelete = async () => {
         //Hier vor fehlt noch ein confirmation PopUp
         try {
             await deleteNote(noteId);
+            removeNote(noteId);
+            console.log(`Note ${noteId} deleted`);
         } catch(error){
             console.log("Failed to delete Note:", error);
         };
@@ -53,6 +54,7 @@ export default function note( {noteId} ) {
                 width: 333,
                 height: 220,
                 backgroundColor: "rgba(217, 217, 217, 0.3)",
+                flexShrink: "0",
             }}
         >
             <React.Fragment>

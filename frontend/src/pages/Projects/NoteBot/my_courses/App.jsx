@@ -9,9 +9,16 @@ import Box from "@mui/material/Box";
 import MyCourses from "./mycourses";
 import Grid from "@mui/material/Grid";
 import Course from "../courses/course.jsx";
+<<<<<<< Updated upstream
 import { useEffect, useState } from "react";
 import { getCoursesByUserId } from "../utils/api.js";
 import { CreateCourseDialog } from "./create.jsx";
+=======
+import {useEffect, useState} from "react";
+import {getCoursesByUserId} from "../utils/api.js";
+import {CreateCourseDialog} from "./create.jsx";
+import Note from "../notes/note.jsx";
+>>>>>>> Stashed changes
 
 export default function App({ uid }) {
     const [open, setOpen] = useState(false);
@@ -65,6 +72,7 @@ export default function App({ uid }) {
         }
         getCoursesInfoFunction(uid);
     }, []);
+<<<<<<< Updated upstream
 
     return (
         <div>
@@ -117,6 +125,57 @@ export default function App({ uid }) {
                                 />
                             )}
                         </Grid>
+=======
+  return (
+    <div>
+        <Grid container alignItems="center" justifyContent="space-between">
+            <Grid item>
+                <Typography
+                    variant="subtitle1"
+                    component="h2"
+                    sx={{
+                        fontWeight: "bold",
+                        color: "Black",
+                        fontSize: 28,
+                        paddingBottom: 1,
+                    }}
+                >
+                    My Courses
+                </Typography>
+            </Grid>
+            <Grid item>
+                <Grid container spacing={1}>
+                    <Grid item>
+                        <Button
+                            variant="outlined"
+                            style={{
+                                color: "#ED7D31",
+                                borderColor: "#ED7D31",
+                            }}
+                        >
+                            Recently Deleted
+                        </Button>
+                    </Grid>
+                    <Grid item>
+                        <Button
+                            variant="contained"
+                            style={{ backgroundColor: "#ED7D31" }}
+                            onClick={() => {handleOpen()}}
+                        >
+                            + Add Course
+                        </Button>
+                    </Grid>
+                    <Grid item>
+                        {open && (
+                            <CreateCourseDialog
+                                isOpen={open}
+                                onClose={handleClose}
+                                courses={courses}
+                                user_id={uid}
+                                updateCourses={updateCourses} // updating course list
+                            />
+                        )}
+>>>>>>> Stashed changes
                     </Grid>
                 </Grid>
             </Grid>

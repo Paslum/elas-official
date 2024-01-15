@@ -100,8 +100,7 @@ export default function app({uid}) {
                                     onClose={handleClose}
                                     courses={courses}
                                     user_id={uid}
-                                    setCourses={setCourses}
-                                    updateCourses={updateCourses} // Pass the callback function
+                                    updateCourses={updateCourses} // updating course list
                                 />
                             )}
                         </Grid>

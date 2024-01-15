@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { createCourse } from "../utils/api.js";
 
-export const CreateCourseDialog = ({ isOpen, onClose, courses, user_id, setCourses, updateCourses }) => {
+export const CreateCourseDialog = ({ isOpen, onClose, courses, user_id, updateCourses }) => {
     const [courseTitle, setCourseTitle] = useState("");
     const handleAddCourse = async () => {
         try {
