@@ -9,11 +9,11 @@ import Box from "@mui/material/Box";
 import MyCourses from "./mycourses";
 import Grid from "@mui/material/Grid";
 import Course from "../courses/course.jsx";
-import {useEffect, useState} from "react";
-import {getCoursesByUserId} from "../utils/api.js";
-import {CreateCourseDialog} from "./create.jsx";
+import { useEffect, useState } from "react";
+import { getCoursesByUserId } from "../utils/api.js";
+import { CreateCourseDialog } from "./create.jsx";
 
-export default function App({uid}) {
+export default function App({ uid }) {
     const [open, setOpen] = useState(false);
 
     const handleOpen = () => {
@@ -65,97 +65,98 @@ export default function App({uid}) {
         }
         getCoursesInfoFunction(uid);
     }, []);
-  return (
-    <div>
-        <Grid container alignItems="center" justifyContent="space-between">
-            <Grid item>
-                <Typography
-                    variant="subtitle1"
-                    component="h2"
-                    sx={{
-                        fontWeight: "bold",
-                        color: "Black",
-                        fontSize: 28,
-                        paddingBottom: 1,
-                    }}
-                >
-                    My Courses
-                </Typography>
-            </Grid>
-            <Grid item>
-                <Grid container spacing={1}>
-                    <Grid item>
-                        <Button
-                            variant="outlined"
-                            style={{
-                                color: "#ED7D31",
-                                borderColor: "#ED7D31",
-                            }}
-                        >
-                            Recently Deleted
-                        </Button>
-                    </Grid>
-                    <Grid item>
-                        <Button
-                            variant="contained"
-                            style={{ backgroundColor: "#ED7D31" }}
-                        >
-                            + Add Course
-                        </Button>
-                    </Grid>
-                    <Grid item>
-                        {open && (
-                            <CreateCourseDialog
-                                isOpen={open}
-                                onClose={handleClose}
-                                courses={courses}
-                                user_id={uid}
-                                setCourses={setCourses}
-                                updateCourses={updateCourses} // Pass the callback function
-                            />
-                        )}
+
+    return (
+        <div>
+            <Grid container alignItems="center" justifyContent="space-between">
+                <Grid item>
+                    <Typography
+                        variant="subtitle1"
+                        component="h2"
+                        sx={{
+                            fontWeight: "bold",
+                            color: "Black",
+                            fontSize: 28,
+                            paddingBottom: 1,
+                        }}
+                    >
+                        My Courses
+                    </Typography>
+                </Grid>
+                <Grid item>
+                    <Grid container spacing={1}>
+                        <Grid item>
+                            <Button
+                                variant="outlined"
+                                style={{
+                                    color: "#ED7D31",
+                                    borderColor: "#ED7D31",
+                                }}
+                            >
+                                Recently Deleted
+                            </Button>
+                        </Grid>
+                        <Grid item>
+                            <Button
+                                variant="contained"
+                                style={{ backgroundColor: "#ED7D31" }}
+                                onClick={handleOpen} 
+                            >
+                                + Add Course
+                            </Button>
+                        </Grid>
+                        <Grid item>
+                            {open && (
+                                <CreateCourseDialog
+                                    isOpen={open}
+                                    onClose={handleClose}
+                                    courses={courses}
+                                    user_id={uid}
+                                    setCourses={setCourses}
+                                    updateCourses={updateCourses} 
+                                />
+                            )}
+                        </Grid>
                     </Grid>
                 </Grid>
             </Grid>
-        </Grid>
-      <Divider />
-
-      {/* Neue Box für Einträge */}
-        <Grid
-            container
-            direction="column"
-            justifyContent="space-between"
-            alignItems="stretch"
-            backgroundColor="#f0f0f0"
-        >
-            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                <Typography variant="h6" sx={{ fontWeight: "bold", paddingLeft: 2 }}>
-                    Title
-                </Typography>
-                <Typography
-                    variant="h6"
-                    sx={{
-                        fontWeight: "bold",
-                        textAlign: "right",
-                        paddingRight: 2,
-                        marginLeft: "auto", // Änderung hier
-                    }}
-                >
-                    Number of notes
-                </Typography>
-            </Box>
-            {courses.courses.length !== 0 ?
-                (function courseLoader(courses) {
-                    let courseAmount = courses.courses.length;
-                    let coursesArr = [];
-                    for (let i = 0; i < courseAmount; i++) {
-                        coursesArr.push(
-                            <MyCourses course={courses.courses[i]} removeCourses={removeCourses}/>);
-                    }
-                    return coursesArr;
-                })(courses) : `no courses yet` //BITTE FÜGT HIER NOCH WAS EIN
-            }
-        </Grid>
-    </div>
-  );
+            <Divider />
+            {/* Neue Box für Einträge */}
+            <Grid
+                container
+                direction="column"
+                justifyContent="space-between"
+                alignItems="stretch"
+                backgroundColor="#f0f0f0"
+            >
+                <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                    <Typography variant="h6" sx={{ fontWeight: "bold", paddingLeft: 2 }}>
+                        Title
+                    </Typography>
+                    <Typography
+                        variant="h6"
+                        sx={{
+                            fontWeight: "bold",
+                            textAlign: "right",
+                            paddingRight: 2,
+                            marginLeft: "auto", // Änderung hier
+                        }}
+                    >
+                        Number of notes
+                    </Typography>
+                </Box>
+                {courses.courses.length !== 0 ?
+                    (function courseLoader(courses) {
+                        let courseAmount = courses.courses.length;
+                        let coursesArr = [];
+                        for (let i = 0; i < courseAmount; i++) {
+                            coursesArr.push(
+                                <MyCourses course={courses.courses[i]} removeCourses={removeCourses} />);
+                        }
+                        return coursesArr;
+                    })(courses) : `no courses yet` //BITTE FÜGT HIER NOCH WAS EIN
+                }
+            </Grid>
+        </div>
+    );
 }
