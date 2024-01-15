@@ -14,11 +14,11 @@ export const getAllCourses = async (req, res) => {
     }
 };
 
-//Get courses by user_id
+//Get courses by userId
 export const getCoursesByUserId = async (req, res) => {
-    const user_id = req.params.user_id;
+    const userId = req.params.user_id;
     try {
-        const foundCourses = await courseModel.find({userId: user_id});
+        const foundCourses = await courseModel.find({userId: userId});
         if (foundCourses) {
             return res.status(200).send({message: `Courses found!`, course: foundCourses.map((course) => course.toObject({ getters: true}))});
         }
@@ -28,6 +28,7 @@ export const getCoursesByUserId = async (req, res) => {
     }
 };
 
+//Get courses by Title -> possible search function
 export const getCoursesByTitle = async (req, res) => {
     const searchParam = req.params.searchParam;
     try {
@@ -71,7 +72,7 @@ export const createCourse = async (req, res) => {
         return res.status(500).send({ message: `Error saving course to DB`});
     }
 };
-
+//Change course title
 export const updateCourse = async (req, res) => {
     const courseId = req.body.courseId;
     try {

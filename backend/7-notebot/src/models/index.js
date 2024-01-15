@@ -15,7 +15,6 @@ db.course = require("./course.model");
 db.section = require("./section.model");
 db.widget = require("./widget.model");
 db.favorite = require("./favorite.model");
-db.httpError = require("./http-error.model");
 /***************** END: EXPORT SCHEMA AS MODULE *****************/
 
 module.exports = db;
