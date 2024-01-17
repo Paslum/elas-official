@@ -45,13 +45,8 @@ export const CreateCourseDialog = ({ isOpen, onClose, courses, user_id, updateCo
             </DialogContent>
             <DialogActions sx={{ padding: 2 }}>
                 <Button
-                    color="primary"
                     onClick={onClose}
                     variant="outlined"
-                    style={{
-                        color: "#ED7D31",
-                        borderColor: "#ED7D31",
-                    }}
                 >
                     Cancel
                 </Button>
@@ -59,9 +54,6 @@ export const CreateCourseDialog = ({ isOpen, onClose, courses, user_id, updateCo
                     onClick={handleAddCourse}
                     variant="contained"
                     disabled={!courseTitle}
-                    style={{
-                        backgroundColor: "#ED7D31",
-                    }}
                 >
                     Add
                 </Button>

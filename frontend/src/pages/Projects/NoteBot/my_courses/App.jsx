@@ -97,10 +97,6 @@ export default function App({ uid }) {
                     <Grid item>
                         <Button
                             variant="outlined"
-                            style={{
-                                color: "#ED7D31",
-                                borderColor: "#ED7D31",
-                            }}
                         >
                             Recently Deleted
                         </Button>
@@ -108,13 +104,11 @@ export default function App({ uid }) {
                     <Grid item>
                         <Button
                             variant="contained"
-                            style={{ backgroundColor: "#ED7D31" }}
                             onClick={() => {createCourse.handleOpen()}}
                         >
                             + Add Course
                         </Button>
                     </Grid>
-                    <Grid item>
                         {createCourse.open && (
                             <CreateCourseDialog
                                 isOpen={createCourse.open}
@@ -124,7 +118,6 @@ export default function App({ uid }) {
                                 updateCourses={updateCourses} // updating course list
                             />
                         )}
-                    </Grid>
                 </Grid>
             </Grid>
         </Grid>

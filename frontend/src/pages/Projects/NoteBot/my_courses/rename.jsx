@@ -52,10 +52,6 @@ export const RenameCourseDialog = ({ isOpen, onClose, courseId, courseTitle, upd
                 <Button
                     onClick={onClose}
                     variant="outlined"
-                    style={{
-                        color: "#ED7D31",
-                        borderColor: "#ED7D31",
-                    }}
                 >
                     Cancel
                 </Button>
@@ -63,9 +59,6 @@ export const RenameCourseDialog = ({ isOpen, onClose, courseId, courseTitle, upd
                     onClick={handleRenameCourse}
                     variant="contained"
                     disabled={!newCourseTitle}
-                    style={{
-                        backgroundColor: "#ED7D31",
-                    }}
                 >
                     Rename
                 </Button>
