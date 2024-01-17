@@ -7,9 +7,16 @@ import Button from "@mui/material/Button";
 import {useEffect, useState} from "react";
 import {getCoursesByUserId} from "../utils/api.js";
 import {CreateCourseDialog} from "../my_courses/create.jsx";
-
+import {
+    Routes,
+    Route,
+    Navigate,
+    useNavigate,
+    useLocation,
+  } from "react-router-dom";
 
 export default function app({uid}) {
+    const navigate = useNavigate();
     const [open, setOpen] = useState(false);
 
     const handleOpen = () => {
@@ -89,6 +96,7 @@ export default function app({uid}) {
                             <Button
                                 variant="contained"
                                 style={{ backgroundColor: "#ED7D31" }}
+                                onClick={() => navigate("/projects/notebot/create")}
                             >
                                 + Add Note
                             </Button>

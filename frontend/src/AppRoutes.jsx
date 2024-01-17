@@ -59,6 +59,7 @@ import ProjectFinder from "./pages/Projects/ProjectFinder/ProjectFinder";
 import CourseRecommender from "./pages/Projects/CourseRecommender/CourseRecommender";
 import Intogen from "./pages/Projects/Intogen/Intogen";
 import NoteBot from "./pages/Projects/NoteBot/NoteBot";
+import CreateNote from "./pages/Projects/NoteBot/Create/CreateNote";
 import CourseDetail from "./pages/Projects/StudyCompassCopy/components/CoueseDetail";
 import StudyCompassNew from "./pages/Projects/StudyCompassCopy/StudyCompassNew";
 
@@ -104,6 +105,7 @@ export default function AppRoutes() {
       <Route path="projects">
         <Route path="notebot">
           <Route index element={<NoteBot />} />
+          <Route path="create" element={<CreateNote />} />
         </Route>
       </Route>
       <Route path="settings" element={<Settings />} />
