@@ -12,17 +12,29 @@ import Course from "../courses/course.jsx";
 import { useEffect, useState } from "react";
 import { getCoursesByUserId } from "../utils/api.js";
 import { CreateCourseDialog } from "./create.jsx";
+import { renameCourseDialog } from "./rename.jsx";
+
 
 export default function App({ uid }) {
-    const [open, setOpen] = useState(false);
+    const useDialogState = (initialState = false) => {
+        const [open, setOpen] = useState(initialState);
 
-    const handleOpen = () => {
-        setOpen(true);
+        const handleOpen = () => {
+            setOpen(true);
+        };
+
+        const handleClose = () => {
+            setOpen(false);
+        };
+
+        return {
+            open,
+            handleOpen,
+            handleClose,
+        };
     };
 
-    const handleClose = () => {
-        setOpen(false);
-    };
+    const createCourse = useDialogState();
 
     const [courses, setCourses] = useState({
         message: "Server not connected",
@@ -99,16 +111,16 @@ export default function App({ uid }) {
                         <Button
                             variant="contained"
                             style={{ backgroundColor: "#ED7D31" }}
-                            onClick={() => {handleOpen()}}
+                            onClick={() => {createCourse.handleOpen()}}
                         >
                             + Add Course
                         </Button>
                     </Grid>
                     <Grid item>
-                        {open && (
+                        {createCourse.open && (
                             <CreateCourseDialog
-                                isOpen={open}
-                                onClose={handleClose}
+                                isOpen={createCourse.open}
+                                onClose={createCourse.handleClose}
                                 courses={courses}
                                 user_id={uid}
                                 updateCourses={updateCourses} // updating course list

@@ -17,15 +17,6 @@ import {
 
 export default function app({uid}) {
     const navigate = useNavigate();
-    const [open, setOpen] = useState(false);
-
-    const handleOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
 
     const [courses, setCourses] = useState({
         message: "Server not connected",
@@ -100,17 +91,6 @@ export default function app({uid}) {
                             >
                                 + Add Note
                             </Button>
-                        </Grid>
-                        <Grid item>
-                            {open && (
-                                <CreateCourseDialog
-                                    isOpen={open}
-                                    onClose={handleClose}
-                                    courses={courses}
-                                    user_id={uid}
-                                    updateCourses={updateCourses} // updating course list
-                                />
-                            )}
                         </Grid>
                     </Grid>
                 </Grid>
