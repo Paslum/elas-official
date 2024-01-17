@@ -12,8 +12,6 @@ import Course from "../courses/course.jsx";
 import { useEffect, useState } from "react";
 import { getCoursesByUserId } from "../utils/api.js";
 import { CreateCourseDialog } from "./create.jsx";
-import { renameCourseDialog } from "./rename.jsx";
-
 
 export default function App({ uid }) {
     const useDialogState = (initialState = false) => {
@@ -161,7 +159,7 @@ export default function App({ uid }) {
                         let coursesArr = [];
                         for (let i = 0; i < courseAmount; i++) {
                             coursesArr.push(
-                                <MyCourses course={courses.courses[i]} removeCourses={removeCourses} />);
+                                <MyCourses course={courses.courses[i]} removeCourses={removeCourses} updateCourses={updateCourses}/>);
                         }
                         return coursesArr;
                     })(courses) : `no courses yet` //BITTE FÜGT HIER NOCH WAS EIN

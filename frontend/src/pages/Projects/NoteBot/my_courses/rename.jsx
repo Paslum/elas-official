@@ -11,11 +11,13 @@ import {
 } from "@mui/material";
 import { updateCourse } from "../utils/api.js";
 
-export const renameCourseDialog = ({ isOpen, onClose, courseId, courseTitle, updateCourses }) => {
+export const RenameCourseDialog = ({ isOpen, onClose, courseId, courseTitle, updateCourses }) => {
+    const [newCourseTitle, setNewCourseTitle] = useState(courseTitle);
+
     const handleRenameCourse = async () => {
         try {
-            // Assuming courseId and courseTitle are part of the component state
-            const updatedCourse = await updateCourse(courseId, courseTitle);
+            // Assuming courseId and newCourseTitle are part of the component state
+            const updatedCourse = await updateCourse(courseId, newCourseTitle);
 
             // Assuming updateCourse returns the updated course information
             // You might need to adjust this based on your actual implementation
@@ -39,13 +41,13 @@ export const renameCourseDialog = ({ isOpen, onClose, courseId, courseTitle, upd
         <Dialog onClose={onClose} open={isOpen} fullWidth>
             <DialogTitle>Rename Course</DialogTitle>
             <DialogContent>
-                <Box sx={{height:12}}/>
+                <Box sx={{ height: 12 }} />
 
                 <FormControl fullWidth>
                     <TextField
                         label="Course Title"
-                        value={courseTitle}
-                        onChange={(e) => setCourseTitle(e.target.value)}
+                        value={newCourseTitle}
+                        onChange={(e) => setNewCourseTitle(e.target.value)}
                         fullWidth
                     />
                 </FormControl>
@@ -55,7 +57,7 @@ export const renameCourseDialog = ({ isOpen, onClose, courseId, courseTitle, upd
                     color="primary"
                     onClick={handleRenameCourse}
                     variant="contained"
-                    disabled={!courseTitle}
+                    disabled={!newCourseTitle}
                 >
                     Rename
                 </Button>
