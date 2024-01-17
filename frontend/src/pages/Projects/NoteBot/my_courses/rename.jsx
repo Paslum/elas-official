@@ -10,7 +10,6 @@ import {
     Button,
 } from "@mui/material";
 import { updateCourse } from "../utils/api.js";
-
 export const RenameCourseDialog = ({ isOpen, onClose, courseId, courseTitle, updateCourses }) => {
     const [newCourseTitle, setNewCourseTitle] = useState(courseTitle);
 
@@ -23,11 +22,8 @@ export const RenameCourseDialog = ({ isOpen, onClose, courseId, courseTitle, upd
             // You might need to adjust this based on your actual implementation
 
             // Update the courses list state in app.jsx
-            updateCourses({
-                title: updatedCourse.title,
-                courseId: updatedCourse._id,
-                // Add other properties if needed
-            });
+
+
 
             // Close the dialog
             onClose();

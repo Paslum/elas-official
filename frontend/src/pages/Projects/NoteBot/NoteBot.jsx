@@ -5,6 +5,8 @@ import { getUserInfo } from "./utils/api.js";
 import Navigation from "./Navigation/navbox";
 
 import noteBotLogo from "../../../assets/images/noteBot-logo.png";
+import theme from "./theme.js";
+import { ThemeProvider } from '@mui/material/styles';
 
 export default function NoteBot() {
   const [user, setUser] = useState({
@@ -34,7 +36,8 @@ export default function NoteBot() {
   }, []);
 
   return (
-    <Grid container justifyContent="center" sx={{ py: 4, px: 2 }}>
+      <ThemeProvider theme={theme}>
+      <Grid container justifyContent="center" sx={{ py: 4, px: 2 }}>
       <Grid container sx={{ width: "100%" }} spacing={2}>
         <Grid item xs={12}>
           <Grid container justifyContent={"center"}>
@@ -66,5 +69,7 @@ export default function NoteBot() {
         </Grid>
       </Grid>
     </Grid>
+      </ThemeProvider>
+
   );
 }
