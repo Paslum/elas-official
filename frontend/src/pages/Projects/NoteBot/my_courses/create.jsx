@@ -48,7 +48,6 @@ export const CreateCourseDialog = ({ isOpen, onClose, courses, user_id, updateCo
                     color="primary"
                     onClick={onClose}
                     variant="outlined"
-                    disabled={!newCourseTitle}
                 >
                     Cancel
                 </Button>
