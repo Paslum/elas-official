@@ -55,6 +55,14 @@ export const RenameCourseDialog = ({ isOpen, onClose, courseId, courseTitle, upd
             <DialogActions sx={{ padding: 2 }}>
                 <Button
                     color="primary"
+                    onClick={onClose}
+                    variant="outlined"
+                    disabled={!newCourseTitle}
+                >
+                    Cancel
+                </Button>
+                <Button
+                    color="primary"
                     onClick={handleRenameCourse}
                     variant="contained"
                     disabled={!newCourseTitle}
