@@ -12,16 +12,6 @@ import Courses from "../courses/App";
 import Favorites from "../favorites/App";
 import MyCourses from "../my_courses/App";
 
-import { createTheme } from "@mui/material/styles";
-
-const theme = createTheme({
-    palette: {
-        primary: {
-            main: "#ED7D31",
-        },
-    },
-});
-
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
@@ -84,8 +74,6 @@ export default function navbox({user}) {
                             value={value}
                             onChange={handleChange}
                             centered
-                            textColor="primary"
-                            indicatorColor="secondary"
                         >
                             <Tab label="My Notes" {...a11yProps(0)} />
                             <Tab label="My Courses" {...a11yProps(1)} />
