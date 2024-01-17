@@ -2,6 +2,7 @@ import { createTheme } from '@mui/material/styles';
 
 const colors = {
     main: '#ED7D31',
+    black: '#000000',
 };
 
 const theme = createTheme({
@@ -27,6 +28,20 @@ const theme = createTheme({
                 },
             },
         },
+        MuiTypography: {
+            styleOverrides: {
+                big: {
+                    fontSize: 18,
+                    fontWeight: "bold",
+                    color: colors.black,
+                },
+                bigMain: {
+                    fontSize: 18,
+                    fontWeight: "bold",
+                    color: colors.main,
+                },
+            },
+        }
     },
 });
 

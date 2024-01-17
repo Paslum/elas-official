@@ -125,38 +125,44 @@ export default function App({ uid }) {
             {/* Neue Box für Einträge */}
             <Grid
                 container
-                direction="column"
-                justifyContent="space-between"
-                alignItems="stretch"
                 backgroundColor="#f0f0f0"
+                sx={{ borderRadius:3, marginTop:'20px', padding:'10px'}}
             >
-                <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                    <Typography variant="h6" sx={{ fontWeight: "bold", paddingLeft: 2 }}>
-                        Title
-                    </Typography>
-                    <Typography
-                        variant="h6"
-                        sx={{
-                            fontWeight: "bold",
-                            textAlign: "right",
-                            paddingRight: 2,
-                            marginLeft: "auto", // Änderung hier
-                        }}
-                    >
-                        Number of notes
-                    </Typography>
-                </Box>
-                {courses.courses.length !== 0 ?
-                    (function courseLoader(courses) {
-                        let courseAmount = courses.courses.length;
-                        let coursesArr = [];
-                        for (let i = 0; i < courseAmount; i++) {
-                            coursesArr.push(
-                                <MyCourses course={courses.courses[i]} removeCourses={removeCourses} updateCourses={updateCourses}/>);
-                        }
-                        return coursesArr;
-                    })(courses) : `no courses yet` //BITTE FÜGT HIER NOCH WAS EIN
-                }
+                <Grid container alignItems="center" justifyContent="space-between" sx={{ display: "flex", height: 60 }}>
+                    <Grid item>
+                        <Typography variant="big" sx={{ paddingLeft: 2 }}>
+                            Title
+                        </Typography>
+                    </Grid>
+                    <Grid item>
+                        <Typography
+                            variant="big"
+                            sx={{
+                                textAlign: "right",
+                                paddingRight: 2,
+                                marginLeft: "auto",
+                            }}
+                        >
+                            Number of Notes
+                        </Typography>
+                    </Grid>
+                </Grid>
+                <Grid container direction="column" justifyContent="flex-start"
+                      alignItems="stretch">
+                    {courses.courses.length !== 0 ?
+                        (function courseLoader(courses) {
+                            let courseAmount = courses.courses.length;
+                            let coursesArr = [];
+                            for (let i = 0; i < courseAmount; i++) {
+                                coursesArr.push(
+                                    <Grid item>
+                                        <MyCourses course={courses.courses[i]} removeCourses={removeCourses} updateCourses={updateCourses}/>
+                                    </Grid>);
+                            }
+                            return coursesArr;
+                        })(courses) : `no courses yet` //BITTE FÜGT HIER NOCH WAS EIN
+                    }
+                </Grid>
             </Grid>
         </div>
     );

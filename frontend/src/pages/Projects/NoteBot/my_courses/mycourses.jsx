@@ -67,12 +67,8 @@ export default function mycourses({ course, removeCourses, updateCourses}) {
             </Grid>
             <Grid item>
               <Typography
-                variant="subtitle1"
+                variant="bigMain"
                 component="h2"
-                sx={{
-                  fontSize: 18,
-                  paddingTop: 1,
-                }}
               >
                 <b>{course.title}</b>
               </Typography>
