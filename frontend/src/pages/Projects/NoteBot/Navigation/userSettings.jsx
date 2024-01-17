@@ -93,11 +93,6 @@ export default function userSettings({user}) {
                     </Typography>
                     <Button
                         variant="outlined"
-                        style={{
-                            color: "#ED7D31",
-                            borderColor: "#ED7D31",
-                            marginBottom: "20px",
-                        }}
                     >
                         Profile Settings
                     </Button>

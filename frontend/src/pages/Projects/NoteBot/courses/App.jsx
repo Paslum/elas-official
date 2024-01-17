@@ -75,10 +75,6 @@ export default function app({uid}) {
                         <Grid item>
                             <Button
                                 variant="outlined"
-                                style={{
-                                        color: "#ED7D31",
-                                        borderColor: "#ED7D31",
-                                    }}
                             >
                                 Recently Deleted
                             </Button>
@@ -86,7 +82,6 @@ export default function app({uid}) {
                         <Grid item>
                             <Button
                                 variant="contained"
-                                style={{ backgroundColor: "#ED7D31" }}
                                 onClick={() => navigate("/projects/notebot/create")}
                             >
                                 + Add Note

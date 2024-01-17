@@ -1,5 +1,9 @@
 import { createTheme } from '@mui/material/styles';
 
+const colors = {
+    main: '#ED7D31',
+};
+
 const theme = createTheme({
     components: {
         MuiButton: {
@@ -8,29 +12,23 @@ const theme = createTheme({
                     textTransform: 'none',
                 },
                 contained: {
-                    backgroundColor: '#ED7D31',
-                    '&:hover': {
-                        backgroundColor: '#ED7D31',
-                    },
-                    '&:active': {
-                        backgroundColor: '#ED7D31',
+                    backgroundColor: colors.main,
+                    '&:hover, &:active': {
+                        backgroundColor: colors.main,
                     },
                 },
                 outlined: {
-                    color: "#ED7D31",
-                    borderColor: "#ED7D31",
-                    '&:hover': {
-                        color: '#ED7D31',
-                        borderColor: "#ED7D31",
-                    },
-                    '&:active': {
-                        color: '#ED7D31',
-                        borderColor: "#ED7D31",
+                    color: colors.main,
+                    borderColor: colors.main,
+                    '&:hover, &:active': {
+                        color: colors.main,
+                        borderColor: colors.main,
                     },
                 },
             },
         },
     },
 });
+
 
 export default theme;
