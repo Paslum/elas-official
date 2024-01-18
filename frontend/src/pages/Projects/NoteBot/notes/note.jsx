@@ -44,6 +44,7 @@ export default function note( {noteId, removeNote} ) {
                     note: ({
                         title: response.note.title,
                         noteId: response.note._id,
+                        favorites: response.note.favorites,
                     }),
                 }));
             } catch (error) {
@@ -56,6 +57,7 @@ export default function note( {noteId, removeNote} ) {
         }
         getNoteInfoFunction(noteId)
     },[]);
+    console.log(note);
     return (
         <Card>
             <React.Fragment>
@@ -75,6 +77,12 @@ export default function note( {noteId, removeNote} ) {
                     </Typography>
                 </CardContent>
                 <IconButton aria-label="Favor Note" style={{ float: "left" }}>
+                    <Typography
+                        variant="normal"
+                        component="h2"
+                    >
+                    {note.note.favorites}
+                    </Typography>
                     <FavoriteIcon sx={{ color: "red" }} />
                 </IconButton>
                 <IconButton onClick={handleDelete} aria-label="Delete Note" style={{ float: "right" }}>
