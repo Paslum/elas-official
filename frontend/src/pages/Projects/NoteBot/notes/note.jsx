@@ -8,9 +8,10 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import FavoriteIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import {deleteNote, getNoteById} from "../utils/api.js";
 import {useEffect, useState} from "react";
-import Grid from "@mui/material/Grid";
+import { useSnackbar } from "notistack";
 
 export default function note( {noteId, removeNote} ) {
+    const { enqueueSnackbar } = useSnackbar();
 
     const [note, setNote] = useState({
         message: "Server not connected",
@@ -21,9 +22,15 @@ export default function note( {noteId, removeNote} ) {
         try {
             await deleteNote(noteId);
             removeNote(noteId);
-            console.log(`Note ${noteId} deleted`);
+            enqueueSnackbar(`Note \"${note.note.title}\" deleted`, {
+                variant: "success",
+                autoHideDuration: 2000,
+            });
         } catch(error){
-            console.log("Failed to delete Note:", error);
+            enqueueSnackbar(`Failed to delete \"${note.note.title}\"`, {
+                variant: "error",
+                autoHideDuration: 2000,
+            });
         };
     };
 
@@ -50,12 +57,7 @@ export default function note( {noteId, removeNote} ) {
         getNoteInfoFunction(noteId)
     },[]);
     return (
-        <Card
-            sx={{
-                minWidth: 333,
-                height: 220,
-            }}
-        >
+        <Card>
             <React.Fragment>
                 <IconButton aria-label="Note Settings" sx={{ float: "right" }}>
                     <SettingsIcon />

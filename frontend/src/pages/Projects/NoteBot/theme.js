@@ -76,6 +76,8 @@ const theme = createTheme({
                     backgroundColor: colors.note,
                     borderRadius: 4,
                     padding: 2,
+                    minWidth: 333,
+                    height: 220,
                 }
             }
         }
