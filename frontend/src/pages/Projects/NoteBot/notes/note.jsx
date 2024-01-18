@@ -8,6 +8,7 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import FavoriteIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import {deleteNote, getNoteById} from "../utils/api.js";
 import {useEffect, useState} from "react";
+import Grid from "@mui/material/Grid";
 
 export default function note( {noteId, removeNote} ) {
 
@@ -51,10 +52,8 @@ export default function note( {noteId, removeNote} ) {
     return (
         <Card
             sx={{
-                width: 333,
+                minWidth: 333,
                 height: 220,
-                backgroundColor: "rgba(217, 217, 217, 0.3)",
-                flexShrink: "0",
             }}
         >
             <React.Fragment>
@@ -63,11 +62,9 @@ export default function note( {noteId, removeNote} ) {
                 </IconButton>
                 <CardContent sx={{ height: "333 - 2em" }}>
                     <Typography
-                        variant="subtitle1"
+                        variant="bigBlue"
                         component="h2"
                         sx={{
-                            fontWeight: "bold",
-                            color: "#4472C4",
                             padding: "60px",
                             textAlign: "center",
                         }}

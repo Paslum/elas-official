@@ -59,11 +59,11 @@ export default function navbox({user}) {
 
     return (
         <Box>
-            <Card
-                variant="outlined"
+            <Box
                 sx={{
-                    minWidth: 1000,
-                    minHeight: 500,
+                    width: "100%",
+                    border: 1,
+                    borderRadius: 2,
                     borderColor: "#ED7D31",
                 }}
             >
@@ -92,7 +92,7 @@ export default function navbox({user}) {
                         </TabPanel>
                     </CardContent>
                 </React.Fragment>
-            </Card>
+            </Box>
         </Box>
     );
 }

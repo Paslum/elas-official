@@ -103,7 +103,7 @@ export default function app({uid}) {
                         let coursesArr = [];
                         for (let i = 0; i < courseAmount; i++) {
                             coursesArr.push(
-                                <Grid item key={i}>
+                                <Grid item key={i} sx={{width: '100%'}}>
                                     <Course course={courses.courses[i]}/>
                                 </Grid>);
                         }

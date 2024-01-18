@@ -7,17 +7,12 @@ export default function course( {course} ) {
     return (
         <Paper elevation={0} sx={{ height: 275 }}>
             <Typography
-                variant="subtitle1"
+                variant="normalMain"
                 component="h2"
-                sx={{
-                    color: "#ED7D31",
-                    fontSize: 18,
-                    paddingTop: 1,
-                }}
             >
                 {course.title}
             </Typography>
-                <div style={{ overflowX: "auto" }}>
+                <div>
                     <Notes notesInfo={course.notes}/>
                 </div>
         </Paper>

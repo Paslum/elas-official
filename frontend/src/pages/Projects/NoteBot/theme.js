@@ -5,6 +5,7 @@ const colors = {
     black: '#000000',
     grey: '#A5A5A5',
     blue: '#4472C4',
+    note: 'rgba(217, 217, 217, 0.3)',
 };
 
 const theme = createTheme({
@@ -42,31 +43,42 @@ const theme = createTheme({
                     fontWeight: "bold",
                     color: colors.main,
                 },
+                bigBlue: {
+                    fontSize: 18,
+                    fontWeight: "bold",
+                    color: colors.blue,
+                },
+                normalMain: {
+                    color: colors.main,
+                    fontWeight: "normal",
+                    fontSize: 18,
+                },
             },
         },
         MuiTabs: {
             styleOverrides: {
-                root: {
-                    // Hier können Sie allgemeine Stile für die Tabs festlegen
-                    // Zum Beispiel: Hintergrundfarbe, Schriftart, etc.
-                },
                 indicator: {
                     backgroundColor: colors.main,
                 },
-                centered: {
-                    // Hier können Sie Stile für zentrierte Tabs festlegen
-                    // Zum Beispiel: Padding, etc.
-                },
-                // Weitere Überschreibungen nach Bedarf
             },
         },
         MuiTab: {
             styleOverrides: {
                 root: {
                     color: colors.main,
+                    textTransform: 'none',
                 },
             },
         },
+        MuiCard: {
+            styleOverrides: {
+                root: {
+                    backgroundColor: colors.note,
+                    borderRadius: 4,
+                    padding: 2,
+                }
+            }
+        }
     },
 });
 
