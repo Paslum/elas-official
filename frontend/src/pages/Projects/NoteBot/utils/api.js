@@ -146,3 +146,16 @@ export const deleteNote = async (noteId) => {
     throw new Error(`Failed to delete Note. Error: ${error.message}`);
   }
 };
+
+export const getFavNotesByUserId = async (userId) => {
+  try {
+    const response = await Backend.get(`/notebot/favorite/${userId}`)
+    const {
+      data: { message, note },
+    } = response;
+    return { message, note };
+  } catch (error) {
+    throw new Error(`Failed to fetch Favorite Notes. Error: ${error.message}`);
+
+  }
+};

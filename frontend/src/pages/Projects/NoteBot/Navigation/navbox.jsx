@@ -88,7 +88,7 @@ export default function navbox({user}) {
                             <MyCourses uid={user.user.uid} />
                         </TabPanel>
                         <TabPanel value={value} index={2} dir={theme.direction}>
-                        <Favorites />
+                        <Favorites uid={user.user.uid}/>
                         </TabPanel>
                     </CardContent>
                 </React.Fragment>

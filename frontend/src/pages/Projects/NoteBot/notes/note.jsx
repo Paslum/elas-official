@@ -57,7 +57,6 @@ export default function note( {noteId, removeNote} ) {
         }
         getNoteInfoFunction(noteId)
     },[]);
-    console.log(note);
     return (
         <Card>
             <React.Fragment>
