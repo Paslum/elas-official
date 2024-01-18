@@ -1,21 +1,29 @@
 const db = require("../models");
 const favoriteModel = db.favorite;
-
+const noteModel = db.note;
 export const getFavNotesByUserId = async (req, res) => {
     // Extract user ID from request parameters
     const userId = req.params.userId;
 
     try {
         // Query the database for notes with the specified userId
-        const foundNotes = await favoriteModel.find({ userId: userId });
-
+        const foundFavNotes = await favoriteModel.find({ userId: userId });
+        const foundNoteIds = foundFavNotes.map((note) => note.note);
+        console.log(foundNoteIds);
         // Check if notes were found
-        if (foundNotes.length > 0) {
+        if (foundNoteIds.length > 0) {
             // Send a success response with the found notes
-            return res.status(200).send({
-                message: `Notes found!`,
-                note: foundNotes.map((note) => note.toObject({ getters: true }))
-            });
+            try {
+                const foundNotes = await noteModel.find({ _id: { $in: foundNoteIds} });
+                console.log(foundNotes);
+                return res.status(200).send({
+                    message: `Notes found!`,
+                    note: foundNotes.map((note) => note.toObject({ getters: true }))
+                });
+            } catch (err) {
+                // Send a response indicating a server error occurred
+                return res.status(500).send({ message: `Error fetching notes from the database` });
+            }
         }
 
         // Send a response indicating no notes were found
