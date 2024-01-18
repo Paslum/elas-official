@@ -8,14 +8,13 @@ export const getFavNotesByUserId = async (req, res) => {
     try {
         // Query the database for notes with the specified userId
         const foundFavNotes = await favoriteModel.find({ userId: userId });
-        const foundNoteIds = foundFavNotes.map((note) => note.note);
+        const foundNoteIds = foundFavNotes.flatMap((note) => note.note);
         console.log(foundNoteIds);
         // Check if notes were found
         if (foundNoteIds.length > 0) {
             // Send a success response with the found notes
             try {
                 const foundNotes = await noteModel.find({ _id: { $in: foundNoteIds} });
-                console.log(foundNotes);
                 return res.status(200).send({
                     message: `Notes found!`,
                     note: foundNotes.map((note) => note.toObject({ getters: true }))
@@ -36,15 +35,22 @@ export const getFavNotesByUserId = async (req, res) => {
 
 export const addFavNote = async  (req, res) => {
     try {
-        // Create a new note instance with user ID and title
-        let note = new favoriteModel({
-            userId: req.body.userId,
-            note: req.body.note,
-        });
+        const existingFavorites = await favoriteModel.find({ userId: req.body.userId });
 
-        // Save the new note to the database
-        await note.save();
+        if (existingFavorites.length > 0) {
+            await favoriteModel.updateOne({ userId: req.body.userId },{ $push: { note: req.body.note } });
+        }
+        else {
+            let note = new favoriteModel({
+                userId: req.body.userId,
+                note: req.body.note,
+            });
 
+            // Save the new note to the database
+            await note.save();
+        }
+
+        await noteModel.updateOne({ _id: req.body.note}, { $inc: { favorites: 1 } });
         // Send a success response
         return res.status(200).send({
             message: `Note ${req.body.note} favorited successfully!`,
