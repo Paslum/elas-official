@@ -59,6 +59,8 @@ const noteRoutes = require("./routes/notes.route");
 app.use(apiURL, noteRoutes);
 const courseRoutes = require("./routes/courses.route");
 app.use(apiURL, courseRoutes);
+const favoriteRoutes = require("./routes/favorite.route");
+app.use(apiURL, favoriteRoutes);
 // Add more routes here
 
 /***************** END: IMPORT ROUTES *****************/

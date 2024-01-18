@@ -13,8 +13,8 @@ const Schema = mongoose.Schema;
  * A user schema for MongoDB.
  */
 const Favorite = new Schema({
-  uid: { type: mongoose.Types.ObjectId, required: true, ref:'user' },
-  note: [{ type: mongoose.Types.ObjectId, required: true, ref:'note' },],
+  userId: { type: String, required: true},
+  note: [{ type: String, required: true},],
 });
 /***************** END: DEFINE A SCHEMA *****************/
 
