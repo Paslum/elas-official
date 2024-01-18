@@ -104,7 +104,7 @@ export default function app({uid}) {
                         for (let i = 0; i < courseAmount; i++) {
                             coursesArr.push(
                                 <Grid item key={i} sx={{width: '100%'}}>
-                                    <Course course={courses.courses[i]}/>
+                                    <Course course={courses.courses[i]} uid={uid}/>
                                 </Grid>);
                         }
                         return coursesArr;

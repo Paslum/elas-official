@@ -6,11 +6,11 @@ import DeleteIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import IconButton from "@mui/material/IconButton";
 import SettingsIcon from "@mui/icons-material/Settings";
 import FavoriteIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import {deleteNote, getNoteById} from "../utils/api.js";
+import {addFavNote, deleteNote, getNoteById} from "../utils/api.js";
 import {useEffect, useState} from "react";
 import { useSnackbar } from "notistack";
 
-export default function note( {noteId, removeNote} ) {
+export default function note( {noteId, removeNote, userId} ) {
     const { enqueueSnackbar } = useSnackbar();
 
     const [note, setNote] = useState({
@@ -31,6 +31,14 @@ export default function note( {noteId, removeNote} ) {
                 variant: "error",
                 autoHideDuration: 2000,
             });
+        };
+    };
+
+    const handleFavorite = async () => {
+        try {
+            await addFavNote(userId, noteId)
+        } catch(error) {
+
         };
     };
 
@@ -75,7 +83,7 @@ export default function note( {noteId, removeNote} ) {
                         {note.note.title}
                     </Typography>
                 </CardContent>
-                <IconButton aria-label="Favor Note" style={{ float: "left" }}>
+                <IconButton onClick={handleFavorite} aria-label="Favor Note" style={{ float: "left" }}>
                     <Typography
                         variant="normal"
                         component="h2"

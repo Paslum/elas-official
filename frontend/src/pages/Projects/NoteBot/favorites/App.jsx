@@ -74,7 +74,7 @@ export default function App({ uid }) {
             >
                     {notes.notes.map((noteId) => (
                         <Grid item>
-                            <Note key={noteId.noteId} noteId={noteId.noteId} removeNote={removeNote} />
+                            <Note key={noteId.noteId} noteId={noteId.noteId} userId={uid} removeNote={removeNote} />
                         </Grid>
                     ))}
             </Grid>

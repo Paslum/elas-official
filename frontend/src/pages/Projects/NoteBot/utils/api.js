@@ -159,3 +159,14 @@ export const getFavNotesByUserId = async (userId) => {
 
   }
 };
+
+export const addFavNote = async (userId, note) => {
+  try {
+    const response = await Backend.post(`/notebot/favorite/`, { userId: userId, note: note });
+    const data = await response.data;
+
+    return data.message;
+  } catch (err) {
+    throw new Error(`Failed to favorite Notes. Error: ${error.message}`);
+  }
+}

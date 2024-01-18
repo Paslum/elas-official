@@ -4,7 +4,7 @@ import Stack from "@mui/material/Stack";
 import { useEffect, useState } from "react";
 import { getCoursesByUserId, getNoteById } from "../utils/api.js";
 
-export default function App({ notesInfo }) {
+export default function App({ notesInfo, uid }) {
     const [notes, setNotes] = useState({
         message: "Server not connected",
         notes: notesInfo || [],
@@ -24,7 +24,7 @@ export default function App({ notesInfo }) {
         <div style={{ overflowX: 'auto' }}>
             <Stack direction="row" spacing={2} sx={{ padding: '4px 0 4px 0' }}>
                 {notes.notes.map((noteId) => (
-                    <Note key={noteId} noteId={noteId} removeNote={removeNote} />
+                    <Note key={noteId} noteId={noteId} userId={uid} removeNote={removeNote} />
                 ))}
             </Stack>
         </div>
