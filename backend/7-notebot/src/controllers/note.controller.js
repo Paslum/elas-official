@@ -16,7 +16,6 @@ export const getNotesByUserId = async (req, res) => {
     try {
         // Query the database for notes with the specified userId
         const foundNotes = await noteModel.find({ userId: userId });
-        console.log("getNotesByUserId");
         // Check if notes were found
         if (foundNotes.length > 0) {
             // Send a success response with the found notes
@@ -173,5 +172,18 @@ export const getSections = async (req, res) => {
         return res.status(200).send({ message: `No Section found!` });
     } catch (Error) {
         return res.status(500).send({ message: `Error fetching Sections` });
+    }
+};
+
+export const updateNote = async (req, res) => {
+    const noteId = req.body.noteId;
+    try {
+        const foundNote = await noteModel.findOne({_id: noteId});
+        if (foundNote) {
+            await noteModel.updateOne({_id: noteId}, {$set: {title: req.body.title}});
+            return res.status(200).send({message: `Note ${noteId} has been updated`});
+        } return res.status(500).send({message: `Note ${noteId} does not exist`})
+    } catch (err) {
+        return res.status(500).send({ message: `Error updating note ${noteId}`});
     }
 };

@@ -42,6 +42,9 @@ noteRouter.get('/sections/:noteId', controller.getSections);
 
 noteRouter.post('/note', controller.createNote); // AddNote buttons
 
+noteRouter.put('/note/update', controller.updateNote) //Change Note title
+
+
 noteRouter.delete('/note/delete/:noteId', controller.deleteNote); // Deleting a Note by _id
 
 //export the router

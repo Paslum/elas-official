@@ -21,7 +21,7 @@ export default function App({ notesInfo, uid }) {
     };
 
     return (
-        <div style={{ overflowX: 'auto' }}>
+        <div style={{ overflowX: 'auto', marginTop: 10 }}>
             <Stack direction="row" spacing={2} sx={{ padding: '4px 0 4px 0' }}>
                 {notes.notes.map((noteId) => (
                     <Note key={noteId} noteId={noteId} userId={uid} removeNote={removeNote} />

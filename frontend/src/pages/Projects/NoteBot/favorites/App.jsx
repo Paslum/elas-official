@@ -74,6 +74,7 @@ export default function App({ uid }) {
                 justifyContent="flex-start"
                 alignItems="center"
                 spacing={{ xs: 2, md: 3 }}
+                sx={{paddingTop: 3}}
             >
                 {notes.notes.length === 0 ? (
                     <p>No favorite notes yet</p>

@@ -58,6 +58,11 @@ const theme = createTheme({
                     fontWeight: "bold",
                     fontSize: 18,
                 },
+                small: {
+                    color: colors.grey,
+                    fontWeight: "normal",
+                    fontSize: 16,
+                },
             },
         },
         MuiTabs: {
