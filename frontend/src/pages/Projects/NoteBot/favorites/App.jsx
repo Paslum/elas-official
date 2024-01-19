@@ -71,7 +71,7 @@ export default function App({ uid }) {
             <Divider />
             <Grid
                 container
-                justifyContent="center"
+                justifyContent="flex-start"
                 alignItems="center"
                 spacing={{ xs: 2, md: 3 }}
             >

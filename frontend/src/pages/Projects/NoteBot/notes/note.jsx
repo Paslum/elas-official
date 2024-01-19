@@ -80,21 +80,29 @@ export default function note( {noteId, removeNote, userId} ) {
         async function getNoteInfoFunction(noteId) {
             try {
                 let response = await getNoteById(noteId);
-                setNote(prevState => ({
-                    ...prevState,
-                    message: response.message,
-                    note: ({
-                        title: response.note.title,
-                        noteId: response.note._id,
-                        favorites: response.note.favorites,
-                    }),
-                }));
-                const isFavorite = await isFavNote(userId, noteId);
-                // Hier setzt du den Zustand mit dem aktualisierten Wert
-                setFavorite(prevState => ({
-                    ...prevState,
-                    favorite: isFavorite,
-                }));
+                console.log(response);
+                if(response.note) {
+                    setNote(prevState => ({
+                        ...prevState,
+                        message: response.message,
+                        note: ({
+                            title: response.note.title,
+                            noteId: response.note._id,
+                            favorites: response.note.favorites,
+                        }),
+                    }));
+                    const isFavorite = await isFavNote(userId, noteId);
+                    // Hier setzt du den Zustand mit dem aktualisierten Wert
+                    setFavorite(prevState => ({
+                        ...prevState,
+                        favorite: isFavorite,
+                    }));
+                } else {
+                    setNote(prevState => ({
+                        ...prevState,
+                        message: "Error fetching Note",
+                    }));
+                };
             } catch (error) {
                 console.error("Error fetching Note:", error);
                 setNote(prevState => ({

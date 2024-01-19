@@ -13,9 +13,8 @@ const Schema = mongoose.Schema;
  * A user schema for MongoDB.
  */
 const Section = new Schema({
-  layout_field: { type: [Number] },
-  note: { type: mongoose.Types.ObjectId, required: true, ref:'note' },
-  widgets: [{type: mongoose.Types.ObjectId, ref: 'widget'},],
+  note: { type: String, required: true, },
+  widgets: [{type: String,},],
 });
 /***************** END: DEFINE A SCHEMA *****************/
 

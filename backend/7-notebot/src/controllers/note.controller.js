@@ -13,17 +13,21 @@ const courseModel = db.course;
 export const getNotesByUserId = async (req, res) => {
     // Extract user ID from request parameters
     const userId = req.params.userId;
-
     try {
         // Query the database for notes with the specified userId
         const foundNotes = await noteModel.find({ userId: userId });
-
+        console.log("getNotesByUserId");
         // Check if notes were found
         if (foundNotes.length > 0) {
             // Send a success response with the found notes
             return res.status(200).send({
                 message: `Notes found!`,
-                note: foundNotes.map((note) => note.toObject({ getters: true }))
+                notes: foundNotes.map((note) => ({
+                    _id: note._id,
+                    user_id: note.userId,
+                    title: note.title,
+                    favorites: note.favorites,
+                })),
             });
         }
 
@@ -49,16 +53,19 @@ export const getNoteById = async (req, res) => {
     try {
         // Query the database for a note with the specified ID
         const foundNote = await noteModel.findOne({ _id: noteId });
-
         // Check if a note was found
         if (foundNote) {
             // Send a success response with the found note
             return res.status(200).send({
                 message: `Note found!`,
-                note: foundNote.toObject({ getters: true })
+                note: {
+                    _id: foundNote._id,
+                    user_id: foundNote.userId,
+                    title: foundNote.title,
+                    favorites: foundNote.favorites,
+                }
             });
         }
-
         // Send a response indicating no note was found
         return res.status(200).send({ message: `No Note found!` });
     } catch (err) {
@@ -145,5 +152,26 @@ export const createNote = async (req, res) => {
     } catch (err) {
         // Handle errors related to saving the note to the database
         return res.status(500).send({ message: `Error saving note to DB` });
+    }
+};
+
+export const getSections = async (req, res) => {
+    try {
+        const noteId = req.params.noteId;
+
+        // Query the database for a note with the specified ID
+        const foundNote = await noteModel.findOne({ _id: noteId });
+        // Check if a note was found
+        if (foundNote.sections.length > 0) {
+            // Send a success response with the found note
+            return res.status(200).send({
+                message: `Section(s) found!`,
+                sections: foundNote.sections,
+            });
+        }
+        // Send a response indicating no note was found
+        return res.status(200).send({ message: `No Section found!` });
+    } catch (Error) {
+        return res.status(500).send({ message: `Error fetching Sections` });
     }
 };

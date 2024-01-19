@@ -1,4 +1,4 @@
-const controller = require("../controllers/note.controller");
+const controller = require("../controllers/section.controller");
 
 /***************** START: INITIALIZE ROUTER MODULE *****************
  * @documentation
@@ -10,9 +10,9 @@ const controller = require("../controllers/note.controller");
  * in this case 'userRouter.use()' function is used to
  * define middleware.
  */
-let noteRouter = require("express").Router();
+let sectionRouter = require("express").Router();
 
-noteRouter.use(function (req, res, next) {
+sectionRouter.use(function (req, res, next) {
     res.header("Access-Control-Allow-Headers", "Origin, Content-Type, Accept");
     next();
 });
@@ -33,16 +33,12 @@ noteRouter.use(function (req, res, next) {
  * file under controllers folder.
  */
 
-//noteRouter.get('/notes', controller.getAllNotes); //Currently not used
-noteRouter.get('/notes/:userId', controller.getNotesByUserId); //Get all Notes by UserId
-noteRouter.get('/note/:noteId', controller.getNoteById);
-noteRouter.get('/sections/:noteId', controller.getSections);
+sectionRouter.get('/section/:section', controller.getSection);
 
-//noteRouter.get('/notes/search/:searchParam', controller.getNotesByTitle); //Search Notes by title
+sectionRouter.post('/addSection/:note', controller.addSection);
 
-noteRouter.post('/note', controller.createNote); // AddNote buttons
+sectionRouter.delete('/section/delete/:section', controller.deleteSection);
 
-noteRouter.delete('/note/delete/:noteId', controller.deleteNote); // Deleting a Note by _id
 
 //export the router
-module.exports = noteRouter;
+module.exports = sectionRouter;

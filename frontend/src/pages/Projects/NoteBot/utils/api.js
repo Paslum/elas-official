@@ -119,7 +119,7 @@ export const updateCourse = async (courseId, title) => {
 /** Notes **/
 export const getNoteById = async (noteId) => {
   try {
-    const response = await Backend.get(`notebot/note/${noteId}`)
+    const response = await Backend.get(`/notebot/note/${noteId}`)
     const {
       data: { message, note },
     } = response;

@@ -16,6 +16,7 @@ const Note = new Schema({
   userId: { type: String, required: true },
   title: { type: String, required: true },
   favorites: { type: Number, default: 0 },
+  sections: [{type: String},],
   }, { timestamps: true }
 );
 /***************** END: DEFINE A SCHEMA *****************/
