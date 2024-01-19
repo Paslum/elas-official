@@ -13,7 +13,6 @@ import {deleteCourse} from "../utils/api.js";
 import { RenameCourseDialog } from "./rename.jsx";
 
 export default function mycourses({ course, removeCourses, updateCourses}) {
-
   const useDialogState = (initialState = false) => {
     const [open, setOpen] = useState(initialState);
 
@@ -33,6 +32,21 @@ export default function mycourses({ course, removeCourses, updateCourses}) {
   };
 
   const renameCourse = useDialogState();
+
+  const [courseTitle, setCourseTitle] = useState({
+    title: course.title,
+  });
+
+  const handleRename = async (title) => {
+    try {
+      setCourseTitle(prevState => ({
+        ...prevState,
+        title: title,
+      }));
+    } catch (error) {
+
+    }
+  }
 
   const handleDelete = async () => {
     //Hier vor fehlt noch ein confirmation PopUp
@@ -60,7 +74,8 @@ export default function mycourses({ course, removeCourses, updateCourses}) {
                         onClose={renameCourse.handleClose}
                         courseId={course.courseId}
                         courseTitle={course.title}
-                        updateCourses={updateCourses} // updating course list
+                        updateCourses={updateCourses}// updating course list
+                        handleRename={handleRename}
                     />
                 )}
               </Grid>
@@ -70,7 +85,7 @@ export default function mycourses({ course, removeCourses, updateCourses}) {
                 variant="bigMain"
                 component="h2"
               >
-                <b>{course.title}</b>
+                {courseTitle.title}
               </Typography>
             </Grid>
           </Grid>

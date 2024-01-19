@@ -10,22 +10,14 @@ import {
     Button,
 } from "@mui/material";
 import { updateCourse } from "../utils/api.js";
-export const RenameCourseDialog = ({ isOpen, onClose, courseId, courseTitle, updateCourses }) => {
+export const RenameCourseDialog = ({ isOpen, onClose, courseId, courseTitle, updateCourses, handleRename }) => {
     const [newCourseTitle, setNewCourseTitle] = useState(courseTitle);
 
     const handleRenameCourse = async () => {
         try {
             // Assuming courseId and newCourseTitle are part of the component state
             const updatedCourse = await updateCourse(courseId, newCourseTitle);
-
-            // Assuming updateCourse returns the updated course information
-            // You might need to adjust this based on your actual implementation
-
-            // Update the courses list state in app.jsx
-
-
-
-            // Close the dialog
+            handleRename(newCourseTitle);
             onClose();
         } catch (error) {
             console.log("Failed to rename the course:", error);

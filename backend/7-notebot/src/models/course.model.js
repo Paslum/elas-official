@@ -17,7 +17,8 @@ const Course = new Schema({
   title: { type: String, required: true },
   description: {type: String},
   notes: [{ type: String},],
-});
+    }, { timestamps: true }
+);
 /***************** END: DEFINE A SCHEMA *****************/
 
 module.exports = mongoose.model("course", Course);
