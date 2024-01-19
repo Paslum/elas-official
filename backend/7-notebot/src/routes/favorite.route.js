@@ -34,8 +34,13 @@ favoriteRouter.use(function (req, res, next) {
  */
 
 favoriteRouter.get('/favorite/:userId', controller.getFavNotesByUserId); //Get all Notes by UserId
+favoriteRouter.get('/isFavNote/', controller.isFavNote); //Get all Notes by UserId
+
 
 favoriteRouter.post('/favorite', controller.addFavNote); // favorite buttons
+
+favoriteRouter.post('/remfavorite', controller.remFavNote); // favorite buttons
+
 
 //export the router
 module.exports = favoriteRouter;

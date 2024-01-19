@@ -153,9 +153,19 @@ export const getFavNotesByUserId = async (userId) => {
     const {
       data: { message, note },
     } = response;
+
     return { message, note };
   } catch (error) {
     throw new Error(`Failed to fetch Favorite Notes. Error: ${error.message}`);
+
+  }
+};
+
+export const isFavNote = async (userId, note) => {
+  try {
+    const response = await Backend.get(`/notebot/isFavNote/?userId=${userId}&note=${note}`);
+    return response.data.isFav;
+  } catch (error) {
 
   }
 };
@@ -168,5 +178,16 @@ export const addFavNote = async (userId, note) => {
     return data.message;
   } catch (err) {
     throw new Error(`Failed to favorite Notes. Error: ${error.message}`);
+  }
+}
+
+export const remFavNote = async (userId, note) => {
+  try {
+    const response = await Backend.post(`/notebot/remfavorite/`, { userId: userId, note: note });
+    const data = await response.data;
+
+    return data.message;
+  } catch (err) {
+    throw new Error(`Failed to de favorite Notes. Error: ${error.message}`);
   }
 }

@@ -5,9 +5,7 @@ import { useEffect, useState } from "react";
 import { getFavNotesByUserId} from "../utils/api.js";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
-import Course from "../courses/course.jsx";
 
 export default function App({ uid }) {
     const [notes, setNotes] = useState({
@@ -37,10 +35,8 @@ export default function App({ uid }) {
         getNotesInfoFunction(uid);
     }, []);
     const removeNote = (oldNote) => {
-        console.log(notes);
         setNotes((prevNotes) => {
             const updatedNotes = prevNotes.notes.filter(noteId => noteId.noteId !== oldNote);
-            console.log(updatedNotes);
             return {
                 ...prevNotes,
                 notes: updatedNotes,

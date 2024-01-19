@@ -6,7 +6,9 @@ import DeleteIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import IconButton from "@mui/material/IconButton";
 import SettingsIcon from "@mui/icons-material/Settings";
 import FavoriteIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import {addFavNote, deleteNote, getNoteById} from "../utils/api.js";
+import FavoriteIconFilled from "@mui/icons-material/Favorite";
+
+import {addFavNote, deleteNote, getNoteById, isFavNote, remFavNote} from "../utils/api.js";
 import {useEffect, useState} from "react";
 import { useSnackbar } from "notistack";
 
@@ -17,6 +19,11 @@ export default function note( {noteId, removeNote, userId} ) {
         message: "Server not connected",
         note: [], // Initialize as an empty array
     });
+
+    const [favorite, setFavorite] = useState({
+        favorite: false,
+    });
+
     const handleDelete = async () => {
         //Hier vor fehlt noch ein confirmation PopUp
         try {
@@ -36,7 +43,34 @@ export default function note( {noteId, removeNote, userId} ) {
 
     const handleFavorite = async () => {
         try {
+            if (favorite.favorite) {
+                await remFavNote(userId, noteId)
+                setFavorite(prevState => ({
+                    ...prevState,
+                    favorite: false,
+                }));
+                setNote(prevState => ({
+                    ...prevState,
+                    note: {
+                        ...prevState.note,
+                        favorites: prevState.note.favorites - 1,
+                    },
+                }));
+                return;
+            }
             await addFavNote(userId, noteId)
+            setFavorite(prevState => ({
+                ...prevState,
+                favorite: true,
+            }));
+            setNote(prevState => ({
+                ...prevState,
+                note: {
+                    ...prevState.note,
+                    favorites: prevState.note.favorites + 1,
+                },
+            }));
+
         } catch(error) {
 
         };
@@ -54,6 +88,12 @@ export default function note( {noteId, removeNote, userId} ) {
                         noteId: response.note._id,
                         favorites: response.note.favorites,
                     }),
+                }));
+                const isFavorite = await isFavNote(userId, noteId);
+                // Hier setzt du den Zustand mit dem aktualisierten Wert
+                setFavorite(prevState => ({
+                    ...prevState,
+                    favorite: isFavorite,
                 }));
             } catch (error) {
                 console.error("Error fetching Note:", error);
@@ -90,7 +130,11 @@ export default function note( {noteId, removeNote, userId} ) {
                     >
                     {note.note.favorites}
                     </Typography>
-                    <FavoriteIcon sx={{ color: "red" }} />
+                    {favorite.favorite ? (
+                    <FavoriteIconFilled sx={{ color: "red" }} />
+                    ) : (
+                        <FavoriteIcon sx={{ color: "red" }} />
+                    )}
                 </IconButton>
                 <IconButton onClick={handleDelete} aria-label="Delete Note" style={{ float: "right" }}>
                     <DeleteIcon />
