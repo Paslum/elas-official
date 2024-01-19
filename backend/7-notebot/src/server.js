@@ -63,6 +63,8 @@ const favoriteRoutes = require("./routes/favorite.route");
 app.use(apiURL, favoriteRoutes);
 const sectionRoutes = require("./routes/sections.route");
 app.use(apiURL, sectionRoutes);
+const widgetRoutes = require("./routes/widgets.route");
+app.use(apiURL, widgetRoutes);
 // Add more routes here
 
 /***************** END: IMPORT ROUTES *****************/

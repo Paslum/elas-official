@@ -1,4 +1,4 @@
-const controller = require("../controllers/section.controller");
+const controller = require("../controllers/widget.controller");
 
 /***************** START: INITIALIZE ROUTER MODULE *****************
  * @documentation
@@ -10,9 +10,9 @@ const controller = require("../controllers/section.controller");
  * in this case 'userRouter.use()' function is used to
  * define middleware.
  */
-let sectionRouter = require("express").Router();
+let widgetRouter = require("express").Router();
 
-sectionRouter.use(function (req, res, next) {
+widgetRouter.use(function (req, res, next) {
     res.header("Access-Control-Allow-Headers", "Origin, Content-Type, Accept");
     next();
 });
@@ -33,13 +33,12 @@ sectionRouter.use(function (req, res, next) {
  * file under controllers folder.
  */
 
-sectionRouter.get('/section/:section', controller.getSection);
-sectionRouter.get('/widgets/:section', controller.getWidgets);
+widgetRouter.get('/widget/:widget', controller.getWidget);
 
-sectionRouter.post('/addSection/:note', controller.addSection);
+widgetRouter.post('/addWidget/', controller.addWidget);
 
-sectionRouter.delete('/section/delete/:section', controller.deleteSection);
+widgetRouter.delete('/widget/delete/:widget', controller.deleteWidget);
 
 
 //export the router
-module.exports = sectionRouter;
+module.exports = widgetRouter;

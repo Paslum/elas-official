@@ -73,3 +73,23 @@ export const deleteSection = async (req, res) => {
         return res.status(500).send({ message: `Section couldn't be deleted` });
     }
 };
+
+export const getWidgets = async (req, res) => {
+    try {
+        const section = req.params.section;
+        // Query the database for a note with the specified ID
+        const foundSection = await sectionModel.findOne({ _id: section });
+        // Check if a note was found
+        if (foundSection.widgets.length > 0) {
+            // Send a success response with the found note
+            return res.status(200).send({
+                message: `Widgets(s) found!`,
+                sections: foundSection.widgets,
+            });
+        }
+        // Send a response indicating no note was found
+        return res.status(200).send({ message: `No Widget found!` });
+    } catch (Error) {
+        return res.status(500).send({ message: `Error fetching Widgets` });
+    }
+};
