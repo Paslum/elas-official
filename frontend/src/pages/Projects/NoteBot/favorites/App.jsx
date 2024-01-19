@@ -17,13 +17,20 @@ export default function App({ uid }) {
         async function getNotesInfoFunction(userId) {
             try {
                 let response = await getFavNotesByUserId(userId);
-                setNotes(prevState => ({
-                    ...prevState,
-                    message: response.message,
-                    notes: response.note.map(note => ({
-                        noteId: note._id,
-                    })),
-                }));
+                if(response.note) {
+                    setNotes(prevState => ({
+                        ...prevState,
+                        message: response.message,
+                        notes: response.note.map(note => ({
+                            noteId: note._id,
+                        })),
+                    }));
+                } else {
+                    setNotes(prevState => ({
+                        ...prevState,
+                        message: response.message,
+                    }));
+                }
             } catch (error) {
                 console.error("Error fetching favorite notes:", error);
                 setNotes(prevState => ({
@@ -68,11 +75,15 @@ export default function App({ uid }) {
                 alignItems="center"
                 spacing={{ xs: 2, md: 3 }}
             >
-                    {notes.notes.map((noteId) => (
-                        <Grid item>
-                            <Note key={noteId.noteId} noteId={noteId.noteId} userId={uid} removeNote={removeNote} />
+                {notes.notes.length === 0 ? (
+                    <p>No favorite notes yet</p>
+                ) : (
+                    notes.notes.map((noteId) => (
+                        <Grid item key={noteId.noteId}>
+                            <Note noteId={noteId.noteId} userId={uid} removeNote={removeNote} />
                         </Grid>
-                    ))}
+                    ))
+                )}
             </Grid>
         </div>
     );
