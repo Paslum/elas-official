@@ -11,6 +11,7 @@ import Box from "@mui/material/Box";
 import {useEffect, useState} from "react";
 import {deleteCourse, updateCourse} from "../utils/api.js";
 import { RenameCourseDialog } from "./rename.jsx";
+import {enqueueSnackbar} from "notistack";
 
 export default function mycourses({ course, removeCourses, updateCourses}) {
   const useDialogState = (initialState = false) => {
@@ -39,13 +40,20 @@ export default function mycourses({ course, removeCourses, updateCourses}) {
 
   const handleRename = async (title) => {
     try {
-      updateCourse(course.courseId, title);
+      await updateCourse(course.courseId, title);
       setCourseTitle(prevState => ({
         ...prevState,
         title: title,
       }));
-    } catch (error) {
-
+      enqueueSnackbar(`Course \"${courseTitle.title}\" renamed`, {
+        variant: "success",
+        autoHideDuration: 2000,
+      });
+    } catch(error){
+      enqueueSnackbar(`Failed to rename \"${courseTitle.title}\"`, {
+        variant: "error",
+        autoHideDuration: 2000,
+      });
     }
   }
 
@@ -72,7 +80,7 @@ export default function mycourses({ course, removeCourses, updateCourses}) {
                 {renameCourse.open && (
                     <RenameCourseDialog
                         onClose={renameCourse.handleClose}
-                        courseTitle={course.title}
+                        courseTitle={courseTitle.title}
                         handleRename={handleRename}
                     />
                 )}
