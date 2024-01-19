@@ -9,7 +9,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import Divider from "@mui/material/Divider";
 import Box from "@mui/material/Box";
 import {useEffect, useState} from "react";
-import {deleteCourse} from "../utils/api.js";
+import {deleteCourse, updateCourse} from "../utils/api.js";
 import { RenameCourseDialog } from "./rename.jsx";
 
 export default function mycourses({ course, removeCourses, updateCourses}) {
@@ -39,6 +39,7 @@ export default function mycourses({ course, removeCourses, updateCourses}) {
 
   const handleRename = async (title) => {
     try {
+      updateCourse(course.courseId, title);
       setCourseTitle(prevState => ({
         ...prevState,
         title: title,
@@ -70,11 +71,8 @@ export default function mycourses({ course, removeCourses, updateCourses}) {
               <Grid item>
                 {renameCourse.open && (
                     <RenameCourseDialog
-                        isOpen={renameCourse.open}
                         onClose={renameCourse.handleClose}
-                        courseId={course.courseId}
                         courseTitle={course.title}
-                        updateCourses={updateCourses}// updating course list
                         handleRename={handleRename}
                     />
                 )}

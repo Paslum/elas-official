@@ -10,13 +10,11 @@ import {
     Button,
 } from "@mui/material";
 import { updateCourse } from "../utils/api.js";
-export const RenameCourseDialog = ({ isOpen, onClose, courseId, courseTitle, updateCourses, handleRename }) => {
+export const RenameCourseDialog = ({ onClose, courseTitle, handleRename }) => {
     const [newCourseTitle, setNewCourseTitle] = useState(courseTitle);
 
     const handleRenameCourse = async () => {
         try {
-            // Assuming courseId and newCourseTitle are part of the component state
-            const updatedCourse = await updateCourse(courseId, newCourseTitle);
             handleRename(newCourseTitle);
             onClose();
         } catch (error) {
@@ -26,7 +24,7 @@ export const RenameCourseDialog = ({ isOpen, onClose, courseId, courseTitle, upd
     };
 
     return (
-        <Dialog onClose={onClose} open={isOpen} fullWidth>
+        <Dialog onClose={onClose} open="true" fullWidth>
             <DialogTitle>Rename Course</DialogTitle>
             <DialogContent>
                 <Box sx={{ height: 12 }} />
