@@ -7,6 +7,8 @@ import IconButton from "@mui/material/IconButton";
 import SettingsIcon from "@mui/icons-material/Settings";
 import FavoriteIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import FavoriteIconFilled from "@mui/icons-material/Favorite";
+import Tooltip from '@mui/material/Tooltip';
+
 
 import {addFavNote, deleteNote, getNoteById, isFavNote, remFavNote} from "../utils/api.js";
 import {useEffect, useState} from "react";
@@ -116,9 +118,11 @@ export default function note( {noteId, removeNote, userId} ) {
     return (
         <Card>
             <React.Fragment>
-                <IconButton aria-label="Note Settings" sx={{ float: "right" }}>
-                    <SettingsIcon />
-                </IconButton>
+                <Tooltip title="Delete Note" enterDelay={500}>
+                    <IconButton aria-label="Note Settings" sx={{ float: "right" }}>
+                        <SettingsIcon />
+                    </IconButton>
+                </Tooltip>
                 <CardContent sx={{ height: "333 - 2em" }}>
                     <Typography
                         variant="bigBlue"
@@ -139,14 +143,20 @@ export default function note( {noteId, removeNote, userId} ) {
                     {note.note.favorites}
                     </Typography>
                     {favorite.favorite ? (
-                    <FavoriteIconFilled sx={{ color: "red" }} />
+                        <Tooltip title="Unfavorite Note" enterDelay={500}>
+                            <FavoriteIconFilled sx={{ color: "red" }} />
+                        </Tooltip>
                     ) : (
-                        <FavoriteIcon sx={{ color: "red" }} />
+                        <Tooltip title="Favorite Note" enterDelay={500}>
+                            <FavoriteIcon sx={{ color: "red" }} />
+                        </Tooltip>
                     )}
                 </IconButton>
-                <IconButton onClick={handleDelete} aria-label="Delete Note" style={{ float: "right" }}>
-                    <DeleteIcon />
-                </IconButton>
+                <Tooltip title="Delete Note" enterDelay={500}>
+                    <IconButton onClick={handleDelete} aria-label="Delete Note" style={{ float: "right" }}>
+                        <DeleteIcon />
+                    </IconButton>
+                </Tooltip>
             </React.Fragment>
         </Card>
     );

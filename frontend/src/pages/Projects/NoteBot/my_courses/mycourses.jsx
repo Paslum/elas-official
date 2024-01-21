@@ -12,6 +12,7 @@ import {useEffect, useState} from "react";
 import {deleteCourse, updateCourse} from "../utils/api.js";
 import { RenameCourseDialog } from "./rename.jsx";
 import {enqueueSnackbar} from "notistack";
+import Tooltip from '@mui/material/Tooltip';
 
 export default function mycourses({ course, removeCourses, updateCourses}) {
   const useDialogState = (initialState = false) => {
@@ -73,9 +74,11 @@ export default function mycourses({ course, removeCourses, updateCourses}) {
         <Grid item>
           <Grid container alignItems="center">
             <Grid item>
-              <IconButton onClick={() => {renameCourse.handleOpen()}}>
-                <EditIcon />
-              </IconButton>
+              <Tooltip title="Rename Course" enterDelay={500}>
+                <IconButton onClick={() => {renameCourse.handleOpen()}}>
+                  <EditIcon />
+                </IconButton>
+              </Tooltip>
               <Grid item>
                 {renameCourse.open && (
                     <RenameCourseDialog
@@ -104,9 +107,11 @@ export default function mycourses({ course, removeCourses, updateCourses}) {
               </Typography>
             </Grid>
             <Grid item>
-              <IconButton onClick={handleDelete}>
-                <DeleteIcon />
-              </IconButton>
+              <Tooltip title="Delete Course" enterDelay={500}>
+                <IconButton onClick={handleDelete}>
+                  <DeleteIcon />
+                </IconButton>
+              </Tooltip>
             </Grid>
           </Grid>
         </Grid>

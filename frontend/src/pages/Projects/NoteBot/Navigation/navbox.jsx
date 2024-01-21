@@ -11,6 +11,7 @@ import UserSettings from "./userSettings";
 import Courses from "../courses/App";
 import Favorites from "../favorites/App";
 import MyCourses from "../my_courses/App";
+import Tooltip from "@mui/material/Tooltip";
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -75,9 +76,15 @@ export default function navbox({user}) {
                             onChange={handleChange}
                             centered
                         >
-                            <Tab label="My Notes" {...a11yProps(0)} />
-                            <Tab label="My Courses" {...a11yProps(1)} />
-                            <Tab label="Favorites" {...a11yProps(2)} />
+                            <Tooltip title="Go to My Notes" enterDelay={500}>
+                                <Tab label="My Notes" {...a11yProps(0)} />
+                            </Tooltip>
+                            <Tooltip title="Go to My Courses" enterDelay={500}>
+                                <Tab label="My Courses" {...a11yProps(1)} />
+                            </Tooltip>
+                            <Tooltip title="Go to Favorites" enterDelay={500}>
+                                <Tab label="Favorites" {...a11yProps(2)} />
+                            </Tooltip>
                         </Tabs>
                     </Box>
                     <CardContent>
@@ -88,7 +95,7 @@ export default function navbox({user}) {
                             <MyCourses uid={user.user.uid} />
                         </TabPanel>
                         <TabPanel value={value} index={2} dir={theme.direction}>
-                        <Favorites uid={user.user.uid}/>
+                            <Favorites uid={user.user.uid}/>
                         </TabPanel>
                     </CardContent>
                 </React.Fragment>
