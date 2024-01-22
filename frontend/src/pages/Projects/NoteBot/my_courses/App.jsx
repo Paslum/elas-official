@@ -122,7 +122,6 @@ export default function App({ uid }) {
             </Grid>
         </Grid>
             <Divider />
-            {/* Neue Box für Einträge */}
             <Grid
                 container
                 backgroundColor="#f0f0f0"
@@ -164,7 +163,15 @@ export default function App({ uid }) {
                                     </Grid>);
                             }
                             return coursesArr;
-                        })(courses) : `no courses yet` //BITTE FÜGT HIER NOCH WAS EIN
+                        })(courses) :
+                        <Grid container justifyContent="center" sx={{ width: '100%', padding: 10 }}>
+                            <Grid item>
+                                <Typography
+                                    variant="big"
+                                    >No courses yet
+                                </Typography>
+                            </Grid>
+                        </Grid>
                     }
                 </Grid>
             </Grid>

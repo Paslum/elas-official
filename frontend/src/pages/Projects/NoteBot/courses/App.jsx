@@ -118,7 +118,14 @@ export default function app({uid}) {
                         return coursesArr;
                     })(courses)
                 ) : (
-                    `no courses yet`
+                    <Grid container justifyContent="center" sx={{ width: '100%', padding: 10 }}>
+                        <Grid item>
+                            <Typography
+                                variant="big"
+                            >No notes yet
+                            </Typography>
+                        </Grid>
+                    </Grid>
                 )}
             </Grid>
         </div>

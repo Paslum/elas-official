@@ -1,6 +1,5 @@
 import * as React from "react";
 import Note from "../notes/note";
-import Stack from "@mui/material/Stack";
 import { useEffect, useState } from "react";
 import { getFavNotesByUserId} from "../utils/api.js";
 import Grid from "@mui/material/Grid";
@@ -86,7 +85,14 @@ export default function App({ uid }) {
                         <LinearProgress />
                     </Grid>
                 ) : notes.notes.length === 0 ? (
-                    <p>No favorite notes yet</p>
+                    <Grid container justifyContent="center" sx={{ width: '100%', padding: 10 }}>
+                        <Grid item>
+                            <Typography
+                                variant="big"
+                            >No favorite notes yet
+                            </Typography>
+                        </Grid>
+                    </Grid>
                 ) : (
                     notes.notes.map((noteId) => (
                         <Grid item key={noteId.noteId}>

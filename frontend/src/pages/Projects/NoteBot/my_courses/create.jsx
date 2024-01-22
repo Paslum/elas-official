@@ -39,6 +39,7 @@ export const CreateCourseDialog = ({ isOpen, onClose, courses, user_id, updateCo
                         label="Course Title"
                         value={courseTitle}
                         onChange={(e) => setCourseTitle(e.target.value)}
+                        onKeyPress={(e) => e.key === 'Enter' && handleAddCourse()}
                         fullWidth
                     />
                 </FormControl>
