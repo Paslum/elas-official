@@ -105,18 +105,11 @@ export default function app({uid}) {
                         <LinearProgress />
                     </Grid>
                 ) : courses.courses.length !== 0 ? (
-                    (function courseLoader(courses) {
-                        let courseAmount = courses.courses.length;
-                        let coursesArr = [];
-                        for (let i = 0; i < courseAmount; i++) {
-                            coursesArr.push(
-                                <Grid item key={i} sx={{ width: "100%" }}>
-                                    <Course course={courses.courses[i]} uid={uid} />
-                                </Grid>
-                            );
-                        }
-                        return coursesArr;
-                    })(courses)
+                    courses.courses.map((course) => (
+                        <Grid item key={course.courseId} sx={{ width: '100%' }}>
+                            <Course course={course} uid={uid} />
+                        </Grid>
+                    ))
                 ) : (
                     <Grid container justifyContent="center" sx={{ width: '100%', padding: 10 }}>
                         <Grid item>

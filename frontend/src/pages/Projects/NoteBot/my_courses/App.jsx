@@ -152,18 +152,13 @@ export default function App({ uid }) {
                         <Grid item sx={{ width: '100%', padding: 10 }}>
                             <LinearProgress />
                         </Grid>
-                    ) : courses.courses.length !== 0 ?
-                        (function courseLoader(courses) {
-                            let courseAmount = courses.courses.length;
-                            let coursesArr = [];
-                            for (let i = 0; i < courseAmount; i++) {
-                                coursesArr.push(
-                                    <Grid item>
-                                        <MyCourses course={courses.courses[i]} removeCourses={removeCourses} updateCourses={updateCourses}/>
-                                    </Grid>);
-                            }
-                            return coursesArr;
-                        })(courses) :
+                    ) : courses.courses.length !== 0 ? (
+                        courses.courses.map((course) => (
+                            <Grid item key={course.courseId}>
+                                <MyCourses course={course} removeCourses={removeCourses} updateCourses={updateCourses} />
+                            </Grid>
+                        ))
+                        ) : (
                         <Grid container justifyContent="center" sx={{ width: '100%', padding: 10 }}>
                             <Grid item>
                                 <Typography
@@ -172,7 +167,7 @@ export default function App({ uid }) {
                                 </Typography>
                             </Grid>
                         </Grid>
-                    }
+                    )}
                 </Grid>
             </Grid>
         </div>

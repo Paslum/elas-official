@@ -93,7 +93,6 @@ export default function note( {noteId, removeNote, userId} ) {
         async function getNoteInfoFunction(noteId) {
             try {
                 let response = await getNoteById(noteId);
-                console.log(response);
                 if(response.note) {
                     setNote(prevState => ({
                         ...prevState,
