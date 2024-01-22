@@ -84,7 +84,7 @@ export const getWidgets = async (req, res) => {
             // Send a success response with the found note
             return res.status(200).send({
                 message: `Widgets(s) found!`,
-                sections: foundSection.widgets,
+                widgets: foundSection.widgets,
             });
         }
         // Send a response indicating no note was found

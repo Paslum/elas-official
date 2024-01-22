@@ -13,6 +13,7 @@ export const getWidget = async (req, res) => {
             // Send a success response with the found note
             return res.status(200).send({
                 message: `Widgets found!`,
+                type: foundWidget.type,
                 data: foundWidget.data,
             });
         }
