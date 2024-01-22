@@ -6,8 +6,11 @@ import { getFavNotesByUserId} from "../utils/api.js";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
+import LinearProgress from "@mui/material/LinearProgress";
 
 export default function App({ uid }) {
+    const [isLoading, setIsLoading] = useState(true);
+
     const [notes, setNotes] = useState({
         message: "Server not connected",
         notes: [],
@@ -37,6 +40,8 @@ export default function App({ uid }) {
                     ...prevState,
                     message: "Error fetching favorite notes",
                 }));
+            } finally {
+                setIsLoading(false); // Mark loading as complete
             }
         }
         getNotesInfoFunction(uid);
@@ -76,7 +81,11 @@ export default function App({ uid }) {
                 spacing={{ xs: 2, md: 3 }}
                 sx={{paddingTop: 3}}
             >
-                {notes.notes.length === 0 ? (
+                {isLoading ? (
+                    <Grid item sx={{ width: '100%', padding: 10 }}>
+                        <LinearProgress />
+                    </Grid>
+                ) : notes.notes.length === 0 ? (
                     <p>No favorite notes yet</p>
                 ) : (
                     notes.notes.map((noteId) => (

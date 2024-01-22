@@ -47,10 +47,6 @@ export default function note( {noteId, removeNote, userId} ) {
         try {
             if (favorite.favorite) {
                 await remFavNote(userId, noteId)
-                setFavorite(prevState => ({
-                    ...prevState,
-                    favorite: false,
-                }));
                 setNote(prevState => ({
                     ...prevState,
                     note: {
@@ -58,13 +54,17 @@ export default function note( {noteId, removeNote, userId} ) {
                         favorites: prevState.note.favorites - 1,
                     },
                 }));
+                setFavorite(prevState => ({
+                    ...prevState,
+                    favorite: false,
+                }));
+                enqueueSnackbar(`Note \"${note.note.title}\" removed from Favorites`, {
+                    variant: "success",
+                    autoHideDuration: 2000,
+                });
                 return;
             }
             await addFavNote(userId, noteId)
-            setFavorite(prevState => ({
-                ...prevState,
-                favorite: true,
-            }));
             setNote(prevState => ({
                 ...prevState,
                 note: {
@@ -72,9 +72,20 @@ export default function note( {noteId, removeNote, userId} ) {
                     favorites: prevState.note.favorites + 1,
                 },
             }));
+            setFavorite(prevState => ({
+                ...prevState,
+                favorite: true,
+            }));
+            enqueueSnackbar(`Note \"${note.note.title}\" added to Favorites`, {
+                variant: "success",
+                autoHideDuration: 2000,
+            });
 
         } catch(error) {
-
+            enqueueSnackbar(`Failed to add/remove Note \"${note.note.title}\" to Favorites`, {
+                variant: "error",
+                autoHideDuration: 2000,
+            });
         };
     };
 

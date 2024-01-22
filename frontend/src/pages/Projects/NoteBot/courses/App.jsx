@@ -4,9 +4,9 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
+import LinearProgress from '@mui/material/LinearProgress';
 import {useEffect, useState} from "react";
 import {getCoursesByUserId} from "../utils/api.js";
-import {CreateCourseDialog} from "../my_courses/create.jsx";
 import {
     Routes,
     Route,
@@ -17,6 +17,7 @@ import {
 
 export default function app({uid}) {
     const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(true);
 
     const [courses, setCourses] = useState({
         message: "Server not connected",
@@ -49,6 +50,8 @@ export default function app({uid}) {
                     ...prevState,
                     message: "Error fetching courses",
                 }));
+            } finally {
+                setIsLoading(false); // Mark loading as complete
             }
         }
         getCoursesInfoFunction(uid);
@@ -97,19 +100,26 @@ export default function app({uid}) {
                 justifyContent="flex-start"
                 alignItems="flex-start"
             >
-                {courses.courses.length !== 0 ?
+                {isLoading ? (
+                    <Grid item sx={{ width: '100%', padding: 10 }}>
+                        <LinearProgress />
+                    </Grid>
+                ) : courses.courses.length !== 0 ? (
                     (function courseLoader(courses) {
                         let courseAmount = courses.courses.length;
                         let coursesArr = [];
                         for (let i = 0; i < courseAmount; i++) {
                             coursesArr.push(
-                                <Grid item key={i} sx={{width: '100%'}}>
-                                    <Course course={courses.courses[i]} uid={uid}/>
-                                </Grid>);
+                                <Grid item key={i} sx={{ width: "100%" }}>
+                                    <Course course={courses.courses[i]} uid={uid} />
+                                </Grid>
+                            );
                         }
                         return coursesArr;
-                    })(courses) : `no courses yet` //BITTE FÜGT HIER NOCH WAS EIN
-                }
+                    })(courses)
+                ) : (
+                    `no courses yet`
+                )}
             </Grid>
         </div>
     );

@@ -34,6 +34,7 @@ export const RenameCourseDialog = ({ onClose, courseTitle, handleRename }) => {
                         label="Course Title"
                         value={newCourseTitle}
                         onChange={(e) => setNewCourseTitle(e.target.value)}
+                        onKeyPress={(e) => e.key === 'Enter' && handleRenameCourse()}
                         fullWidth
                     />
                 </FormControl>

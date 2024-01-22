@@ -1,19 +1,17 @@
 import * as React from "react";
 import Typography from "@mui/material/Typography";
-import IconButton from "@mui/material/IconButton";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
 import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
 import MyCourses from "./mycourses";
 import Grid from "@mui/material/Grid";
-import Course from "../courses/course.jsx";
 import { useEffect, useState } from "react";
 import { getCoursesByUserId } from "../utils/api.js";
 import { CreateCourseDialog } from "./create.jsx";
+import LinearProgress from "@mui/material/LinearProgress";
 
 export default function App({ uid }) {
+    const [isLoading, setIsLoading] = useState(true);
+
     const useDialogState = (initialState = false) => {
         const [open, setOpen] = useState(initialState);
 
@@ -71,6 +69,8 @@ export default function App({ uid }) {
                     ...prevState,
                     message: "Error fetching courses",
                 }));
+            } finally {
+                setIsLoading(false); // Mark loading as complete
             }
         }
         getCoursesInfoFunction(uid);
@@ -149,7 +149,11 @@ export default function App({ uid }) {
                 </Grid>
                 <Grid container direction="column" justifyContent="flex-start"
                       alignItems="stretch">
-                    {courses.courses.length !== 0 ?
+                    {isLoading ? (
+                        <Grid item sx={{ width: '100%', padding: 10 }}>
+                            <LinearProgress />
+                        </Grid>
+                    ) : courses.courses.length !== 0 ?
                         (function courseLoader(courses) {
                             let courseAmount = courses.courses.length;
                             let coursesArr = [];
