@@ -68,9 +68,9 @@ export default function mycourses({ course, removeCourses, updateCourses}) {
     };
   };
   return (
-    <Box sx={{ height: 75 }}>
+    <Box>
       <Divider />
-      <Grid container alignItems="center" justifyContent="space-between">
+      <Grid container alignItems="center" justifyContent="space-between"  sx={{ height: 60 }}>
         <Grid item>
           <Grid container alignItems="center">
             <Grid item>

@@ -79,26 +79,20 @@ export default function App({ uid }) {
     <div>
         <Grid container alignItems="center" justifyContent="space-between">
             <Grid item>
-                <Typography
-                    variant="heading"
-                    component="h2"
-                >
+                <Typography variant="heading" component="h2">
                     My Courses
                 </Typography>
             </Grid>
             <Grid item>
                 <Grid container spacing={1}>
                     <Grid item>
-                        <Button
-                            variant="outlined"
-                        >
+                        <Button variant="outlined">
                             Recently Deleted
                         </Button>
                     </Grid>
                     <Grid item>
-                        <Button
-                            variant="contained"
-                            onClick={() => {createCourse.handleOpen()}}
+                        <Button variant="contained"
+                                onClick={() => {createCourse.handleOpen()}}
                         >
                             + Add Course
                         </Button>
@@ -116,32 +110,22 @@ export default function App({ uid }) {
             </Grid>
         </Grid>
             <Divider />
-            <Grid
-                container
-                backgroundColor="#f0f0f0"
-                sx={{ borderRadius:3, marginTop:'20px', padding:'10px'}}
-            >
-                <Grid container alignItems="center" justifyContent="space-between" sx={{ display: "flex", height: 60 }}>
+            <Grid container
+                  backgroundColor="#f0f0f0"
+                  sx={{ borderRadius: 3, marginTop:'20px', padding: 1}}>
+                <Grid container justifyContent="space-between" sx={{ padding: 2 }}>
                     <Grid item>
-                        <Typography variant="big" sx={{ paddingLeft: 2 }}>
+                        <Typography variant="big">
                             Title
                         </Typography>
                     </Grid>
                     <Grid item>
-                        <Typography
-                            variant="big"
-                            sx={{
-                                textAlign: "right",
-                                paddingRight: 2,
-                                marginLeft: "auto",
-                            }}
-                        >
+                        <Typography variant="big">
                             Number of Notes
                         </Typography>
                     </Grid>
                 </Grid>
-                <Grid container direction="column" justifyContent="flex-start"
-                      alignItems="stretch">
+                <Grid container direction="column" alignItems="stretch">
                     {isLoading ? (
                         <Grid item sx={{ width: '100%', padding: 10 }}>
                             <LinearProgress />
