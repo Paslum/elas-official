@@ -1,12 +1,9 @@
 import * as React from "react";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
+import {Grid, Typography, IconButton, Tooltip} from "@mui/material";
 import DeleteIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import IconButton from "@mui/material/IconButton";
 import SettingsIcon from "@mui/icons-material/Settings";
 import FavoriteIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import FavoriteIconFilled from "@mui/icons-material/Favorite";
-import Tooltip from '@mui/material/Tooltip';
 import { colors } from "../theme.js";
 
 

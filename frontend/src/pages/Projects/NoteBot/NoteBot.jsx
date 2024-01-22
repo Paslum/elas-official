@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Grid, Typography, ThemeProvider} from "@mui/material";
+import { Grid, ThemeProvider} from "@mui/material";
 import { getUserInfo } from "./utils/api.js";
 
 import Navigation from "./Navigation/navbox";
 
 import noteBotLogo from "../../../assets/images/noteBot-logo.png";
-import theme from "./theme.js";
+import theme, {colors} from "./theme.js";
 
 export default function NoteBot() {
   const [user, setUser] = useState({
@@ -50,7 +50,7 @@ export default function NoteBot() {
                   width: "100%",
                   border: 1,
                   borderRadius: 2,
-                  borderColor: "#ED7D31",}}>
+                  borderColor: colors.main}}>
 
                   {user.user.username ? ( //If Server connected and User logged in
                       <Navigation user={user}/>

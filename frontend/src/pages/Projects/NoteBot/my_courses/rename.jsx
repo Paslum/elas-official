@@ -1,15 +1,5 @@
 import React, { useState } from "react";
-import { Box, FormControl } from "@mui/material";
-import {
-    Dialog,
-    DialogTitle,
-    DialogContent,
-    DialogActions,
-    TextField,
-    Stack,
-    Button,
-} from "@mui/material";
-import { updateCourse } from "../utils/api.js";
+import { Box, FormControl, Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button, } from "@mui/material";
 export const RenameCourseDialog = ({ onClose, courseTitle, handleRename }) => {
     const [newCourseTitle, setNewCourseTitle] = useState(courseTitle);
 

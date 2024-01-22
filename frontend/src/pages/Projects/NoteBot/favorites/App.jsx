@@ -2,10 +2,7 @@ import * as React from "react";
 import Note from "../notes/note";
 import { useEffect, useState } from "react";
 import { getFavNotesByUserId} from "../utils/api.js";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
-import LinearProgress from "@mui/material/LinearProgress";
+import {Grid, Typography, Divider, LinearProgress} from "@mui/material";
 
 export default function App({ uid }) {
     const [isLoading, setIsLoading] = useState(true);

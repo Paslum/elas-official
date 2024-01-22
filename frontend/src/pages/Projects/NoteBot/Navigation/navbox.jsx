@@ -1,14 +1,10 @@
 import * as React from "react";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
+import {Grid, Typography, Tabs, Tab, Tooltip} from "@mui/material";
 import PropTypes from "prop-types";
 import UserSettings from "./userSettings";
 import Courses from "../courses/App";
 import Favorites from "../favorites/App";
 import MyCourses from "../my_courses/App";
-import Tooltip from "@mui/material/Tooltip";
 
 function TabPanel({ children, value, index, ...other }) {
     return (

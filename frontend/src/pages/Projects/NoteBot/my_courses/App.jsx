@@ -1,13 +1,9 @@
 import * as React from "react";
-import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
-import Button from "@mui/material/Button";
+import {Typography, Divider, Button, Grid, LinearProgress} from "@mui/material";
 import MyCourses from "./mycourses";
-import Grid from "@mui/material/Grid";
 import { useEffect, useState } from "react";
 import { getCoursesByUserId } from "../utils/api.js";
 import { CreateCourseDialog } from "./create.jsx";
-import LinearProgress from "@mui/material/LinearProgress";
 
 export default function App({ uid }) {
     const [isLoading, setIsLoading] = useState(true);

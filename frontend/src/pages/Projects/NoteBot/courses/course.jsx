@@ -1,13 +1,10 @@
 import * as React from "react";
 import Notes from "../notes/App";
-import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
-import Divider from "@mui/material/Divider";
+import {Typography, Grid, Divider} from "@mui/material";
 
 export default function course( {course, uid} ) {
     return (
-        <Paper elevation={0}>
+        <Grid>
             <Grid sx={{height: 40}} container direction="row" justifyContent="flex-start" alignItems="center">
                 <Grid item >
                     <Typography variant="normalMain">
@@ -21,9 +18,9 @@ export default function course( {course, uid} ) {
                 </Grid>
             </Grid>
             <Divider />
-                <div>
-                    <Notes notesInfo={course.notes} uid={uid}/>
-                </div>
-        </Paper>
+            <Grid>
+                <Notes notesInfo={course.notes} uid={uid}/>
+            </Grid>
+        </Grid>
     );
 }

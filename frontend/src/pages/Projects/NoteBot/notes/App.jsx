@@ -1,6 +1,6 @@
 import * as React from "react";
 import Note from "./note";
-import Stack from "@mui/material/Stack";
+import {Stack} from "@mui/material";
 import { useState } from "react";
 
 export default function App({ notesInfo, uid }) {

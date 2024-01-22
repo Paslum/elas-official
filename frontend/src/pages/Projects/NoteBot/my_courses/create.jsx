@@ -1,14 +1,5 @@
 import React, { useState } from "react";
-import { Box, FormControl } from "@mui/material";
-import {
-    Dialog,
-    DialogTitle,
-    DialogContent,
-    DialogActions,
-    TextField,
-    Stack,
-    Button,
-} from "@mui/material";
+import { Box, FormControl, Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button } from "@mui/material";
 import { createCourse } from "../utils/api.js";
 
 export const CreateCourseDialog = ({ isOpen, onClose, courses, user_id, updateCourses }) => {

@@ -1,19 +1,9 @@
 import * as React from "react";
 import Course from "./course";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
-import Button from "@mui/material/Button";
-import LinearProgress from '@mui/material/LinearProgress';
+import {Grid, Typography, Divider, Button, LinearProgress} from "@mui/material";
 import {useEffect, useState} from "react";
 import {getCoursesByUserId} from "../utils/api.js";
-import {
-    Routes,
-    Route,
-    Navigate,
-    useNavigate,
-    useLocation,
-  } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 export default function app({uid}) {
     const navigate = useNavigate();
@@ -23,13 +13,6 @@ export default function app({uid}) {
         message: "Server not connected",
         courses: [], // Initialize as an empty array
     });
-
-    const updateCourses = (newCourse) => {
-        setCourses((prevCourses) => ({
-            ...prevCourses,
-            courses: [...prevCourses.courses, newCourse],
-        }));
-    };
 
     useEffect(() => {
         async function getCoursesInfoFunction(userId) {
