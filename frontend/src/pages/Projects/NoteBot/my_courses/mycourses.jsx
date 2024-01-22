@@ -90,10 +90,7 @@ export default function mycourses({ course, removeCourses, updateCourses}) {
               </Grid>
             </Grid>
             <Grid item>
-              <Typography
-                variant="bigMain"
-                component="h2"
-              >
+              <Typography variant="bigMain">
                 {courseTitle.title}
               </Typography>
             </Grid>
@@ -102,8 +99,8 @@ export default function mycourses({ course, removeCourses, updateCourses}) {
         <Grid item>
           <Grid container alignItems="center">
             <Grid item>
-              <Typography variant="subtitle1">
-                <b>{course.notes?.length ?? 0}</b>
+              <Typography variant="normal">
+                {course.notes?.length ?? 0}
               </Typography>
             </Grid>
             <Grid item>

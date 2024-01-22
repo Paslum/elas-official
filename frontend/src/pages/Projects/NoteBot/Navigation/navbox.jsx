@@ -4,7 +4,6 @@ import Typography from "@mui/material/Typography";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import PropTypes from "prop-types";
-import { useTheme } from "@mui/material/styles";
 import UserSettings from "./userSettings";
 import Courses from "../courses/App";
 import Favorites from "../favorites/App";
@@ -45,7 +44,6 @@ function a11yProps(index) {
 }
 
 export default function navbox({user}) {
-    const theme = useTheme();
     const [value, setValue] = React.useState(0);
 
     const handleChange = (event, newValue) => {
@@ -53,11 +51,7 @@ export default function navbox({user}) {
     };
 
     return (
-        <Grid container sx={{
-            border: 1,
-            borderRadius: 2,
-            borderColor: "#ED7D31",
-        }}>
+        <Grid container>
             <Grid item container direction="row" justifyContent="space-between" alignItems="center">
                 <Grid item></Grid>
                 <Grid item >
@@ -77,14 +71,14 @@ export default function navbox({user}) {
                     <UserSettings user={user.user}/>
                 </Grid>
             </Grid>
-            <Grid item sx={{width: "100%"}}>
-                <TabPanel value={value} index={0} dir={theme.direction}>
+            <Grid item xs={12}>
+                <TabPanel value={value} index={0}>
                     <Courses uid={user.user.uid} />
                 </TabPanel>
-                <TabPanel value={value} index={1} dir={theme.direction}>
+                <TabPanel value={value} index={1}>
                     <MyCourses uid={user.user.uid} />
                 </TabPanel>
-                <TabPanel value={value} index={2} dir={theme.direction}>
+                <TabPanel value={value} index={2}>
                     <Favorites uid={user.user.uid}/>
                 </TabPanel>
             </Grid>

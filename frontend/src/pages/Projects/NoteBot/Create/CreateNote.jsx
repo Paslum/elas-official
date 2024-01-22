@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Grid, Typography} from "@mui/material";
 
 
@@ -11,7 +11,7 @@ export default function CreateNote() {
     <Grid container justifyContent="center" sx={{ py: 4, px: 2 }}>
       <Grid container sx={{ width: "100%" }} spacing={2}>
         <Grid item xs={12}>
-          <Grid container justifyContent={"center"}>
+          <Grid container justifyContent="center">
             <Grid
               item
               component="img"
@@ -25,8 +25,6 @@ export default function CreateNote() {
           </Grid>
           <Grid container sx={{ width: "100%" }} spacing={2}>
             <Grid item xs>
-
-             
                 <Typography variant="h5" align="center">
                   CreateNote
                 </Typography>

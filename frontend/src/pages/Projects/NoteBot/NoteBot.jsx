@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Grid, Typography} from "@mui/material";
+import { Grid, Typography, ThemeProvider} from "@mui/material";
 import { getUserInfo } from "./utils/api.js";
 
 import Navigation from "./Navigation/navbox";
 
 import noteBotLogo from "../../../assets/images/noteBot-logo.png";
 import theme from "./theme.js";
-import { ThemeProvider } from '@mui/material/styles';
 
 export default function NoteBot() {
   const [user, setUser] = useState({
@@ -20,56 +19,46 @@ export default function NoteBot() {
 
   useEffect(() => {
     let elasUser = JSON.parse(sessionStorage.getItem("elas-user"));
-    async function getUserInfoFunction(userId) {
-      let reponse = await getUserInfo(userId);
+    async function getUserInfoFunction() {
+      let response = await getUserInfo(elasUser.id);
       setUser((prevState) => ({
         ...prevState,
-        message: reponse.message,
+        message: response.message,
         user: {
-          uid: reponse.user.uid,
-          name: reponse.user.name,
-          username: reponse.user.username,
+          uid: response.user.uid,
+          name: response.user.name,
+          username: response.user.username,
         },
       }));
     }
-    getUserInfoFunction(elasUser.id);
+    getUserInfoFunction();
   }, []);
 
   return (
       <ThemeProvider theme={theme}>
-      <Grid container justifyContent="center" sx={{ py: 4, px: 2 }}>
-      <Grid container sx={{ width: "100%" }} spacing={2}>
-        <Grid item xs={12}>
-          <Grid container justifyContent={"center"}>
-            <Grid
-              item
-              component="img"
-              src={noteBotLogo}
-              alt="NoteBot Logo"
-              xs={12}
-              sm={7}
-              md={4}
-              sx={{ width: "100%", pb: 2 }}
-            />
-          </Grid>
-          <Grid container sx={{ width: "100%" }} spacing={2}>
-            <Grid item xs>
+          <Grid container justifyContent="center" sx={{ py: 4, px: 2 }}>
+                <Grid item
+                  component="img"
+                  src={noteBotLogo}
+                  alt="NoteBot Logo"
+                  xs={12}
+                  sm={7}
+                  md={4}
+                  sx={{ width: "100%"}}
+                />
+                <Grid item sx={{
+                  width: "100%",
+                  border: 1,
+                  borderRadius: 2,
+                  borderColor: "#ED7D31",}}>
 
-              {user.user.username ? ( //If Server connected and User logged in
-                  <div>
-                    <Navigation user={user}/>
-                  </div>
-              ) : ( //If Server not connected or User not logged in
-                <Typography variant="h5" align="center">
-                  <i>{user.message}</i>
-                </Typography>
-              )}
-            </Grid>
+                  {user.user.username ? ( //If Server connected and User logged in
+                      <Navigation user={user}/>
+                  ) : ( //If Server not connected or User not logged in
+                      <i>{user.message}</i>
+                  )}
+                </Grid>
           </Grid>
-        </Grid>
-      </Grid>
-    </Grid>
       </ThemeProvider>
-
   );
 }

@@ -10,12 +10,12 @@ export default function course( {course, uid} ) {
         <Paper elevation={0}>
             <Grid sx={{height: 40}} container direction="row" justifyContent="flex-start" alignItems="center">
                 <Grid item >
-                    <Typography variant="normalMain" component="h2">
+                    <Typography variant="normalMain">
                         {course.title}
                     </Typography>
                 </Grid>
                 <Grid item>
-                    <Typography variant="small" component="h2">
+                    <Typography variant="small">
                         ({course.notes.length})
                     </Typography>
                 </Grid>

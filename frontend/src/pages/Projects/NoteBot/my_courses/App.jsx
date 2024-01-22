@@ -79,7 +79,7 @@ export default function App({ uid }) {
     <div>
         <Grid container alignItems="center" justifyContent="space-between">
             <Grid item>
-                <Typography variant="heading" component="h2">
+                <Typography variant="heading">
                     My Courses
                 </Typography>
             </Grid>
@@ -139,9 +139,8 @@ export default function App({ uid }) {
                         ) : (
                         <Grid container justifyContent="center" sx={{ width: '100%', padding: 10 }}>
                             <Grid item>
-                                <Typography
-                                    variant="big"
-                                    >No courses yet
+                                <Typography variant="big">
+                                    No courses yet
                                 </Typography>
                             </Grid>
                         </Grid>

@@ -145,10 +145,7 @@ export default function note( {noteId, removeNote, userId} ) {
             </Grid>
             <Grid item container justifyContent="center">
                 <Grid item>
-                    <Typography
-                        variant="bigBlue"
-                        component="h2"
-                    >
+                    <Typography variant="bigBlue">
                         {note.note.title}
                     </Typography>
                 </Grid>
@@ -156,10 +153,7 @@ export default function note( {noteId, removeNote, userId} ) {
             <Grid item container justifyContent="space-between" alignItems="flex-end">
                 <Grid item>
                     <IconButton onClick={handleFavorite} aria-label="Favor Note">
-                        <Typography
-                            variant="normal"
-                            component="h2"
-                        >
+                        <Typography variant="normal">
                             {note.note.favorites}
                         </Typography>
                         {favorite.favorite ? (

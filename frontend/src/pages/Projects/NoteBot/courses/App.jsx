@@ -60,19 +60,14 @@ export default function app({uid}) {
         <div>
             <Grid container alignItems="center" justifyContent="space-between">
                 <Grid item>
-                    <Typography
-                        variant="heading"
-                        component="h2"
-                    >
+                    <Typography variant="heading">
                         My Notes
                     </Typography>
                 </Grid>
                 <Grid item>
                     <Grid container spacing={1}>
                         <Grid item>
-                            <Button
-                                variant="outlined"
-                            >
+                            <Button variant="outlined">
                                 Recently Deleted
                             </Button>
                         </Grid>
@@ -107,9 +102,8 @@ export default function app({uid}) {
                 ) : (
                     <Grid container justifyContent="center" sx={{ width: '100%', padding: 10 }}>
                         <Grid item>
-                            <Typography
-                                variant="big"
-                            >No notes yet
+                            <Typography variant="big">
+                                No notes yet
                             </Typography>
                         </Grid>
                     </Grid>
