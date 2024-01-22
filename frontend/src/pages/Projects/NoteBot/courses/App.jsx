@@ -61,14 +61,8 @@ export default function app({uid}) {
             <Grid container alignItems="center" justifyContent="space-between">
                 <Grid item>
                     <Typography
-                        variant="subtitle1"
+                        variant="heading"
                         component="h2"
-                        sx={{
-                            fontWeight: "bold",
-                            color: "Black",
-                            fontSize: 28,
-                            paddingBottom: 1,
-                        }}
                     >
                         My Notes
                     </Typography>

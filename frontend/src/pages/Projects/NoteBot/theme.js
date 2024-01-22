@@ -33,6 +33,11 @@ const theme = createTheme({
         },
         MuiTypography: {
             styleOverrides: {
+                heading: {
+                    fontSize: 28,
+                    fontWeight: "bold",
+                    color: colors.black,
+                },
                 big: {
                     fontSize: 18,
                     fontWeight: "bold",
