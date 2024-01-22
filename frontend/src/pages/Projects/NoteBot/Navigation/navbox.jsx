@@ -1,7 +1,5 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
+import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -13,9 +11,7 @@ import Favorites from "../favorites/App";
 import MyCourses from "../my_courses/App";
 import Tooltip from "@mui/material/Tooltip";
 
-function TabPanel(props) {
-    const { children, value, index, ...other } = props;
-
+function TabPanel({ children, value, index, ...other }) {
     return (
         <div
             role="tabpanel"
@@ -25,9 +21,11 @@ function TabPanel(props) {
             {...other}
         >
             {value === index && (
-                <Box sx={{ p: 3 }}>
-                    <Typography>{children}</Typography>
-                </Box>
+                <Grid container>
+                    <Grid item xs={12} sx={{ p: 3 }}>
+                        <Typography>{children}</Typography>
+                    </Grid>
+                </Grid>
             )}
         </div>
     );
@@ -54,52 +52,42 @@ export default function navbox({user}) {
         setValue(newValue);
     };
 
-    const handleChangeIndex = (index) => {
-        setValue(index);
-    };
-
     return (
-        <Box>
-            <Box
-                sx={{
-                    width: "100%",
-                    border: 1,
-                    borderRadius: 2,
-                    borderColor: "#ED7D31",
-                }}
-            >
-                <React.Fragment>
-                    <Box sx={{ flexGrow: 0 }}>
-                        <UserSettings user={user.user}/>
-                        <Tabs
-                            value={value}
-                            onChange={handleChange}
-                            centered
-                        >
-                            <Tooltip title="Go to My Notes" enterDelay={500}>
-                                <Tab label="My Notes" {...a11yProps(0)} />
-                            </Tooltip>
-                            <Tooltip title="Go to My Courses" enterDelay={500}>
-                                <Tab label="My Courses" {...a11yProps(1)} />
-                            </Tooltip>
-                            <Tooltip title="Go to Favorites" enterDelay={500}>
-                                <Tab label="Favorites" {...a11yProps(2)} />
-                            </Tooltip>
-                        </Tabs>
-                    </Box>
-                    <CardContent>
-                        <TabPanel value={value} index={0} dir={theme.direction}>
-                            <Courses uid={user.user.uid} />
-                        </TabPanel>
-                        <TabPanel value={value} index={1} dir={theme.direction}>
-                            <MyCourses uid={user.user.uid} />
-                        </TabPanel>
-                        <TabPanel value={value} index={2} dir={theme.direction}>
-                            <Favorites uid={user.user.uid}/>
-                        </TabPanel>
-                    </CardContent>
-                </React.Fragment>
-            </Box>
-        </Box>
+        <Grid container sx={{
+            border: 1,
+            borderRadius: 2,
+            borderColor: "#ED7D31",
+        }}>
+            <Grid item container direction="row" justifyContent="space-between" alignItems="center">
+                <Grid item></Grid>
+                <Grid item >
+                    <Tabs value={value} onChange={handleChange} centered>
+                        <Tooltip title="Go to My Notes" enterDelay={500}>
+                            <Tab label="My Notes" {...a11yProps(0)} />
+                        </Tooltip>
+                        <Tooltip title="Go to My Courses" enterDelay={500}>
+                            <Tab label="My Courses" {...a11yProps(1)} />
+                        </Tooltip>
+                        <Tooltip title="Go to Favorites" enterDelay={500}>
+                            <Tab label="Favorites" {...a11yProps(2)} />
+                        </Tooltip>
+                    </Tabs>
+                </Grid>
+                <Grid item>
+                    <UserSettings user={user.user}/>
+                </Grid>
+            </Grid>
+            <Grid item sx={{width: "100%"}}>
+                <TabPanel value={value} index={0} dir={theme.direction}>
+                    <Courses uid={user.user.uid} />
+                </TabPanel>
+                <TabPanel value={value} index={1} dir={theme.direction}>
+                    <MyCourses uid={user.user.uid} />
+                </TabPanel>
+                <TabPanel value={value} index={2} dir={theme.direction}>
+                    <Favorites uid={user.user.uid}/>
+                </TabPanel>
+            </Grid>
+        </Grid>
     );
 }
