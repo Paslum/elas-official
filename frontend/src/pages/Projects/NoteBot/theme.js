@@ -1,6 +1,6 @@
 import { createTheme } from '@mui/material/styles';
 
-const colors = {
+export const colors = {
     main: '#ED7D31',
     black: '#000000',
     grey: '#A5A5A5',
@@ -87,10 +87,11 @@ const theme = createTheme({
                     borderRadius: 4,
                     padding: 2,
                     minWidth: 333,
+                    maxWidth: 333,
                     height: 220,
-                }
-            }
-        }
+                },
+            },
+        },
     },
 });
 

@@ -1,6 +1,5 @@
 import * as React from "react";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
+import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import DeleteIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import IconButton from "@mui/material/IconButton";
@@ -8,6 +7,7 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import FavoriteIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import FavoriteIconFilled from "@mui/icons-material/Favorite";
 import Tooltip from '@mui/material/Tooltip';
+import { colors } from "../theme.js";
 
 
 import {addFavNote, deleteNote, getNoteById, isFavNote, remFavNote} from "../utils/api.js";
@@ -127,48 +127,61 @@ export default function note( {noteId, removeNote, userId} ) {
         getNoteInfoFunction(noteId)
     },[]);
     return (
-        <Card>
-            <React.Fragment>
-                <Tooltip title="Delete Note" enterDelay={500}>
-                    <IconButton aria-label="Note Settings" sx={{ float: "right" }}>
-                        <SettingsIcon />
-                    </IconButton>
-                </Tooltip>
-                <CardContent sx={{ height: "333 - 2em" }}>
+        <Grid direction="column" justifyContent="space-between" container sx={{
+            backgroundColor: colors.note,
+            borderRadius: 4,
+            padding: 1,
+            minWidth: 333,
+            maxWidth: 333,
+            height: 220,
+        }}>
+            <Grid item container justifyContent="flex-end">
+                <Grid item>
+                    <Tooltip title="Note Settings" enterDelay={500}>
+                        <IconButton aria-label="Note Settings">
+                            <SettingsIcon />
+                        </IconButton>
+                    </Tooltip>
+                </Grid>
+            </Grid>
+            <Grid item container justifyContent="center">
+                <Grid item>
                     <Typography
                         variant="bigBlue"
                         component="h2"
-                        sx={{
-                            padding: "60px",
-                            textAlign: "center",
-                        }}
                     >
                         {note.note.title}
                     </Typography>
-                </CardContent>
-                <IconButton onClick={handleFavorite} aria-label="Favor Note" style={{ float: "left" }}>
-                    <Typography
-                        variant="normal"
-                        component="h2"
-                    >
-                    {note.note.favorites}
-                    </Typography>
-                    {favorite.favorite ? (
-                        <Tooltip title="Unfavorite Note" enterDelay={500}>
-                            <FavoriteIconFilled sx={{ color: "red" }} />
-                        </Tooltip>
-                    ) : (
-                        <Tooltip title="Favorite Note" enterDelay={500}>
-                            <FavoriteIcon sx={{ color: "red" }} />
-                        </Tooltip>
-                    )}
-                </IconButton>
-                <Tooltip title="Delete Note" enterDelay={500}>
-                    <IconButton onClick={handleDelete} aria-label="Delete Note" style={{ float: "right" }}>
-                        <DeleteIcon />
+                </Grid>
+            </Grid>
+            <Grid item container justifyContent="space-between" alignItems="flex-end">
+                <Grid item>
+                    <IconButton onClick={handleFavorite} aria-label="Favor Note">
+                        <Typography
+                            variant="normal"
+                            component="h2"
+                        >
+                            {note.note.favorites}
+                        </Typography>
+                        {favorite.favorite ? (
+                            <Tooltip title="Unfavorite Note" enterDelay={500}>
+                                <FavoriteIconFilled sx={{ color: "red" }} />
+                            </Tooltip>
+                        ) : (
+                            <Tooltip title="Favorite Note" enterDelay={500}>
+                                <FavoriteIcon sx={{ color: "red" }} />
+                            </Tooltip>
+                        )}
                     </IconButton>
-                </Tooltip>
-            </React.Fragment>
-        </Card>
+                </Grid>
+                <Grid item>
+                    <Tooltip title="Delete Note" enterDelay={500}>
+                        <IconButton onClick={handleDelete} aria-label="Delete Note">
+                            <DeleteIcon />
+                        </IconButton>
+                    </Tooltip>
+                </Grid>
+            </Grid>
+        </Grid>
     );
 }
