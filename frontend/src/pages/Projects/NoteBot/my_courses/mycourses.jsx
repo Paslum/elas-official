@@ -1,6 +1,7 @@
 import * as React from "react";
 import {Tooltip, Box, Divider, Grid, IconButton, Typography} from '@mui/material';
-import {DeleteIcon, EditIcon} from "@mui/icons-material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 import {useState} from "react";
 import {deleteCourse, updateCourse} from "../utils/api.js";
 import { RenameCourseDialog } from "./rename.jsx";
