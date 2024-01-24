@@ -37,6 +37,7 @@ export default function CreateNote() {
 
   useEffect(() => {
     let elasUser = JSON.parse(sessionStorage.getItem("elas-user"));
+
     async function getUserInfoFunction() {
       let response = await getUserInfo(elasUser.id);
       setUser((prevState) => ({
@@ -48,18 +49,18 @@ export default function CreateNote() {
           username: response.user.username,
         },
       }));
-    }
-    getUserInfoFunction();
-  }, []);
 
-  useEffect(() => {
-    async function getCoursesInfoFunction() {
+      // Nachdem die Benutzerinformationen abgerufen wurden, rufen Sie die Funktion zur Abfrage von Kursen auf.
+      getCoursesInfoFunction(response.user.uid);
+    }
+
+    async function getCoursesInfoFunction(userId) {
       try {
-        let response = await getCoursesByUserId(user.user.uid);
-        setCourses(prevState => ({
+        let response = await getCoursesByUserId(userId);
+        setCourses((prevState) => ({
           ...prevState,
           message: response.message,
-          courses: response.course.map(course => ({
+          courses: response.course.map((course) => ({
             title: course.title,
             courseId: course._id,
             notes: course.notes,
@@ -67,14 +68,16 @@ export default function CreateNote() {
         }));
       } catch (error) {
         console.error("Error fetching courses:", error);
-        setCourses(prevState => ({
+        setCourses((prevState) => ({
           ...prevState,
           message: "Error fetching courses",
         }));
       }
     }
-    getCoursesInfoFunction();
+
+    getUserInfoFunction();
   }, []);
+
 
   const [noteTitle, setNoteTitle] = React.useState("");
   const [isDialogOpen, setDialogOpen] = React.useState(false);
