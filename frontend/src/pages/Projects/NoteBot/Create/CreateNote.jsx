@@ -100,12 +100,8 @@ export default function CreateNote() {
     setSelectedCourse(event.target.value);
   };
 
-  const handleNewCourseChange = (event) => {
-    setNewCourse(event.target.value);
-  };
-
-  const handleAddNewCourse = () => {
-    setSelectedCourse(newCourse);
+  const handleAddToCourse = () => {
+    setNewCourse(selectedCourse);
     setDialogOpen(false);
   };
 
@@ -188,7 +184,7 @@ export default function CreateNote() {
                     onClick={handleNoCourseClick}
                 >
                   <FolderIcon/>
-                  {selectedCourse || "No Course"}
+                  {newCourse || "No Course"}
                 </Button>
                 <Dialog open={isDialogOpen} onClose={handleDialogClose}>
                   <DialogTitle>Save To Course</DialogTitle>
@@ -210,7 +206,7 @@ export default function CreateNote() {
                   </DialogContent>
                   <DialogActions>
                     <Button onClick={handleDialogClose}>Cancel</Button>
-                    <Button onClick={handleAddNewCourse}>Add</Button>
+                    <Button onClick={handleAddToCourse}>Add</Button>
                   </DialogActions>
                 </Dialog>
               </Grid>

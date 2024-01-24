@@ -56,8 +56,15 @@ export default function mycourses({ course, removeCourses, updateCourses}) {
     try {
       await deleteCourse(course.courseId);
       removeCourses(course.courseId);
+      enqueueSnackbar(`Course \"${courseTitle.title}\" deleted`, {
+        variant: "success",
+        autoHideDuration: 2000,
+      });
     } catch(error){
-      console.log("Failed to delete course:", error);
+      enqueueSnackbar(`Failed to delete \"${courseTitle.title}\"`, {
+        variant: "error",
+        autoHideDuration: 2000,
+      });
     };
   };
   return (
@@ -92,9 +99,11 @@ export default function mycourses({ course, removeCourses, updateCourses}) {
         <Grid item>
           <Grid container alignItems="center">
             <Grid item>
-              <Typography variant="normal">
-                {course.notes?.length ?? 0}
-              </Typography>
+              <Tooltip title="Notes in this Course" enterDelay={500}>
+                <Typography variant="normal">
+                  {course.notes?.length ?? 0}
+                </Typography>
+              </Tooltip>
             </Grid>
             <Grid item>
               <Tooltip title="Delete Course" enterDelay={500}>
