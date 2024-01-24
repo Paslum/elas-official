@@ -52,13 +52,13 @@ export default function navbox({user}) {
                 <Grid item></Grid>
                 <Grid item >
                     <Tabs value={value} onChange={handleChange} centered>
-                        <Tooltip title="Go to My Notes" enterDelay={500}>
+                        <Tooltip title={value === 0 ? "You are currently here" : ("Go to My Notes")} enterDelay={500}>
                             <Tab label="My Notes" {...a11yProps(0)} />
                         </Tooltip>
-                        <Tooltip title="Go to My Courses" enterDelay={500}>
+                        <Tooltip title={value === 1 ? "You are currently here" : ("Go to My Courses")} enterDelay={500}>
                             <Tab label="My Courses" {...a11yProps(1)} />
                         </Tooltip>
-                        <Tooltip title="Go to Favorites" enterDelay={500}>
+                        <Tooltip title={value === 2 ? "You are currently here" : ("Go to Favorites")} enterDelay={500}>
                             <Tab label="Favorites" {...a11yProps(2)} />
                         </Tooltip>
                     </Tabs>
