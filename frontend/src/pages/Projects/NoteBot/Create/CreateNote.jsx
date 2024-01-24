@@ -52,7 +52,6 @@ export default function CreateNote() {
         },
       }));
 
-      // Nachdem die Benutzerinformationen abgerufen wurden, rufen Sie die Funktion zur Abfrage von Kursen auf.
       getCoursesInfoFunction(response.user.uid);
     }
 
@@ -90,15 +89,11 @@ export default function CreateNote() {
     setNoteTitle(event.target.value);
   };
 
-  const handleNoCourseClick = () => {
-    setDialogOpen(true);
+  const handleDialogState = () => {
+    setDialogOpen(!isDialogOpen);
   };
 
-  const handleDialogClose = () => {
-    setDialogOpen(false);
-  };
-
-  const handleCourseSelect = (event) => {
+  const handleSelectCourse = (event) => {
     setSelectedCourse(event.target.value);
   };
 
@@ -117,16 +112,6 @@ export default function CreateNote() {
     // Fügen Sie hier die Aktion für das Text-Icon hinzu
     console.log("Text Icon clicked");
     setTextFieldContent("");
-  };
-
-  const handlePdfIconClick = () => {
-    // Fügen Sie hier die Aktion für das PDF-Icon hinzu
-    console.log("PDF Icon clicked");
-  };
-
-  const handleVideoIconClick = () => {
-    // Fügen Sie hier die Aktion für das Video-Icon hinzu
-    console.log("Video Icon clicked");
   };
 
   const [isLayoutSelectorVisible, setLayoutSelectorVisible] =
@@ -213,18 +198,18 @@ export default function CreateNote() {
                       borderColor: "black",
                       overflow: "hidden",
                     }}
-                    onClick={handleNoCourseClick}
+                    onClick={handleDialogState}
                 >
                   <FolderIcon/>
                   {newCourse.title || "No Course"}
                 </Button>
-                <Dialog open={isDialogOpen} onClose={handleDialogClose}>
+                <Dialog open={isDialogOpen} onClose={handleDialogState}>
                   <DialogTitle>Save To Course</DialogTitle>
                   <DialogContent>
                     <Typography>Add to a course from your course list:</Typography>
                     <Select
                         value={selectedCourse}
-                        onChange={handleCourseSelect}
+                        onChange={handleSelectCourse}
                         sx={{ width: "100%" }}
                     >
                       {courses.courses.length > 0 ? (
@@ -237,7 +222,7 @@ export default function CreateNote() {
                     </Select>
                   </DialogContent>
                   <DialogActions>
-                    <Button onClick={handleDialogClose}>Cancel</Button>
+                    <Button onClick={handleDialogState}>Cancel</Button>
                     <Button onClick={handleAddToCourse}>Add</Button>
                   </DialogActions>
                 </Dialog>
@@ -282,10 +267,10 @@ export default function CreateNote() {
                                         <Button onClick={handleTextIconClick}>
                                             <TextFieldsIcon style={{ color: "Blue" }}/>
                                         </Button>
-                                        <Button onClick={handlePdfIconClick} disabled="true">
+                                        <Button disabled="true">
                                           <PictureAsPdfIcon/>
                                         </Button>
-                                        <Button onClick={handleVideoIconClick} disabled="true">
+                                        <Button disabled="true">
                                           <VideoLibraryIcon/>
                                         </Button>
                                     </Grid>
