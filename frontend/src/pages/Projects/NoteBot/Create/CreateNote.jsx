@@ -139,15 +139,29 @@ export default function CreateNote() {
   };
 
   const handleSave = async() => {
+    let title = noteTitle;
     try {
-      await createNote(user.user.uid, noteTitle, newCourse.courseId);
-      navigate('/projects/notebot');
-      enqueueSnackbar(`Note \"${noteTitle}\" created`, {
-        variant: "success",
-        autoHideDuration: 2000,
-      });
+      if (newCourse.length === 0) {
+        enqueueSnackbar(`Please assign a course`, {
+        variant: "error",
+        autoHideDuration: 2500,
+      });}
+      else {
+        if (title === "") {
+          const currentDate = new Date();
+          const formattedDate = `${currentDate.toLocaleDateString()}, ${currentDate.toLocaleTimeString()}`;
+          title = `New Note ${formattedDate}`;
+        }
+
+        await createNote(user.user.uid, title, newCourse.courseId);
+        navigate('/projects/notebot');
+        enqueueSnackbar(`Note \"${title}\" created`, {
+          variant: "success",
+          autoHideDuration: 2000,
+        });
+      }
     } catch(error){
-      enqueueSnackbar(`Failed to save \"${noteTitle}\"`, {
+      enqueueSnackbar(`Failed to save \"${title}\"`, {
         variant: "error",
         autoHideDuration: 2000,
       });
@@ -237,23 +251,25 @@ export default function CreateNote() {
                 </Button>
               </Grid>
             </Grid>
-            <Divider />
             {isLayoutSelectorVisible ? (
                 <React.Fragment>
+                  <Divider />
                   {selectedLayout ? (
-                      <Grid container spacing={2}>
+                      <Grid container sx={{
+                        border: 1,
+                        borderRadius: 2,
+                        borderColor: '#ED7D31',
+                        padding: 2,
+                        marginTop: 2,
+                      }}>
                         {selectedLayout.map((column, index) => (
-                            <Grid item xs={column} key={index}>
-                              {/* Hier können Sie den Inhalt für jedes Layout-Feld rendern */}
-                              <Paper
-                                  style={{
-                                    height: "300%", // Ändern Sie die Höhe nach Bedarf
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                  }}
-                              >
+                            <Grid item container xs={column} key={index} justifyContent="center" alignItems="center"
+                                  sx={{
+                                    height: 250,
+                                    border: "dashed 2px",
+                                    borderRadius: 2,
+                                    borderColor: '#A5A5A5',
+                                  }}>
                                 {textFieldContent ? (
                                     <TextField
                                         multiline
@@ -262,28 +278,19 @@ export default function CreateNote() {
                                         onChange={(e) => setTextFieldContent(e.target.value)}
                                     />
                                 ) : (
-                                    <>
-                                      <Typography variant="h6">Choose a Widget</Typography>
-                                      <div style={{ marginTop: 16 }}>
+                                    <Grid item>
+                                        <Typography variant="h6">Choose a Widget</Typography>
                                         <Button onClick={handleTextIconClick}>
-                                          <TextFieldsIcon
-                                              style={{ fontSize: 48, color: "Blue" }}
-                                          />
+                                            <TextFieldsIcon style={{ color: "Blue" }}/>
                                         </Button>
-                                        <Button onClick={handlePdfIconClick}>
-                                          <PictureAsPdfIcon
-                                              style={{ fontSize: 48, color: "#ED7D31" }}
-                                          />
+                                        <Button onClick={handlePdfIconClick} disabled="true">
+                                          <PictureAsPdfIcon/>
                                         </Button>
-                                        <Button onClick={handleVideoIconClick}>
-                                          <VideoLibraryIcon
-                                              style={{ fontSize: 48, color: "red" }}
-                                          />
+                                        <Button onClick={handleVideoIconClick} disabled="true">
+                                          <VideoLibraryIcon/>
                                         </Button>
-                                      </div>
-                                    </>
+                                    </Grid>
                                 )}
-                              </Paper>
                             </Grid>
                         ))}
                       </Grid>

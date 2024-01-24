@@ -1,48 +1,34 @@
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Unstable_Grid2";
 import { LayoutItem } from "./LayoutItem";
-import { useTheme } from "@mui/material/styles";
 
 export function LayoutSelector({ onLayoutSelect }) {
-  const theme = useTheme();
   return (
-    <Box
-      padding={2}
+    <Grid direction="row"
       sx={{
-        backgroundColor: theme.palette.grey[100],
-        borderRadius: 2,
+        backgroundColor: '#f0f0f0', borderRadius: 3, marginTop:'20px', padding: 1
       }}
     >
-      <Box
+      <Grid item
         margin={2}
         display={"flex"}
         justifyContent={"center"}
         alignContent={"center"}
       >
-        CHOOSE LAYOUT
-      </Box>
-      <Grid container justifyContent={"center"} alignContent={"center"}>
-        <LayoutItem columns={[12]} handle={onLayoutSelect}></LayoutItem>
-        <LayoutItem columns={[6, 6]} handle={onLayoutSelect}></LayoutItem>
-        <LayoutItem columns={[4, 4, 4]} handle={onLayoutSelect}></LayoutItem>
-        <LayoutItem columns={[3, 3, 3, 3]} handle={onLayoutSelect}></LayoutItem>
-        <LayoutItem columns={[4, 8]} handle={onLayoutSelect}></LayoutItem>
-        <LayoutItem columns={[8, 4]} handle={onLayoutSelect}></LayoutItem>
+        Choose a Layout
       </Grid>
-      <Grid container justifyContent={"center"} alignContent={"center"}>
-        <LayoutItem columns={[3, 3, 6]} handle={onLayoutSelect}></LayoutItem>
-        <LayoutItem columns={[6, 3, 3]} handle={onLayoutSelect}></LayoutItem>
-        <LayoutItem columns={[3, 6, 3]} handle={onLayoutSelect}></LayoutItem>
-        <LayoutItem
-          columns={[2.4, 2.4, 2.4, 2.4, 2.4]}
-          handle={onLayoutSelect}
-        ></LayoutItem>
-        <LayoutItem columns={[2, 8, 2]} handle={onLayoutSelect}></LayoutItem>
-        <LayoutItem
-          columns={[2, 2, 2, 2, 2, 2]}
-          handle={onLayoutSelect}
-        ></LayoutItem>
+      <Grid item container direction="row" justifyContent="center" alignContent={"center"}>
+        <Grid item><LayoutItem columns={[12]} handle={onLayoutSelect}></LayoutItem></Grid>
+        <Grid item><LayoutItem columns={[6, 6]} handle={onLayoutSelect}></LayoutItem></Grid>
+        <Grid item><LayoutItem columns={[4, 4, 4]} handle={onLayoutSelect}></LayoutItem></Grid>
+        <Grid item><LayoutItem columns={[4, 8]} handle={onLayoutSelect}></LayoutItem></Grid>
       </Grid>
-    </Box>
+      <Grid item container direction="row" justifyContent="center" alignContent={"center"}>
+        <Grid item><LayoutItem columns={[3, 3, 6]} handle={onLayoutSelect}></LayoutItem></Grid>
+        <Grid item><LayoutItem columns={[6, 3, 3]} handle={onLayoutSelect}></LayoutItem></Grid>
+        <Grid item><LayoutItem columns={[3, 6, 3]} handle={onLayoutSelect}></LayoutItem></Grid>
+        <Grid item><LayoutItem columns={[2, 8, 2]} handle={onLayoutSelect}></LayoutItem></Grid>
+      </Grid>
+    </Grid>
   );
 }

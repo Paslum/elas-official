@@ -1,4 +1,4 @@
-import Grid from "@mui/material/Unstable_Grid2";
+import Grid from "@mui/material/Grid";
 import {
   Button,
   ButtonBase,
@@ -11,7 +11,7 @@ import {
 import styled from "@emotion/styled";
 
 const Item = styled(Paper)({
-  backgroundColor: "#1A2027", // Platzhalterfarbe für den Dunkelmodus
+  backgroundColor: "#A5A5A5", // Platzhalterfarbe für den Dunkelmodus
   padding: "8px", // Platzhalterabstand
   textAlign: "center",
   borderRadius: 0,
