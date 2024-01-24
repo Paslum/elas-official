@@ -8,10 +8,7 @@ export const CreateCourseDialog = ({ isOpen, onClose, courses, user_id, updateCo
         try {
             const newCourse = await createCourse(user_id, courseTitle);
             // Update the courses list state in app.jsx
-            updateCourses({
-                title: newCourse.title,
-                courseId: newCourse._id,
-            });
+            updateCourses(newCourse);
 
             // Close the dialog
             onClose();

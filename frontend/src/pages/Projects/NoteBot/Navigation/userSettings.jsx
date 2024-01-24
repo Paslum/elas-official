@@ -92,27 +92,10 @@ export default function userSettings({user}) {
                         Hello {user.name}!
                     </Typography>
                     <Button
-                        variant="outlined"
+                        variant="outlined" disabled="true"
                     >
                         Profile Settings
                     </Button>
-
-                    {/* Material-UI Grid für Home Icon und Text */}
-                    <div
-                        style={{
-                            display: "grid",
-                            gridTemplateColumns: "auto auto",
-                            gap: "8px",
-                            justifyContent: "center",
-                        }}
-                    >
-                        <IconButton aria-label="Go back to ELAS">
-                            <HomeIcon />
-                            <Typography variant="subtitle2" component="h2">
-                                Go back to ELAS
-                            </Typography>
-                        </IconButton>
-                    </div>
                 </Paper>
             </Popover>
         </div>

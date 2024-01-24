@@ -38,12 +38,14 @@ export default function App({ uid }) {
             ...prevCourses,
             courses: [...prevCourses.courses, newCourse],
         }));
+        console.log(courses);
     };
     const removeCourses = (oldCourse) => {
         setCourses((prevCourses) => ({
             ...prevCourses,
             courses: prevCourses.courses.filter(course => course.courseId !== oldCourse),
         }));
+        console.log(courses);
     };
 
     useEffect(() => {

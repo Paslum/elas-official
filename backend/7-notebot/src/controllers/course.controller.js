@@ -67,6 +67,7 @@ export const createCourse = async (req, res) => {
         await course.save();
         return res.status(200).send({
             message: `Course ${req.body.title} created successfully!`,
+            _id: course._id,
         });
     } catch (err) {
         return res.status(500).send({ message: `Error saving course to DB`});
