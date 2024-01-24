@@ -129,7 +129,6 @@ export const createNote = async (req, res) => {
         try {
             // Check if a course ID is provided in the request
             const courseId = req.body.courseId;
-
             // If a course ID is provided, associate the note with the course
             if (courseId) {
                 const foundCourse = await courseModel.findOne({ _id: courseId });

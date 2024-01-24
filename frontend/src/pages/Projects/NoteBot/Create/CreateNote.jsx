@@ -19,9 +19,12 @@ import { LayoutSelector } from "./LayoutSelector";
 import InputAdornment from '@mui/material/InputAdornment';
 import noteBotLogo from "../../../../assets/images/noteBot-logo.png";
 import theme, {colors} from "../theme.js";
-import {getCoursesByUserId, getUserInfo} from "../utils/api.js";
+import {getCoursesByUserId, getUserInfo, createNote, updateCourse} from "../utils/api.js";
+import {useNavigate} from "react-router-dom";
+import {enqueueSnackbar} from "notistack";
 
 export default function CreateNote() {
+  const navigate = useNavigate();
   const [user, setUser] = useState({
     message: "Server not connected",
     user: {
@@ -81,8 +84,8 @@ export default function CreateNote() {
 
   const [noteTitle, setNoteTitle] = React.useState("");
   const [isDialogOpen, setDialogOpen] = React.useState(false);
-  const [selectedCourse, setSelectedCourse] = React.useState("");
-  const [newCourse, setNewCourse] = React.useState("");
+  const [selectedCourse, setSelectedCourse] = React.useState([]);
+  const [newCourse, setNewCourse] = React.useState([]);
   const [selectedLayout, setSelectedLayout] = React.useState(null);
   const handleTitleChange = (event) => {
     setNoteTitle(event.target.value);
@@ -135,6 +138,22 @@ export default function CreateNote() {
     setSelectedLayout(null);
   };
 
+  const handleSave = async() => {
+    try {
+      await createNote(user.user.uid, noteTitle, newCourse.courseId);
+      navigate('/projects/notebot');
+      enqueueSnackbar(`Note \"${noteTitle}\" created`, {
+        variant: "success",
+        autoHideDuration: 2000,
+      });
+    } catch(error){
+      enqueueSnackbar(`Failed to save \"${noteTitle}\"`, {
+        variant: "error",
+        autoHideDuration: 2000,
+      });
+    }
+  };
+
   return (
       <div>
       <ThemeProvider theme={theme}>
@@ -184,7 +203,7 @@ export default function CreateNote() {
                     onClick={handleNoCourseClick}
                 >
                   <FolderIcon/>
-                  {newCourse || "No Course"}
+                  {newCourse.title || "No Course"}
                 </Button>
                 <Dialog open={isDialogOpen} onClose={handleDialogClose}>
                   <DialogTitle>Save To Course</DialogTitle>
@@ -197,7 +216,7 @@ export default function CreateNote() {
                     >
                       {courses.courses.length > 0 ? (
                       courses.courses.map((course) => (
-                          <MenuItem value={course.title}>{course.title}</MenuItem>
+                          <MenuItem value={course}>{course.title}</MenuItem>
                       ))
                       ) : (
                           <MenuItem value="No course">No courses yet</MenuItem>
@@ -212,7 +231,7 @@ export default function CreateNote() {
               </Grid>
               </Grid>
               <Grid item container xs justifyContent="flex-end">
-                <Button variant="contained">
+                <Button variant="contained" onClick={handleSave}>
                   <SaveIcon/>
                   Save
                 </Button>

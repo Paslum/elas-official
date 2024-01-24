@@ -136,6 +136,21 @@ export const getNoteById = async (noteId) => {
   }
 };
 
+export const createNote = async (userId, title, course) => {
+  try {
+    const response = await Backend.post(`/notebot/note`, { uid: userId, title: title, courseId: course });
+    const data = await response.data;
+
+    if (data.message && data.message.includes('created successfully')) {
+      return response.data;
+    } else {
+      throw new Error('Failed to extract note information from the response.');
+    }
+  } catch (error) {
+    throw new Error(`Failed to create a new note. Error: ${error.message}`);
+  }
+};
+
 export const deleteNote = async (noteId) => {
   try {
     const response = await Backend.delete(`/notebot/note/delete/${noteId}`)
