@@ -36,7 +36,7 @@ export default function NoteBot() {
 
   return (
       <ThemeProvider theme={theme}>
-          <Grid container justifyContent="center" sx={{ py: 4, px: 2 }}>
+          <Grid container justifyContent="center" sx={{px: 2 }}>
                 <Grid item
                   component="img"
                   src={noteBotLogo}
@@ -44,7 +44,7 @@ export default function NoteBot() {
                   xs={12}
                   sm={7}
                   md={4}
-                  sx={{ width: "100%"}}
+                  sx={{ width: "100%", py: 1}}
                 />
                 <Grid item sx={{
                   width: "100%",

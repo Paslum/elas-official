@@ -6,7 +6,6 @@ import FolderIcon from "@mui/icons-material/Folder";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import VideoLibraryIcon from "@mui/icons-material/VideoLibrary";
 import TextFieldsIcon from "@mui/icons-material/TextFields";
-import Paper from "@mui/material/Paper";
 import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
 import Dialog from "@mui/material/Dialog";

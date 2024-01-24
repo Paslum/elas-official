@@ -6,13 +6,11 @@ import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Badge from "@mui/material/Badge";
 import Paper from "@mui/material/Paper";
+import Tooltip from "@mui/material/Tooltip";
 import HomeIcon from "@mui/icons-material/Home";
 import CloseIcon from "@mui/icons-material/Close";
 import EditIcon from "@mui/icons-material/Edit";
 import SettingsIcon from "@mui/icons-material/Settings";
-
-import { getUserInfo } from "../utils/api.js";
-import {useEffect, useState} from "react";
 
 export default function userSettings({user}) {
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -30,9 +28,11 @@ export default function userSettings({user}) {
 
     return (
         <div>
-            <IconButton onClick={handleClick} style={{ float: "right" }}>
-                <SettingsIcon />
-            </IconButton>
+            <Tooltip title="Profile settings" enterDelay={500}>
+                <IconButton onClick={handleClick} style={{ float: "right" }}>
+                    <SettingsIcon />
+                </IconButton>
+            </Tooltip>
             <Popover
                 id={id}
                 open={open}

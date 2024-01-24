@@ -50,7 +50,7 @@ export default function app({uid}) {
                 <Grid item>
                     <Grid container spacing={1}>
                         <Grid item>
-                            <Button variant="outlined">
+                            <Button variant="outlined" disabled="true">
                                 Recently Deleted
                             </Button>
                         </Grid>
