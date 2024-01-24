@@ -1,16 +1,13 @@
-import React from "react";
-import { Grid, Typography} from "@mui/material";
-import Divider from "@mui/material/Divider";
+import React, {useEffect, useState} from "react";
+import {Grid, ThemeProvider, Typography, Divider} from "@mui/material";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import FolderIcon from "@mui/icons-material/Folder";
-import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import VideoLibraryIcon from "@mui/icons-material/VideoLibrary";
 import TextFieldsIcon from "@mui/icons-material/TextFields";
 import Paper from "@mui/material/Paper";
 import EditIcon from "@mui/icons-material/Edit";
-import ShareIcon from "@mui/icons-material/Share";
 import SaveIcon from "@mui/icons-material/Save";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -19,16 +16,71 @@ import DialogActions from "@mui/material/DialogActions";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { LayoutSelector } from "./LayoutSelector";
-
+import InputAdornment from '@mui/material/InputAdornment';
 import noteBotLogo from "../../../../assets/images/noteBot-logo.png";
+import theme, {colors} from "../theme.js";
+import {getCoursesByUserId, getUserInfo} from "../utils/api.js";
 
-export default function CreateNote({ uid }) {
-  const [noteTitle, setNoteTitle] = React.useState("My Notes");
+export default function CreateNote() {
+  const [user, setUser] = useState({
+    message: "Server not connected",
+    user: {
+      uid: "",
+      name: "",
+      username: "",
+    },
+  });
+  const [courses, setCourses] = useState({
+    message: "Server not connected",
+    courses: [], // Initialize as an empty array
+  });
+
+  useEffect(() => {
+    let elasUser = JSON.parse(sessionStorage.getItem("elas-user"));
+    async function getUserInfoFunction() {
+      let response = await getUserInfo(elasUser.id);
+      setUser((prevState) => ({
+        ...prevState,
+        message: response.message,
+        user: {
+          uid: response.user.uid,
+          name: response.user.name,
+          username: response.user.username,
+        },
+      }));
+    }
+    getUserInfoFunction();
+  }, []);
+
+  useEffect(() => {
+    async function getCoursesInfoFunction() {
+      try {
+        let response = await getCoursesByUserId(user.user.uid);
+        setCourses(prevState => ({
+          ...prevState,
+          message: response.message,
+          courses: response.course.map(course => ({
+            title: course.title,
+            courseId: course._id,
+            notes: course.notes,
+          })),
+        }));
+      } catch (error) {
+        console.error("Error fetching courses:", error);
+        setCourses(prevState => ({
+          ...prevState,
+          message: "Error fetching courses",
+        }));
+      }
+    }
+    getCoursesInfoFunction();
+  }, []);
+
+  const [noteTitle, setNoteTitle] = React.useState("");
   const [isDialogOpen, setDialogOpen] = React.useState(false);
   const [selectedCourse, setSelectedCourse] = React.useState("");
   const [newCourse, setNewCourse] = React.useState("");
   const [selectedLayout, setSelectedLayout] = React.useState(null);
-
   const handleTitleChange = (event) => {
     setNoteTitle(event.target.value);
   };
@@ -85,158 +137,150 @@ export default function CreateNote({ uid }) {
   };
 
   return (
-    <div>
-      <Grid container alignItems="center" justifyContent="space-between">
-        <Grid item>
-          <TextField
-            margin="dense"
-            value={noteTitle}
-            onChange={handleTitleChange}
-            sx={{
-              width: "200px",
-              display: "flex",
-              alignItems: "center",
-              paddingLeft: "8px",
-            }}
-            InputProps={{
-              startAdornment: <EditIcon sx={{ marginRight: 1 }} />,
-            }}
+      <div>
+      <ThemeProvider theme={theme}>
+        <Grid container justifyContent="center" sx={{ py: 4, px: 2 }}>
+          <Grid item
+                component="img"
+                src={noteBotLogo}
+                alt="NoteBot Logo"
+                xs={12}
+                sm={7}
+                md={4}
+                sx={{ width: "100%"}}
           />
-        </Grid>
-        <Grid item>
-          <Button
-            variant="outlined"
-            style={{
-              color: "black",
-              borderColor: "black",
-              paddingLeft: "15px", // Adjust the left margin
-              width: "160px",
-              whiteSpace: "nowrap", // Prevent text from wrapping
-              overflow: "hidden", // Hide any overflowing text
-              textOverflow: "ellipsis", // Display an ellipsis (...) for overflow
-            }}
-            startIcon={<FolderIcon sx={{ fontSize: 20, color: "black" }} />}
-            onClick={handleNoCourseClick}
-          >
-            {selectedCourse || "No Course"}
-          </Button>
-          <Dialog open={isDialogOpen} onClose={handleDialogClose}>
-            <DialogTitle>Save To Course</DialogTitle>
-            <DialogContent>
-              <Typography>Add to a course from your course list:</Typography>
-              <Select
-                value={selectedCourse}
-                onChange={handleCourseSelect}
-                style={{ width: "100%" }}
-              >
-                <MenuItem value="">Select a course</MenuItem>
-                <MenuItem value="Course 1">Course 1</MenuItem>
-                <MenuItem value="Course 2">Course 2</MenuItem>
-                {/* Weitere Kurse können hier hinzugefügt werden */}
-              </Select>
-              <Typography mt={2}>Add to a new course:</Typography>
-              <TextField
-                label="New Course"
-                variant="outlined"
-                fullWidth
-                value={newCourse}
-                onChange={handleNewCourseChange}
-              />
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={handleDialogClose}>Cancel</Button>
-              <Button onClick={handleAddNewCourse}>Add</Button>
-            </DialogActions>
-          </Dialog>
-        </Grid>
-        <Grid item>
-          <Grid container spacing={1} alignItems="center">
-            <Grid item>
-              <Button
-                variant="outlined"
-                style={{
-                  color: "#ED7D31",
-                  borderColor: "#ED7D31",
-                }}
-                startIcon={<ShareIcon sx={{ fontSize: 28 }} />}
-              >
-                Share
-              </Button>
+          <Grid item container direction="column" sx={{
+            border: 1,
+            borderRadius: 2,
+            borderColor: colors.main,
+            padding: 3,
+          }}>
+            <Grid container direction="row" justifyContent="space-between" sx={{marginBottom: 2}}>
+              <Grid item container xs spacing={2}>
+                <Grid item>
+                <TextField
+                    label="Note Title"
+                    placeholder="New Note"
+                    value={noteTitle}
+                    onChange={handleTitleChange}
+                    size="small"
+                    InputProps={{
+                      startAdornment: (
+                          <InputAdornment position="start">
+                            <EditIcon/>
+                          </InputAdornment>
+                      ),
+                    }}
+                />
+              </Grid>
+                <Grid item>
+                <Button
+                    variant="outlined"
+                    style={{
+                      height: "100%",
+                      color: "black",
+                      borderColor: "black",
+                      overflow: "hidden",
+                    }}
+                    onClick={handleNoCourseClick}
+                >
+                  <FolderIcon/>
+                  {selectedCourse || "No Course"}
+                </Button>
+                <Dialog open={isDialogOpen} onClose={handleDialogClose}>
+                  <DialogTitle>Save To Course</DialogTitle>
+                  <DialogContent>
+                    <Typography>Add to a course from your course list:</Typography>
+                    <Select
+                        value={selectedCourse}
+                        onChange={handleCourseSelect}
+                        sx={{ width: "100%" }}
+                    >
+                      {courses.courses.length > 0 ? (
+                      courses.courses.map((course) => (
+                          <MenuItem value={course.title}>{course.title}</MenuItem>
+                      ))
+                      ) : (
+                          <MenuItem value="No course">No courses yet</MenuItem>
+                      )}
+                    </Select>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={handleDialogClose}>Cancel</Button>
+                    <Button onClick={handleAddNewCourse}>Add</Button>
+                  </DialogActions>
+                </Dialog>
+              </Grid>
+              </Grid>
+              <Grid item container xs justifyContent="flex-end">
+                <Button variant="contained">
+                  <SaveIcon/>
+                  Save
+                </Button>
+              </Grid>
             </Grid>
-            <Grid item>
-              <Button
-                variant="contained"
-                style={{
-                  backgroundColor: "#ED7D31",
-                  color: "white",
-                }}
-                startIcon={<SaveIcon sx={{ fontSize: 28, color: "white" }} />}
-              >
-                Save
-              </Button>
-            </Grid>
+            <Divider />
+            {isLayoutSelectorVisible ? (
+                <React.Fragment>
+                  {selectedLayout ? (
+                      <Grid container spacing={2}>
+                        {selectedLayout.map((column, index) => (
+                            <Grid item xs={column} key={index}>
+                              {/* Hier können Sie den Inhalt für jedes Layout-Feld rendern */}
+                              <Paper
+                                  style={{
+                                    height: "300%", // Ändern Sie die Höhe nach Bedarf
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                  }}
+                              >
+                                {textFieldContent ? (
+                                    <TextField
+                                        multiline
+                                        fullWidth
+                                        value={textFieldContent}
+                                        onChange={(e) => setTextFieldContent(e.target.value)}
+                                    />
+                                ) : (
+                                    <>
+                                      <Typography variant="h6">Choose a Widget</Typography>
+                                      <div style={{ marginTop: 16 }}>
+                                        <Button onClick={handleTextIconClick}>
+                                          <TextFieldsIcon
+                                              style={{ fontSize: 48, color: "Blue" }}
+                                          />
+                                        </Button>
+                                        <Button onClick={handlePdfIconClick}>
+                                          <PictureAsPdfIcon
+                                              style={{ fontSize: 48, color: "#ED7D31" }}
+                                          />
+                                        </Button>
+                                        <Button onClick={handleVideoIconClick}>
+                                          <VideoLibraryIcon
+                                              style={{ fontSize: 48, color: "red" }}
+                                          />
+                                        </Button>
+                                      </div>
+                                    </>
+                                )}
+                              </Paper>
+                            </Grid>
+                        ))}
+                      </Grid>
+                  ) : (
+                      <LayoutSelector onLayoutSelect={handleLayoutSelect} />
+                  )}
+                  <Divider />
+                  <Button onClick={handleShowLayoutSelector}>Create New Layout</Button>
+                </React.Fragment>
+            ) : (
+                <LayoutSelector onLayoutSelect={handleLayoutSelect} />
+            )}
           </Grid>
         </Grid>
-      </Grid>
-      <Divider />
-      {isLayoutSelectorVisible ? (
-        <React.Fragment>
-          {selectedLayout ? (
-            <Grid container spacing={2}>
-              {selectedLayout.map((column, index) => (
-                <Grid item xs={column} key={index}>
-                  {/* Hier können Sie den Inhalt für jedes Layout-Feld rendern */}
-                  <Paper
-                    style={{
-                      height: "300%", // Ändern Sie die Höhe nach Bedarf
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    {textFieldContent ? (
-                      <TextField
-                        multiline
-                        fullWidth
-                        value={textFieldContent}
-                        onChange={(e) => setTextFieldContent(e.target.value)}
-                      />
-                    ) : (
-                      <>
-                        <Typography variant="h6">Choose a Widget</Typography>
-                        <div style={{ marginTop: 16 }}>
-                          <Button onClick={handleTextIconClick}>
-                            <TextFieldsIcon
-                              style={{ fontSize: 48, color: "Blue" }}
-                            />
-                          </Button>
-                          <Button onClick={handlePdfIconClick}>
-                            <PictureAsPdfIcon
-                              style={{ fontSize: 48, color: "#ED7D31" }}
-                            />
-                          </Button>
-                          <Button onClick={handleVideoIconClick}>
-                            <VideoLibraryIcon
-                              style={{ fontSize: 48, color: "red" }}
-                            />
-                          </Button>
-                        </div>
-                      </>
-                    )}
-                  </Paper>
-                </Grid>
-              ))}
-            </Grid>
-          ) : (
-            <LayoutSelector onLayoutSelect={handleLayoutSelect} />
-          )}
-          <Divider />
-          <Button onClick={handleShowLayoutSelector}>Create New Layout</Button>
-        </React.Fragment>
-      ) : (
-        <LayoutSelector onLayoutSelect={handleLayoutSelect} />
-      )}
+      </ThemeProvider>
     </div>
   );  
 }
