@@ -21,6 +21,7 @@ import theme, {colors} from "../theme.js";
 import {getCoursesByUserId, getUserInfo, createNote, updateCourse} from "../utils/api.js";
 import {useNavigate} from "react-router-dom";
 import {enqueueSnackbar} from "notistack";
+import Sections from "./sections/app.jsx";
 
 export default function CreateNote() {
   const navigate = useNavigate();
@@ -84,7 +85,8 @@ export default function CreateNote() {
   const [isDialogOpen, setDialogOpen] = React.useState(false);
   const [selectedCourse, setSelectedCourse] = React.useState([]);
   const [newCourse, setNewCourse] = React.useState([]);
-  const [selectedLayout, setSelectedLayout] = React.useState(null);
+  const [sectionCounter, setSectionCounter] = React.useState(1);
+
   const handleTitleChange = (event) => {
     setNoteTitle(event.target.value);
   };
@@ -102,24 +104,8 @@ export default function CreateNote() {
     setDialogOpen(false);
   };
 
-  const handleLayoutSelect = (columns) => {
-    setSelectedLayout(columns);
-  };
-
-  const [textFieldContent, setTextFieldContent] = React.useState(""); // Hinzugefügt
-
-  const handleTextIconClick = () => {
-    // Fügen Sie hier die Aktion für das Text-Icon hinzu
-    console.log("Text Icon clicked");
-    setTextFieldContent("");
-  };
-
-  const [isLayoutSelectorVisible, setLayoutSelectorVisible] =
-    React.useState(true);
-
-  const handleShowLayoutSelector = () => {
-    setLayoutSelectorVisible(true);
-    setSelectedLayout(null);
+  const handleAddSection = () => {
+    setSectionCounter(sectionCounter + 1);
   };
 
   const handleSave = async() => {
@@ -155,7 +141,7 @@ export default function CreateNote() {
   return (
       <div>
       <ThemeProvider theme={theme}>
-        <Grid container justifyContent="center" sx={{ py: 4, px: 2 }}>
+        <Grid container justifyContent="center" sx={{ px: 2 }}>
           <Grid item
                 component="img"
                 src={noteBotLogo}
@@ -163,70 +149,71 @@ export default function CreateNote() {
                 xs={12}
                 sm={7}
                 md={4}
-                sx={{ width: "100%"}}
+                sx={{ width: "100%", py: 1}}
           />
           <Grid item container direction="column" sx={{
+            width: "100%",
             border: 1,
             borderRadius: 2,
             borderColor: colors.main,
             padding: 3,
           }}>
-            <Grid container direction="row" justifyContent="space-between" sx={{marginBottom: 2}}>
+            <Grid container direction="column" sx={{marginBottom: 2}}>
               <Grid item container xs spacing={2}>
                 <Grid item>
-                <TextField
-                    label="Note Title"
-                    placeholder="New Note"
-                    value={noteTitle}
-                    onChange={handleTitleChange}
-                    size="small"
-                    InputProps={{
-                      startAdornment: (
-                          <InputAdornment position="start">
-                            <EditIcon/>
-                          </InputAdornment>
-                      ),
-                    }}
-                />
-              </Grid>
+                  <TextField
+                      label="Note Title"
+                      placeholder="New Note"
+                      value={noteTitle}
+                      onChange={handleTitleChange}
+                      size="small"
+                      InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start">
+                              <EditIcon/>
+                            </InputAdornment>
+                        ),
+                      }}
+                  />
+                </Grid>
                 <Grid item>
-                <Button
-                    variant="outlined"
-                    style={{
-                      height: "100%",
-                      color: "black",
-                      borderColor: "black",
-                      overflow: "hidden",
-                    }}
-                    onClick={handleDialogState}
-                >
-                  <FolderIcon/>
-                  {newCourse.title || "No Course"}
-                </Button>
-                <Dialog open={isDialogOpen} onClose={handleDialogState}>
-                  <DialogTitle>Save To Course</DialogTitle>
-                  <DialogContent>
-                    <Typography>Add to a course from your course list:</Typography>
-                    <Select
-                        value={selectedCourse}
-                        onChange={handleSelectCourse}
-                        sx={{ width: "100%" }}
-                    >
-                      {courses.courses.length > 0 ? (
-                      courses.courses.map((course) => (
-                          <MenuItem value={course}>{course.title}</MenuItem>
-                      ))
-                      ) : (
-                          <MenuItem value="No course">No courses yet</MenuItem>
-                      )}
-                    </Select>
-                  </DialogContent>
-                  <DialogActions>
-                    <Button onClick={handleDialogState}>Cancel</Button>
-                    <Button onClick={handleAddToCourse}>Add</Button>
-                  </DialogActions>
-                </Dialog>
-              </Grid>
+                  <Button
+                      variant="outlined"
+                      style={{
+                        height: "100%",
+                        color: "black",
+                        borderColor: "black",
+                        overflow: "hidden",
+                      }}
+                      onClick={handleDialogState}
+                  >
+                    <FolderIcon/>
+                    {newCourse.title || "No Course"}
+                  </Button>
+                  <Dialog open={isDialogOpen} onClose={handleDialogState}>
+                    <DialogTitle>Save To Course</DialogTitle>
+                    <DialogContent>
+                      <Typography>Add to a course from your course list:</Typography>
+                      <Select
+                          value={selectedCourse}
+                          onChange={handleSelectCourse}
+                          sx={{ width: "100%" }}
+                      >
+                        {courses.courses.length > 0 ? (
+                        courses.courses.map((course) => (
+                            <MenuItem value={course}>{course.title}</MenuItem>
+                        ))
+                        ) : (
+                            <MenuItem value="No course">No courses yet</MenuItem>
+                        )}
+                      </Select>
+                    </DialogContent>
+                    <DialogActions>
+                      <Button onClick={handleDialogState}>Cancel</Button>
+                      <Button onClick={handleAddToCourse}>Add</Button>
+                    </DialogActions>
+                  </Dialog>
+                </Grid>
               </Grid>
               <Grid item container xs justifyContent="flex-end">
                 <Button variant="contained" onClick={handleSave}>
@@ -235,58 +222,10 @@ export default function CreateNote() {
                 </Button>
               </Grid>
             </Grid>
-            {isLayoutSelectorVisible ? (
-                <React.Fragment>
-                  <Divider />
-                  {selectedLayout ? (
-                      <Grid container sx={{
-                        border: 1,
-                        borderRadius: 2,
-                        borderColor: '#ED7D31',
-                        padding: 2,
-                        marginTop: 2,
-                      }}>
-                        {selectedLayout.map((column, index) => (
-                            <Grid item container xs={column} key={index} justifyContent="center" alignItems="center"
-                                  sx={{
-                                    height: 250,
-                                    border: "dashed 2px",
-                                    borderRadius: 2,
-                                    borderColor: '#A5A5A5',
-                                  }}>
-                                {textFieldContent ? (
-                                    <TextField
-                                        multiline
-                                        fullWidth
-                                        value={textFieldContent}
-                                        onChange={(e) => setTextFieldContent(e.target.value)}
-                                    />
-                                ) : (
-                                    <Grid item>
-                                        <Typography variant="h6">Choose a Widget</Typography>
-                                        <Button onClick={handleTextIconClick}>
-                                            <TextFieldsIcon style={{ color: "Blue" }}/>
-                                        </Button>
-                                        <Button disabled="true">
-                                          <PictureAsPdfIcon/>
-                                        </Button>
-                                        <Button disabled="true">
-                                          <VideoLibraryIcon/>
-                                        </Button>
-                                    </Grid>
-                                )}
-                            </Grid>
-                        ))}
-                      </Grid>
-                  ) : (
-                      <LayoutSelector onLayoutSelect={handleLayoutSelect} />
-                  )}
-                  <Divider />
-                  <Button onClick={handleShowLayoutSelector}>Create New Layout</Button>
-                </React.Fragment>
-            ) : (
-                <LayoutSelector onLayoutSelect={handleLayoutSelect} />
-            )}
+              <Divider />
+              <Grid item>
+                <Sections counter={sectionCounter} addSection={handleAddSection}/>
+              </Grid>
           </Grid>
         </Grid>
       </ThemeProvider>

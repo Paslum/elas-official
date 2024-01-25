@@ -25,7 +25,6 @@ export const LayoutItem = ({ columns, handle }) => {
     <Grid
       container
       xs={12}
-      spacing={1}
       sx={{
         margin: 1,
         width: 140,
@@ -41,7 +40,7 @@ export const LayoutItem = ({ columns, handle }) => {
     >
       {columns.map((column, index) => {
         return (
-          <Grid item xs={column} key={index}>
+          <Grid item xs={column} key={index} sx={{padding: 0.5}}>
             <Item />
           </Grid>
         );
