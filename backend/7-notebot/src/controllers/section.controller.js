@@ -9,10 +9,11 @@ export const getSection = async (req, res) => {
         // Query the database for a note with the specified ID
         const foundSection = await sectionModel.findOne({ _id: section });
         // Check if a note was found
-        if (foundSection.widgets > 0) {
+        if (foundSection.layout.length > 0) {
             // Send a success response with the found note
             return res.status(200).send({
                 message: `Widgets(s) found!`,
+                layout: foundSection.layout,
                 widgets: foundSection.widgets,
             });
         }
@@ -28,6 +29,7 @@ export const addSection = async (req, res) => {
         // Create a new note instance with user ID and title
         let section = new sectionModel({
             note: req.params.note,
+            layout: req.body.layout,
         });
 
         // Save the new note to the database

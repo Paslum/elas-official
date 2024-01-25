@@ -4,7 +4,7 @@ import Section from "./section.jsx";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Grid from '@mui/material/Grid';
 
-export default function Sections ({counter, addSection}) {
+export default function Sections ({counter, addSection, addLayout}) {
     const handleShowLayoutSelector = () => {
         addSection();
     };
@@ -13,7 +13,7 @@ export default function Sections ({counter, addSection}) {
         <Grid item container direction="column">
             <Grid item>
                 {Array(counter).fill().map((_, index) => (
-                    <Section index={index} />
+                    <Section index={index} addLayout={addLayout}/>
                 ))}
             </Grid>
             <Grid item sx={{margin: 'auto'}}>

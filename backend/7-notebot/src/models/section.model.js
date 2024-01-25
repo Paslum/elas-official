@@ -14,6 +14,7 @@ const Schema = mongoose.Schema;
  */
 const Section = new Schema({
   note: { type: String, required: true, },
+  layout: {type: Array, required: true, },
   widgets: [{type: String,},],
 });
 /***************** END: DEFINE A SCHEMA *****************/

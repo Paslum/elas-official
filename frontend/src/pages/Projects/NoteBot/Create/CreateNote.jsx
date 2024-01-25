@@ -3,9 +3,6 @@ import {Grid, ThemeProvider, Typography, Divider} from "@mui/material";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import FolderIcon from "@mui/icons-material/Folder";
-import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
-import VideoLibraryIcon from "@mui/icons-material/VideoLibrary";
-import TextFieldsIcon from "@mui/icons-material/TextFields";
 import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
 import Dialog from "@mui/material/Dialog";
@@ -14,7 +11,6 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-import { LayoutSelector } from "./LayoutSelector";
 import InputAdornment from '@mui/material/InputAdornment';
 import noteBotLogo from "../../../../assets/images/noteBot-logo.png";
 import theme, {colors} from "../theme.js";
@@ -36,6 +32,14 @@ export default function CreateNote() {
   const [courses, setCourses] = useState({
     message: "Server not connected",
     courses: [], // Initialize as an empty array
+  });
+
+  const [sections, setSections] = useState({
+      sections: []
+  });
+
+  const [layout, setLayout] = useState({
+    layout: []
   });
 
   useEffect(() => {
@@ -108,6 +112,19 @@ export default function CreateNote() {
     setSectionCounter(sectionCounter + 1);
   };
 
+  const handleAddLayout = (index, layout) => {
+    setLayout((prevState) => ({
+      ...prevState,
+      layout: [
+        ...prevState.layout,
+        {
+          index: index,
+          layout: layout,
+        }
+      ],
+    }));
+  };
+
   const handleSave = async() => {
     let title = noteTitle;
     try {
@@ -123,7 +140,7 @@ export default function CreateNote() {
           title = `New Note ${formattedDate}`;
         }
 
-        await createNote(user.user.uid, title, newCourse.courseId);
+        await createNote(user.user.uid, title, newCourse.courseId, sectionCounter, layout);
         navigate('/projects/notebot');
         enqueueSnackbar(`Note \"${title}\" created`, {
           variant: "success",
@@ -224,7 +241,7 @@ export default function CreateNote() {
             </Grid>
               <Divider />
               <Grid item>
-                <Sections counter={sectionCounter} addSection={handleAddSection}/>
+                <Sections counter={sectionCounter} addSection={handleAddSection} addLayout={handleAddLayout}/>
               </Grid>
           </Grid>
         </Grid>

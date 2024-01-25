@@ -146,6 +146,7 @@ export const createNote = async (req, res) => {
         // Send a success response
         return res.status(200).send({
             message: `Note ${req.body.title} created successfully!`,
+            noteId: note._id,
         });
     } catch (err) {
         // Handle errors related to saving the note to the database
