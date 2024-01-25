@@ -158,12 +158,12 @@ export default function CreateNote() {
             borderColor: colors.main,
             padding: 3,
           }}>
-            <Grid container direction="column" sx={{marginBottom: 2}}>
+            <Grid container sx={{marginBottom: 0.25}}>
               <Grid item container xs spacing={2}>
                 <Grid item>
                   <TextField
                       label="Note Title"
-                      placeholder="New Note"
+                      placeholder="New note"
                       value={noteTitle}
                       onChange={handleTitleChange}
                       size="small"
