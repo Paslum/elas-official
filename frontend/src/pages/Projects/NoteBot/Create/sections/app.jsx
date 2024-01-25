@@ -1,37 +1,26 @@
-import React, {useEffect, useState} from "react";
-import {Divider, Grid, Typography} from "@mui/material";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import TextFieldsIcon from "@mui/icons-material/TextFields.js";
-import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf.js";
-import VideoLibraryIcon from "@mui/icons-material/VideoLibrary.js";
-import {LayoutSelector} from "../LayoutSelector.jsx";
+import React from "react";
+import IconButton from "@mui/material/IconButton";
 import Section from "./section.jsx";
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import Grid from '@mui/material/Grid';
 
 export default function Sections ({counter, addSection}) {
-    const [isLayoutSelectorVisible, setLayoutSelectorVisible] = React.useState(true);
-
-    const [selectedLayout, setSelectedLayout] = React.useState(null);
-    const handleLayoutSelect = (columns) => {
-        setSelectedLayout(columns);
-    };
-
-    const [textFieldContent, setTextFieldContent] = React.useState(""); // Hinzugefügt
-
-    const handleTextIconClick = () => {
-        // Fügen Sie hier die Aktion für das Text-Icon hinzu
-        console.log("Text Icon clicked");
-        setTextFieldContent("");
-    };
-
     const handleShowLayoutSelector = () => {
         addSection();
     };
 
     return (<div>
-        {Array(counter).fill().map((_, index) => (
-            <Section key={index} />
-        ))}
-        <Button onClick={handleShowLayoutSelector}>Create New Layout</Button>
+        <Grid item container direction="column">
+            <Grid item>
+                {Array(counter).fill().map((_, index) => (
+                    <Section index={index} />
+                ))}
+            </Grid>
+            <Grid item sx={{margin: 'auto'}}>
+                <IconButton aria-label="add section" onClick={handleShowLayoutSelector} size="large">
+                    <AddCircleIcon fontSize="large"/>
+                </IconButton>
+            </Grid>
+        </Grid>
     </div>)
 };

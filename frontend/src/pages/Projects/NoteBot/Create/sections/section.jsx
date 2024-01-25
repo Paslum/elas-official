@@ -3,7 +3,7 @@ import {Grid, Typography} from "@mui/material";
 import {LayoutSelector} from "../LayoutSelector.jsx";
 import Widgets from "./widgets/app.jsx";
 
-export default function Section () {
+export default function Section (index) {
     const [isLayoutSelectorVisible, setLayoutSelectorVisible] = React.useState(true);
 
     const [selectedLayout, setSelectedLayout] = React.useState(null);
