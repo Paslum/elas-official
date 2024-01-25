@@ -140,7 +140,7 @@ export default function CreateNote() {
           title = `New Note ${formattedDate}`;
         }
 
-        await createNote(user.user.uid, title, newCourse.courseId, sectionCounter, layout);
+        await createNote(user.user.uid, title, newCourse.courseId, layout);
         navigate('/projects/notebot');
         enqueueSnackbar(`Note \"${title}\" created`, {
           variant: "success",
