@@ -50,6 +50,7 @@ export const addSection = async (req, res) => {
         // Send a success response
         return res.status(200).send({
             message: `Section ${section} created successfully!`,
+            section: section._id,
         });
     } catch (err) {
         // Handle errors related to saving the note to the database

@@ -136,13 +136,18 @@ export const getNoteById = async (noteId) => {
   }
 };
 
-export const createNote = async (userId, title, course, layout) => {
+export const createNote = async (userId, title, course, layout, widgets) => {
   try {
     const response = await Backend.post(`/notebot/note`, { uid: userId, title: title, courseId: course });
     const data = await response.data;
-    for (let i = 0; i < layout.layout.length || 0; i++) {
+    for (let i = 0; i < layout.layout.length; i++) {
       const responseSection = await Backend.post(`/notebot/addSection/${data.noteId}`, {layout: layout.layout[i].layout});
-      const dataSection = await responseSection.data
+      const dataSection = await responseSection.data;
+      const filteredWidgets = widgets.widget.filter(widget => widget.section === i);
+      for (let j = 0; j < filteredWidgets.length || 0; j++) {
+          const responseWidget = await Backend.post(`/notebot/addWidget/`, {type: filteredWidgets[j].type, data: filteredWidgets[j].data, section: dataSection.section});
+          console.log(responseWidget.data);
+      };
     }
 
     if (data.message && data.message.includes('created successfully')) {

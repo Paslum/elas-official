@@ -39,7 +39,7 @@ export default function CreateNote() {
   });
 
   const [layout, setLayout] = useState({
-    layout: []
+      layout: []
   });
 
   useEffect(() => {
@@ -125,6 +125,42 @@ export default function CreateNote() {
     }));
   };
 
+  const [widgets, setWidgets] = React.useState({
+    widget: []
+  });
+
+  const handleAddWidget = (index, type, section, data) => {
+    setWidgets((prevState) => ({
+      ...prevState,
+      widget: [
+        ...prevState.widget,
+        {
+          index: index,
+          type: type,
+          section: section,
+          data: data,
+        }
+      ],
+    }));
+  };
+
+  const handleSetWidgetContent = (index, data, section) => {
+    setWidgets(prevState => ({
+      ...prevState,
+      widget: prevState.widget.map(widget => {
+        if (widget && widget.index === index) {
+          if (widget.section === section) {
+            return {
+              ...widget,
+              data: data,
+            };
+          }
+        }
+        return widget;
+      })
+    }));
+  };
+
   const handleSave = async() => {
     let title = noteTitle;
     try {
@@ -140,7 +176,7 @@ export default function CreateNote() {
           title = `New Note ${formattedDate}`;
         }
 
-        await createNote(user.user.uid, title, newCourse.courseId, layout);
+        await createNote(user.user.uid, title, newCourse.courseId, layout, widgets);
         navigate('/projects/notebot');
         enqueueSnackbar(`Note \"${title}\" created`, {
           variant: "success",
@@ -241,7 +277,9 @@ export default function CreateNote() {
             </Grid>
               <Divider />
               <Grid item>
-                <Sections counter={sectionCounter} addSection={handleAddSection} addLayout={handleAddLayout}/>
+                <Sections counter={sectionCounter} addSection={handleAddSection}
+                          addLayout={handleAddLayout} addWidget={handleAddWidget}
+                          setWidgetContent={handleSetWidgetContent}/>
               </Grid>
           </Grid>
         </Grid>

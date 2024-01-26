@@ -6,13 +6,18 @@ import TextFieldsIcon from "@mui/icons-material/TextFields.js";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf.js";
 import VideoLibraryIcon from "@mui/icons-material/VideoLibrary.js";
 
-export default function Widgets ({column, index}) {
-    const [textFieldContent, setTextFieldContent] = React.useState(""); // Hinzugefügt
-
+export default function Widgets ({column, index, addWidget, setWidgetContent}) {
+    const [textFieldContent, setTextFieldContent] = React.useState("");
     const [widgetType, setWidgetType] = React.useState("");
 
     const handleSetWidgetType = (type) => {
         setWidgetType(type);
+        addWidget(index, type, textFieldContent)
+    };
+
+    const handleSetTextFieldContent = (text) => {
+        setTextFieldContent(text);
+        setWidgetContent(index, text);
     };
 
     return (
@@ -22,7 +27,7 @@ export default function Widgets ({column, index}) {
                     multiline
                     fullWidth
                     value={textFieldContent}
-                    onChange={(e) => setTextFieldContent(e.target.value)}
+                    onChange={(e) => handleSetTextFieldContent(e.target.value)}
                 />
             ) : (
                 <Grid item container alignItems="center" direction="column" xs sx={{

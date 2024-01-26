@@ -3,13 +3,21 @@ import {Grid, Typography} from "@mui/material";
 import {LayoutSelector} from "../LayoutSelector.jsx";
 import Widgets from "./widgets/app.jsx";
 
-export default function Section ({index, addLayout}) {
+export default function Section ({index, addLayout, addWidget, setWidgetContent}) {
     const [isLayoutSelectorVisible, setLayoutSelectorVisible] = React.useState(true);
 
     const [selectedLayout, setSelectedLayout] = React.useState(null);
     const handleLayoutSelect = (columns) => {
         setSelectedLayout(columns);
         addLayout(index, columns);
+    };
+
+    const handleAddWidget = (indexWidget, type, data) => {
+        addWidget(indexWidget, type, index, data)
+    };
+
+    const handleSetWidgetContent = (indexWidget, data) => {
+        setWidgetContent(indexWidget, data, index)
     };
 
     return (<div>
@@ -24,7 +32,7 @@ export default function Section ({index, addLayout}) {
                         marginTop: 2,
                     }}>
                         {selectedLayout.map((column, index) => (
-                            <Widgets column={column} index={index}/>
+                            <Widgets column={column} index={index} addWidget={handleAddWidget} setWidgetContent={handleSetWidgetContent}/>
                         ))}
                     </Grid>
                 ) : (
