@@ -146,8 +146,7 @@ export const createNote = async (userId, title, course, layout, widgets) => {
       const filteredWidgets = widgets.widget.filter(widget => widget.section === i);
       for (let j = 0; j < filteredWidgets.length || 0; j++) {
           const responseWidget = await Backend.post(`/notebot/addWidget/`, {type: filteredWidgets[j].type, data: filteredWidgets[j].data, section: dataSection.section});
-          console.log(responseWidget.data);
-      };
+      }
     }
 
     if (data.message && data.message.includes('created successfully')) {

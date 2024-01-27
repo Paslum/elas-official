@@ -3,10 +3,10 @@ import {Grid, Typography} from "@mui/material";
 import {LayoutSelector} from "../LayoutSelector.jsx";
 import Widgets from "./widgets/app.jsx";
 
-export default function Section ({index, addLayout, addWidget, setWidgetContent}) {
+export default function Section ({index, addLayout, addWidget, setWidgetContent, initialSection = {layout: [], widget: []}}) {
     const [isLayoutSelectorVisible, setLayoutSelectorVisible] = React.useState(true);
 
-    const [selectedLayout, setSelectedLayout] = React.useState(null);
+    const [selectedLayout, setSelectedLayout] = React.useState(initialSection.layout);
     const handleLayoutSelect = (columns) => {
         setSelectedLayout(columns);
         addLayout(index, columns);
@@ -23,7 +23,7 @@ export default function Section ({index, addLayout, addWidget, setWidgetContent}
     return (<div>
         {isLayoutSelectorVisible ? (
             <React.Fragment>
-                {selectedLayout ? (
+                {selectedLayout.length > 0 ? (
                     <Grid container alignItems="flex-start" sx={{
                         border: 1,
                         borderRadius: 2,
@@ -32,7 +32,7 @@ export default function Section ({index, addLayout, addWidget, setWidgetContent}
                         marginTop: 2,
                     }}>
                         {selectedLayout.map((column, index) => (
-                            <Widgets column={column} index={index} addWidget={handleAddWidget} setWidgetContent={handleSetWidgetContent}/>
+                            <Widgets column={column} index={index} addWidget={handleAddWidget} setWidgetContent={handleSetWidgetContent} initialWidget={initialSection.widget[index]}/>
                         ))}
                     </Grid>
                 ) : (

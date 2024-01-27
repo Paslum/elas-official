@@ -26,22 +26,21 @@ export const getWidget = async (req, res) => {
 
 export const addWidget = async (req, res) => {
     try {
+
         // Create a new note instance with user ID and title
         let widget = new widgetModel({
             type: req.body.type,
             data: req.body.data,
         });
-
         // Save the new note to the database
         await widget.save();
-
         try {
             const foundSection = await sectionModel.findOne({ _id: req.body.section });
-
             // If the course exists, update it to include the new note
             if (foundSection) {
                 await sectionModel.updateOne({ _id: req.body.section }, { $push: { widgets: widget._id.toString() } });
             }
+
         } catch (err) {
             // Handle errors related to saving the note to a course
             return res.status(500).send({ message: `Widget saved but error saving widget to section` });

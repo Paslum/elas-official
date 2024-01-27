@@ -14,7 +14,7 @@ import MenuItem from "@mui/material/MenuItem";
 import InputAdornment from '@mui/material/InputAdornment';
 import noteBotLogo from "../../../../assets/images/noteBot-logo.png";
 import theme, {colors} from "../theme.js";
-import {getCoursesByUserId, getUserInfo, createNote, updateCourse} from "../utils/api.js";
+import {getCoursesByUserId, getUserInfo, createNote} from "../utils/api.js";
 import {useNavigate} from "react-router-dom";
 import {enqueueSnackbar} from "notistack";
 import Sections from "./sections/app.jsx";
@@ -34,9 +34,15 @@ export default function CreateNote() {
     courses: [], // Initialize as an empty array
   });
 
-  const [sections, setSections] = useState({
-      sections: []
-  });
+  const initialNote = {
+    section: [{
+      layout: [],
+      widget: [{
+        data: "",
+        type: "",
+      }]
+    }],
+  };
 
   const [layout, setLayout] = useState({
       layout: []
@@ -175,7 +181,6 @@ export default function CreateNote() {
           const formattedDate = `${currentDate.toLocaleDateString()}, ${currentDate.toLocaleTimeString()}`;
           title = `New Note ${formattedDate}`;
         }
-
         await createNote(user.user.uid, title, newCourse.courseId, layout, widgets);
         navigate('/projects/notebot');
         enqueueSnackbar(`Note \"${title}\" created`, {
@@ -279,7 +284,7 @@ export default function CreateNote() {
               <Grid item>
                 <Sections counter={sectionCounter} addSection={handleAddSection}
                           addLayout={handleAddLayout} addWidget={handleAddWidget}
-                          setWidgetContent={handleSetWidgetContent}/>
+                          setWidgetContent={handleSetWidgetContent} initialNote={initialNote}/>
               </Grid>
           </Grid>
         </Grid>

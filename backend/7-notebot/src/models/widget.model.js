@@ -14,7 +14,7 @@ const Schema = mongoose.Schema;
  */
 const Widget = new Schema({
   type: { type: String, required: true },
-  data: { type: String, required: true },
+  data: { type: String},
   layout_index: { type: Number },
 });
 /***************** END: DEFINE A SCHEMA *****************/
