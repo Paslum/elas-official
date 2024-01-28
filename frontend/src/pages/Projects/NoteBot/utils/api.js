@@ -119,7 +119,7 @@ export const updateCourse = async (courseId, title) => {
 /** Notes **/
 export const getNoteById = async (noteId) => {
   try {
-    const response = await Backend.get(`/notebot/note/${noteId}`)
+    const response = await Backend.get(`/notebot/note/${noteId}`);
     const {
       data: { message, note },
     } = response;
@@ -135,6 +135,43 @@ export const getNoteById = async (noteId) => {
     };
   }
 };
+
+export const getNoteContentById = async (noteId) => {
+  try {
+    const responseNote = await Backend.get(`/notebot/note/${noteId}`);
+    const responseCourse = await Backend.get(`/notebot/courses`);
+    const filteredCourse = responseCourse.data.course.find(course => course.notes.includes(noteId));
+    const responseSections = await Backend.get(`/notebot/sections/${noteId}`);
+
+    const responseSection = async(section) => {
+      return await Backend.get(`/notebot/section/${section}`);
+    };
+
+    //const responseWidget = await Backend.get();
+    const NoteInfo = {
+      message: responseNote.data.message,
+      title: responseNote.data.note.title,
+      course: filteredCourse,
+      sections: await Promise.all(responseSections.data.sections.map(async section => {
+        const layoutResponse = await responseSection(section);
+        return {
+          layout: layoutResponse.data.layout, // Zugriff nur auf die layout-Daten
+          widget: [{
+            data: "",
+            type: "",
+          }]
+        };
+      })),
+    };
+
+    return NoteInfo;
+  } catch (error) {
+    console.log(error);
+    return {
+      message: "Server not connected",
+    };
+  }
+}
 
 export const createNote = async (userId, title, course, layout, widgets) => {
   try {

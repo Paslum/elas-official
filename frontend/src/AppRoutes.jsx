@@ -106,6 +106,7 @@ export default function AppRoutes() {
         <Route path="notebot">
           <Route index element={<NoteBot />} />
           <Route path="create" element={<CreateNote />} />
+          <Route path="edit/:noteId" element={<CreateNote />} />
         </Route>
       </Route>
       <Route path="settings" element={<Settings />} />

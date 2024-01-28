@@ -14,13 +14,29 @@ import MenuItem from "@mui/material/MenuItem";
 import InputAdornment from '@mui/material/InputAdornment';
 import noteBotLogo from "../../../../assets/images/noteBot-logo.png";
 import theme, {colors} from "../theme.js";
-import {getCoursesByUserId, getUserInfo, createNote} from "../utils/api.js";
+import {getCoursesByUserId, getUserInfo, createNote, getNoteContentById} from "../utils/api.js";
 import {useNavigate} from "react-router-dom";
 import {enqueueSnackbar} from "notistack";
 import Sections from "./sections/app.jsx";
+import { useParams } from "react-router-dom";
 
 export default function CreateNote() {
+  const { noteId } = useParams();
+
+  const noteIdValue = noteId ? noteId : null;
+
   const navigate = useNavigate();
+  const [initialNote, setInitialNote] = useState({
+    title: "",
+    course: "",
+    section: [{
+      layout: [],
+      widget: [{
+        data: "",
+        type: "",
+      }]
+    }],
+  });
   const [user, setUser] = useState({
     message: "Server not connected",
     user: {
@@ -33,16 +49,6 @@ export default function CreateNote() {
     message: "Server not connected",
     courses: [], // Initialize as an empty array
   });
-
-  const initialNote = {
-    section: [{
-      layout: [],
-      widget: [{
-        data: "",
-        type: "",
-      }]
-    }],
-  };
 
   const [layout, setLayout] = useState({
       layout: []
@@ -88,10 +94,27 @@ export default function CreateNote() {
     }
 
     getUserInfoFunction();
+
+    async function getNoteInfoFunction() {
+      if (noteIdValue === null) {
+      } else {
+        let note = await getNoteContentById(noteId);
+        console.log(note);
+        setInitialNote({
+          title: note.title,
+          course: note.course,
+          section: note.sections,
+        });
+        setNoteTitle(note.title);
+        setNewCourse(note.course);
+        handleAddSection(note.sections.length);
+      };
+    };
+    getNoteInfoFunction();
   }, []);
 
 
-  const [noteTitle, setNoteTitle] = React.useState("");
+  const [noteTitle, setNoteTitle] = React.useState();
   const [isDialogOpen, setDialogOpen] = React.useState(false);
   const [selectedCourse, setSelectedCourse] = React.useState([]);
   const [newCourse, setNewCourse] = React.useState([]);
