@@ -6,7 +6,7 @@ import TextFieldsIcon from "@mui/icons-material/TextFields.js";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf.js";
 import VideoLibraryIcon from "@mui/icons-material/VideoLibrary.js";
 
-export default function Widgets ({column, index, addWidget, setWidgetContent, initialWidget}) {
+export default function Widgets ({column, index, addWidget, setWidgetContent, initialWidget={data: "", type: ""}}) {
     const [textFieldContent, setTextFieldContent] = React.useState(initialWidget.data);
     const [widgetType, setWidgetType] = React.useState(initialWidget.type);
     const handleSetWidgetType = (type) => {

@@ -3,11 +3,12 @@ import {Grid, Typography} from "@mui/material";
 import {LayoutSelector} from "../LayoutSelector.jsx";
 import Widgets from "./widgets/app.jsx";
 
-export default function Section ({index, addLayout, addWidget, setWidgetContent, initialSection}) {
+export default function Section ({index, addLayout, addWidget, setWidgetContent, initialSection = {layout: [], widget: []}}) {
     const [isLayoutSelectorVisible, setLayoutSelectorVisible] = React.useState(initialSection.layout.length === 0);
 
     const [selectedLayout, setSelectedLayout] = React.useState(initialSection.layout);
     const handleLayoutSelect = (columns) => {
+        setLayoutSelectorVisible(false);
         setSelectedLayout(columns);
         addLayout(index, columns);
     };

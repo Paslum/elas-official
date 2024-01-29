@@ -210,7 +210,6 @@ export default function CreateNote() {
       })
     }));
   };
-  console.log(widgets);
 
   const handleSave = async() => {
     let title = noteTitle;

@@ -10,8 +10,11 @@ import { colors } from "../theme.js";
 import {addFavNote, deleteNote, getNoteById, isFavNote, remFavNote} from "../utils/api.js";
 import {useEffect, useState} from "react";
 import { useSnackbar } from "notistack";
+import {useNavigate} from "react-router-dom";
 
 export default function note( {noteId, removeNote, userId} ) {
+    const navigate = useNavigate();
+
     const { enqueueSnackbar } = useSnackbar();
 
     const [note, setNote] = useState({
@@ -140,7 +143,8 @@ export default function note( {noteId, removeNote, userId} ) {
                     </Tooltip>
                 </Grid>
             </Grid>
-            <Grid item container justifyContent="center">
+            <Grid item container justifyContent="center" onClick={() => navigate(`/projects/notebot/edit/${noteId}`)}
+            sx={{ cursor: 'pointer' }}>
                 <Grid item>
                     <Typography variant="bigBlue">
                         {note.note.title}
