@@ -349,6 +349,7 @@ export default function CreateNote() {
                       <Typography>Add to a course from your course list:</Typography>
                       <Select
                           value={selectedCourse}
+                          placeholder="select a course"
                           onChange={handleSelectCourse}
                           sx={{ width: "100%" }}
                       >
