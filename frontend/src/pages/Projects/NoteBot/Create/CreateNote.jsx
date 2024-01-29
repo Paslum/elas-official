@@ -119,11 +119,21 @@ export default function CreateNote() {
             })),
           ],
         }));
+        let indexWidgetCounter = 0;
+        setWidgets((prevState) => ({
+          widget: [
+            ...note.sections.map(section => ({
+              index: indexWidgetCounter++,
+              type: section.widget.type,
+              section: "",
+              data: section.widget.data,
+            })),
+          ],
+        }));
         setIsLoading(false);
       };
     };
     getNoteInfoFunction();
-
   }, []);
 
   const [noteTitle, setNoteTitle] = React.useState();
@@ -131,7 +141,6 @@ export default function CreateNote() {
   const [selectedCourse, setSelectedCourse] = React.useState([]);
   const [newCourse, setNewCourse] = React.useState([]);
   const [sectionCounter, setSectionCounter] = React.useState(1);
-
   const handleTitleChange = (event) => {
     setNoteTitle(event.target.value);
   };
@@ -201,6 +210,7 @@ export default function CreateNote() {
       })
     }));
   };
+  console.log(widgets);
 
   const handleSave = async() => {
     let title = noteTitle;

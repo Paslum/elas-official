@@ -142,12 +142,14 @@ export const getNoteContentById = async (noteId) => {
     const responseCourse = await Backend.get(`/notebot/courses`);
     const filteredCourse = responseCourse.data.course.find(course => course.notes.includes(noteId));
     const responseSections = await Backend.get(`/notebot/sections/${noteId}`);
-
     const responseSection = async(section) => {
       return await Backend.get(`/notebot/section/${section}`);
     };
 
-    //const responseWidget = await Backend.get();
+    const responseWidget = async(widget) => {
+      return await Backend.get(`/notebot/widget/${widget}`);
+    };
+
     const NoteInfo = {
       message: responseNote.data.message,
       title: responseNote.data.note.title,
@@ -155,11 +157,14 @@ export const getNoteContentById = async (noteId) => {
       sections: await Promise.all(responseSections.data.sections.map(async section => {
         const layoutResponse = await responseSection(section);
         return {
-          layout: layoutResponse.data.layout, // Zugriff nur auf die layout-Daten
-          widget: [{
-            data: "",
-            type: "",
-          }]
+          layout: layoutResponse.data.layout,
+          widget: await Promise.all(layoutResponse.data.widgets.map(async widgetId => {
+            const widgetResponse = await responseWidget(widgetId);
+            return {
+              data: widgetResponse.data.data,
+              type: widgetResponse.data.type,
+            };
+          })),
         };
       })),
     };
