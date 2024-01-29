@@ -34,7 +34,7 @@ export default function app({uid}) {
                     message: "Error fetching courses",
                 }));
             } finally {
-                setIsLoading(false); // Mark loading as complete
+                setIsLoading(false);
             }
         }
         getCoursesInfoFunction(uid);

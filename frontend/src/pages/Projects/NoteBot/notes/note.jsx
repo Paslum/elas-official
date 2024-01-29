@@ -136,19 +136,21 @@ export default function note( {noteId, removeNote, userId} ) {
         }}>
             <Grid item container justifyContent="flex-end">
                 <Grid item>
-                    <Tooltip title="Note Settings" enterDelay={500}>
+                    {/*<Tooltip title="Note Settings" enterDelay={500}>
                         <IconButton aria-label="Note Settings">
                             <SettingsIcon />
                         </IconButton>
-                    </Tooltip>
+                    </Tooltip>*/}
                 </Grid>
             </Grid>
             <Grid item container justifyContent="center" onClick={() => navigate(`/projects/notebot/edit/${noteId}`)}
             sx={{ cursor: 'pointer' }}>
                 <Grid item>
-                    <Typography variant="bigBlue">
-                        {note.note.title}
-                    </Typography>
+                    <Tooltip title="View/Edit Note" enterDelay={500}>
+                        <Typography variant="bigBlue">
+                            {note.note.title}
+                        </Typography>
+                    </Tooltip>
                 </Grid>
             </Grid>
             <Grid item container justifyContent="space-between" alignItems="flex-end">
