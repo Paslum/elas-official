@@ -21,7 +21,7 @@ import {
   getNoteContentById,
   remFavNote,
   addFavNote,
-  isFavNote
+  isFavNote,
 } from "../utils/api.js";
 import {useNavigate} from "react-router-dom";
 import {enqueueSnackbar} from "notistack";
@@ -63,6 +63,10 @@ export default function CreateNote() {
 
   const [layout, setLayout] = useState({
       layout: []
+  });
+
+  const [favorite, setFavorite] = useState({
+    favorite: false,
   });
 
   useEffect(() => {
@@ -140,16 +144,16 @@ export default function CreateNote() {
             })),
           ],
         }));
-        const isFavorite = await isFavNote(user.user.uid, noteId);
-        // Hier setzt du den Zustand mit dem aktualisierten Wert
-        setFavorite(prevState => ({
-          ...prevState,
-          favorite: isFavorite,
-        }));
-        setIsLoading(false);
       };
     };
     getNoteInfoFunction();
+
+    const isFavorite = isFavNote(user.user.uid, noteId);
+    setFavorite({
+      favorite: isFavorite,
+    });
+    setIsLoading(false);
+
   }, []);
 
   const [noteTitle, setNoteTitle] = React.useState();
@@ -255,10 +259,6 @@ export default function CreateNote() {
       });
     }
   };
-
-  const [favorite, setFavorite] = useState({
-    favorite: false,
-  });
   const handleFavorite = async () => {
     try {
       if (favorite.favorite) {
