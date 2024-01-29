@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Grid, ThemeProvider, Typography, Divider} from "@mui/material";
+import {Grid, ThemeProvider, Typography, Divider, IconButton, Tooltip} from "@mui/material";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import FolderIcon from "@mui/icons-material/Folder";
@@ -14,11 +14,21 @@ import MenuItem from "@mui/material/MenuItem";
 import InputAdornment from '@mui/material/InputAdornment';
 import noteBotLogo from "../../../../assets/images/noteBot-logo.png";
 import theme, {colors} from "../theme.js";
-import {getCoursesByUserId, getUserInfo, createNote, getNoteContentById} from "../utils/api.js";
+import {
+  getCoursesByUserId,
+  getUserInfo,
+  createNote,
+  getNoteContentById,
+  remFavNote,
+  addFavNote,
+  isFavNote
+} from "../utils/api.js";
 import {useNavigate} from "react-router-dom";
 import {enqueueSnackbar} from "notistack";
 import Sections from "./sections/app.jsx";
 import { useParams } from "react-router-dom";
+import FavoriteIconFilled from "@mui/icons-material/Favorite.js";
+import FavoriteIcon from "@mui/icons-material/FavoriteBorderOutlined.js";
 
 export default function CreateNote() {
   const { noteId } = useParams();
@@ -130,6 +140,12 @@ export default function CreateNote() {
             })),
           ],
         }));
+        const isFavorite = await isFavNote(user.user.uid, noteId);
+        // Hier setzt du den Zustand mit dem aktualisierten Wert
+        setFavorite(prevState => ({
+          ...prevState,
+          favorite: isFavorite,
+        }));
         setIsLoading(false);
       };
     };
@@ -240,6 +256,41 @@ export default function CreateNote() {
     }
   };
 
+  const [favorite, setFavorite] = useState({
+    favorite: false,
+  });
+  const handleFavorite = async () => {
+    try {
+      if (favorite.favorite) {
+        await remFavNote(user.user.uid, noteId)
+        setFavorite(prevState => ({
+          ...prevState,
+          favorite: false,
+        }));
+        enqueueSnackbar(`Note \"${noteTitle}\" removed from Favorites`, {
+          variant: "success",
+          autoHideDuration: 2000,
+        });
+        return;
+      }
+      await addFavNote(user.user.uid, noteId)
+      setFavorite(prevState => ({
+        ...prevState,
+        favorite: true,
+      }));
+      enqueueSnackbar(`Note \"${noteTitle}\" added to Favorites`, {
+        variant: "success",
+        autoHideDuration: 2000,
+      });
+
+    } catch(error) {
+      enqueueSnackbar(`Failed to add/remove Note \"${noteTitle}\" to Favorites`, {
+        variant: "error",
+        autoHideDuration: 2000,
+      });
+    };
+  };
+
   return (
       <div>
       <ThemeProvider theme={theme}>
@@ -317,11 +368,26 @@ export default function CreateNote() {
                   </Dialog>
                 </Grid>
               </Grid>
-              <Grid item container xs justifyContent="flex-end">
-                <Button variant="contained" onClick={handleSave}>
-                  <SaveIcon/>
-                  Save
-                </Button>
+              <Grid item container xs direction="row" justifyContent="flex-end">
+                <Grid item>
+                  <IconButton onClick={handleFavorite} aria-label="Favor Note">
+                    {favorite.favorite ? (
+                        <Tooltip title="Unfavorite Note" enterDelay={500}>
+                          <FavoriteIconFilled sx={{ color: "red" }} />
+                        </Tooltip>
+                    ) : (
+                        <Tooltip title="Favorite Note" enterDelay={500}>
+                          <FavoriteIcon sx={{ color: "red" }} />
+                        </Tooltip>
+                    )}
+                  </IconButton>
+                </Grid>
+                <Grid item>
+                  <Button variant="contained" onClick={handleSave}>
+                    <SaveIcon/>
+                    Save
+                  </Button>
+                </Grid>
               </Grid>
             </Grid>
               <Divider />
