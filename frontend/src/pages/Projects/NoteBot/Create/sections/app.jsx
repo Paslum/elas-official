@@ -8,7 +8,6 @@ export default function Sections ({counter, addSection, addLayout, addWidget, se
     const handleShowLayoutSelector = () => {
         addSection();
     };
-
     return (<div>
         <Grid item container direction="column">
             <Grid item>

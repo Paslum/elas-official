@@ -3,8 +3,8 @@ import {Grid, Typography} from "@mui/material";
 import {LayoutSelector} from "../LayoutSelector.jsx";
 import Widgets from "./widgets/app.jsx";
 
-export default function Section ({index, addLayout, addWidget, setWidgetContent, initialSection = {layout: [], widget: []}}) {
-    const [isLayoutSelectorVisible, setLayoutSelectorVisible] = React.useState(true);
+export default function Section ({index, addLayout, addWidget, setWidgetContent, initialSection}) {
+    const [isLayoutSelectorVisible, setLayoutSelectorVisible] = React.useState(initialSection.layout.length === 0);
 
     const [selectedLayout, setSelectedLayout] = React.useState(initialSection.layout);
     const handleLayoutSelect = (columns) => {
@@ -21,7 +21,7 @@ export default function Section ({index, addLayout, addWidget, setWidgetContent,
     };
 
     return (<div>
-        {isLayoutSelectorVisible ? (
+        {isLayoutSelectorVisible === false ? (
             <React.Fragment>
                 {selectedLayout.length > 0 ? (
                     <Grid container alignItems="flex-start" sx={{

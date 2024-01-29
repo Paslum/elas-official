@@ -22,6 +22,7 @@ import { useParams } from "react-router-dom";
 
 export default function CreateNote() {
   const { noteId } = useParams();
+  const [isLoading, setIsLoading] = useState(true);
 
   const noteIdValue = noteId ? noteId : null;
 
@@ -97,9 +98,9 @@ export default function CreateNote() {
 
     async function getNoteInfoFunction() {
       if (noteIdValue === null) {
+        setIsLoading(false);
       } else {
         let note = await getNoteContentById(noteId);
-        console.log(note);
         setInitialNote({
           title: note.title,
           course: note.course,
@@ -107,12 +108,23 @@ export default function CreateNote() {
         });
         setNoteTitle(note.title);
         setNewCourse(note.course);
-        handleAddSection(note.sections.length);
+        setSelectedCourse(note.course);
+        setSectionCounter(note.sections.length);
+        let indexCounter = 0;
+        setLayout((prevState) => ({
+          layout: [
+            ...note.sections.map(section => ({
+              index: indexCounter++,
+              layout: section.layout,
+            })),
+          ],
+        }));
+        setIsLoading(false);
       };
     };
     getNoteInfoFunction();
-  }, []);
 
+  }, []);
 
   const [noteTitle, setNoteTitle] = React.useState();
   const [isDialogOpen, setDialogOpen] = React.useState(false);
@@ -137,8 +149,8 @@ export default function CreateNote() {
     setDialogOpen(false);
   };
 
-  const handleAddSection = () => {
-    setSectionCounter(sectionCounter + 1);
+  const handleAddSection = (amount = 1) => {
+    setSectionCounter(sectionCounter + amount);
   };
 
   const handleAddLayout = (index, layout) => {
@@ -305,9 +317,11 @@ export default function CreateNote() {
             </Grid>
               <Divider />
               <Grid item>
-                <Sections counter={sectionCounter} addSection={handleAddSection}
+                {isLoading === false && (
+                    <Sections counter={sectionCounter} addSection={handleAddSection}
                           addLayout={handleAddLayout} addWidget={handleAddWidget}
                           setWidgetContent={handleSetWidgetContent} initialNote={initialNote}/>
+                )}
               </Grid>
           </Grid>
         </Grid>
