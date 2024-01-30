@@ -374,9 +374,9 @@ export default function CreateNote() {
                         )}
                       </Select>
                     </DialogContent>
-                    <DialogActions>
-                      <Button onClick={handleDialogState}>Cancel</Button>
-                      <Button onClick={handleAddToCourse}>Add</Button>
+                    <DialogActions sx={{ padding: 2 }}>
+                      <Button variant="outlined" onClick={handleDialogState}>Cancel</Button>
+                      <Button variant="contained" onClick={handleAddToCourse}>Add</Button>
                     </DialogActions>
                   </Dialog>
                 </Grid>
