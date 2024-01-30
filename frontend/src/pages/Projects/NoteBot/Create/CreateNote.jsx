@@ -112,6 +112,7 @@ export default function CreateNote() {
 
     async function getNoteInfoFunction() {
       if (noteIdValue === null) {
+        setSectionCounter(1);
         setIsLoading(false);
       } else {
         let note = await getNoteContentById(noteId);
@@ -187,8 +188,10 @@ export default function CreateNote() {
     setDialogOpen(false);
   };
 
-  const handleAddSection = (amount = 1) => {
-    setSectionCounter(sectionCounter + amount);
+  const handleAddSection = () => {
+    setSectionCounter(prevCounter => prevCounter + 1);
+    console.log("add section");
+    console.log(sectionCounter);
   };
 
   const handleAddLayout = (index, layout) => {

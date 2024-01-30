@@ -12,7 +12,6 @@ export default function Sections ({counter, addSection, addLayout, addWidget, se
         <Grid item container direction="column">
             <Grid item>
                 {Array(counter).fill().map((_, index) => (
-                    initialNote.section[index] && (
                             <Section
                                 index={index}
                                 addLayout={addLayout}
@@ -20,7 +19,6 @@ export default function Sections ({counter, addSection, addLayout, addWidget, se
                                 setWidgetContent={setWidgetContent}
                                 initialSection={initialNote.section[index]}
                             />
-                        )
                 ))}
             </Grid>
             <Grid item sx={{margin: 'auto'}}>

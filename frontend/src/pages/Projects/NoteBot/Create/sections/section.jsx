@@ -7,7 +7,6 @@ export default function Section ({index, addLayout, addWidget, setWidgetContent,
     const [isLayoutSelectorVisible, setLayoutSelectorVisible] = React.useState(initialSection.layout.length === 0);
 
     const [selectedLayout, setSelectedLayout] = React.useState(initialSection.layout);
-
     const handleLayoutSelect = (columns) => {
         setLayoutSelectorVisible(false);
         setSelectedLayout(columns);
@@ -23,7 +22,7 @@ export default function Section ({index, addLayout, addWidget, setWidgetContent,
     };
     return (<div>
             <React.Fragment>
-                {isLayoutSelectorVisible || selectedLayout === 0 ? (
+                {isLayoutSelectorVisible || selectedLayout.length === 0 ? (
                     <LayoutSelector onLayoutSelect={handleLayoutSelect} />
                 ) : (
                     <Grid container alignItems="flex-start" sx={{
