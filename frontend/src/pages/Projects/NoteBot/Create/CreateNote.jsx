@@ -148,10 +148,19 @@ export default function CreateNote() {
     };
     getNoteInfoFunction();
 
-    const isFavorite = isFavNote(user.user.uid, noteId);
-    setFavorite({
-      favorite: isFavorite,
-    });
+    async function checkFavorite() {
+      try {
+        const isFavorite = await isFavNote(user.user.uid, noteId);
+        setFavorite({
+          favorite: isFavorite,
+        });
+      } catch (error) {
+        console.error("Error checking favorite:", error);
+      }
+    }
+
+    checkFavorite();
+
     setIsLoading(false);
 
   }, []);
@@ -160,7 +169,7 @@ export default function CreateNote() {
   const [isDialogOpen, setDialogOpen] = React.useState(false);
   const [selectedCourse, setSelectedCourse] = React.useState([]);
   const [newCourse, setNewCourse] = React.useState([]);
-  const [sectionCounter, setSectionCounter] = React.useState(1);
+  const [sectionCounter, setSectionCounter] = React.useState(0);
   const handleTitleChange = (event) => {
     setNoteTitle(event.target.value);
   };
@@ -370,19 +379,21 @@ export default function CreateNote() {
                 </Grid>
               </Grid>
               <Grid item container xs direction="row" justifyContent="flex-end">
-                <Grid item>
-                  <IconButton onClick={handleFavorite} aria-label="Favor Note">
-                    {favorite.favorite ? (
-                        <Tooltip title="Unfavorite Note" enterDelay={500}>
-                          <FavoriteIconFilled sx={{ color: "red" }} />
-                        </Tooltip>
-                    ) : (
-                        <Tooltip title="Favorite Note" enterDelay={500}>
-                          <FavoriteIcon sx={{ color: "red" }} />
-                        </Tooltip>
-                    )}
-                  </IconButton>
-                </Grid>
+                {initialNote.title !== "" && (
+                    <Grid item>
+                      <IconButton onClick={handleFavorite} aria-label="Favor Note">
+                        {favorite.favorite ? (
+                            <Tooltip title="Unfavorite Note" enterDelay={500}>
+                              <FavoriteIconFilled sx={{ color: "red" }} />
+                            </Tooltip>
+                        ) : (
+                            <Tooltip title="Favorite Note" enterDelay={500}>
+                              <FavoriteIcon sx={{ color: "red" }} />
+                            </Tooltip>
+                        )}
+                      </IconButton>
+                    </Grid>
+                )}
                 <Grid item>
                   <Button variant="contained" onClick={handleSave}>
                     <SaveIcon/>
