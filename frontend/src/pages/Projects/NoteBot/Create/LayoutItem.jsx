@@ -1,4 +1,4 @@
-import Grid from "@mui/material/Grid";
+import Grid from "@mui/material/Grid"; 
 import {
   Button,
   ButtonBase,
@@ -7,41 +7,46 @@ import {
   Paper,
   Stack,
   Typography,
-} from "@mui/material";
-import styled from "@emotion/styled";
+} from "@mui/material"; 
+import styled from "@emotion/styled"; 
 
+// Styling the Paper component using Emotion's styled
 const Item = styled(Paper)({
-  backgroundColor: "#A5A5A5", // Platzhalterfarbe für den Dunkelmodus
-  padding: "8px", // Platzhalterabstand
-  textAlign: "center",
-  borderRadius: 0,
-  boxShadow: 0,
-  height: 60,
-  color: "#333", // Platzhaltertextfarbe
+  backgroundColor: "#A5A5A5", 
+  padding: "8px", 
+  textAlign: "center", 
+  borderRadius: 0, 
+  boxShadow: 0, 
+  height: 60, 
+  color: "#333", 
 });
 
+// Component for each layout item
 export const LayoutItem = ({ columns, handle }) => {
   return (
+    // Grid container for layout item
     <Grid
       container
-      xs={12}
+      xs={12} // Taking full width on extra-small screens
       sx={{
-        margin: 1,
-        width: 140,
-        p: 1,
-        ":hover": {
-          boxShadow: 1,
-          backgroundColor: "#fff", // Platzhalterfarbe für den Hintergrund im Hover-Zustand
-          color: "#666", // Platzhaltertextfarbe im Hover-Zustand
-          borderRadius: 1,
+        margin: 1, 
+        width: 140, 
+        p: 1, 
+        ":hover": { // Hover effect styles
+          boxShadow: 1, 
+          backgroundColor: "#fff", 
+          color: "#666", 
+          borderRadius: 1, 
         },
       }}
-      onClick={() => handle(columns)}
+      onClick={() => handle(columns)} 
     >
+      {/* Mapping over columns array to render grid items */}
       {columns.map((column, index) => {
         return (
-          <Grid item xs={column} key={index} sx={{padding: 0.5}}>
-            <Item />
+          // Grid item for each column
+          <Grid item xs={column} key={index} sx={{padding: 0.5}}> 
+            <Item /> 
           </Grid>
         );
       })}
