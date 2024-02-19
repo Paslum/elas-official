@@ -370,7 +370,7 @@ export default function CreateNote() {
                             <MenuItem value={course}>{course.title}</MenuItem>
                         ))
                         ) : (
-                            <MenuItem value="No course">No courses yet</MenuItem>
+                            <MenuItem disabled="true" value="No course">No courses yet</MenuItem>
                         )}
                       </Select>
                     </DialogContent>
