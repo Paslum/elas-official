@@ -154,7 +154,7 @@ export const getNoteContentById = async (noteId) => {
       message: responseNote.data.message,
       title: responseNote.data.note.title,
       course: filteredCourse,
-      sections: await Promise.all(responseSections.data.sections.map(async section => {
+      sections: responseSections.data.sections ? await Promise.all(responseSections.data.sections.map(async section => {
         const layoutResponse = await responseSection(section);
         return {
           layout: layoutResponse.data.layout,
@@ -166,7 +166,7 @@ export const getNoteContentById = async (noteId) => {
             };
           })),
         };
-      })),
+      })) : [],
     };
 
     return NoteInfo;

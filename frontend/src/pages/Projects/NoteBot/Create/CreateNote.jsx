@@ -124,7 +124,7 @@ export default function CreateNote() {
         setNoteTitle(note.title);
         setNewCourse(note.course);
         setSelectedCourse(note.course);
-        setSectionCounter(note.sections.length);
+        setSectionCounter(note.sections.length || 1);
         let indexCounter = 0;
         setLayout((prevState) => ({
           layout: [
