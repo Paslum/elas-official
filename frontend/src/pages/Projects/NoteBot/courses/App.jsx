@@ -5,9 +5,10 @@ import {useEffect, useState} from "react";
 import {getCoursesByUserId} from "../utils/api.js";
 import {useNavigate} from "react-router-dom";
 
+// This component represents the main application where users can view and manage their notes
 export default function app({uid}) {
-    const navigate = useNavigate();
-    const [isLoading, setIsLoading] = useState(true);
+    const navigate = useNavigate(); // Hook for programmatic navigation
+    const [isLoading, setIsLoading] = useState(true); // State for loading state
 
     const [courses, setCourses] = useState({
         message: "Server not connected",
@@ -17,7 +18,7 @@ export default function app({uid}) {
     useEffect(() => {
         async function getCoursesInfoFunction(userId) {
             try {
-                let response = await getCoursesByUserId(userId);
+                let response = await getCoursesByUserId(userId); // Fetch courses by user ID
                 setCourses(prevState => ({
                     ...prevState,
                     message: response.message,
@@ -34,13 +35,15 @@ export default function app({uid}) {
                     message: "Error fetching courses",
                 }));
             } finally {
-                setIsLoading(false);
+                setIsLoading(false); // Set loading state to false when done
             }
         }
         getCoursesInfoFunction(uid);
-    }, []);
+    }, []); // Empty array as dependency, so useEffect runs only once
+
     return (
         <div>
+            {/* Header with title and buttons */}
             <Grid container alignItems="center" justifyContent="space-between">
                 <Grid item>
                     <Typography variant="heading">
@@ -50,11 +53,13 @@ export default function app({uid}) {
                 <Grid item>
                     <Grid container spacing={1}>
                         <Grid item>
+                            {/* Button for recently deleted notes (disabled) */}
                             <Button variant="outlined" disabled="true">
                                 Recently Deleted
                             </Button>
                         </Grid>
                         <Grid item>
+                            {/* Button to add a new note */}
                             <Button
                                 variant="contained"
                                 onClick={() => navigate("/projects/notebot/create")}
@@ -65,6 +70,7 @@ export default function app({uid}) {
                     </Grid>
                 </Grid>
             </Grid>
+            {/* Divider */}
             <Divider />
             <Grid
                 container
@@ -72,17 +78,20 @@ export default function app({uid}) {
                 justifyContent="flex-start"
                 alignItems="flex-start"
             >
+                {/* Loading progress bar */}
                 {isLoading ? (
                     <Grid item sx={{ width: '100%', padding: 10 }}>
                         <LinearProgress />
                     </Grid>
                 ) : courses.courses.length !== 0 ? (
+                    // Render courses
                     courses.courses.map((course) => (
                         <Grid item key={course.courseId} sx={{ width: '100%' }}>
                             <Course course={course} uid={uid} />
                         </Grid>
                     ))
                 ) : (
+                    // No notes message
                     <Grid container justifyContent="center" sx={{ width: '100%', padding: 10 }}>
                         <Grid item>
                             <Typography variant="big">
