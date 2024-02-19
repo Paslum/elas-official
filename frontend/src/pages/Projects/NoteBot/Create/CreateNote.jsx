@@ -252,7 +252,7 @@ export default function CreateNote() {
         autoHideDuration: 2500,
       });}
       else {
-        if (title === "") {
+        if (title === "" || title === undefined) {
           const currentDate = new Date();
           const formattedDate = `${currentDate.toLocaleDateString()}, ${currentDate.toLocaleTimeString()}`;
           title = `New Note ${formattedDate}`;
