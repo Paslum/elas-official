@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import { Box, FormControl, Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button, } from "@mui/material";
+
+// Component for renaming a course
 export const RenameCourseDialog = ({ onClose, courseTitle, handleRename }) => {
+    // State to manage the new course title
     const [newCourseTitle, setNewCourseTitle] = useState(courseTitle);
 
+    // Function to handle the renaming of the course
     const handleRenameCourse = async () => {
         try {
+            // Call the handleRename function provided by the parent component
             handleRename(newCourseTitle);
             onClose();
         } catch (error) {
@@ -14,11 +19,14 @@ export const RenameCourseDialog = ({ onClose, courseTitle, handleRename }) => {
     };
 
     return (
-        <Dialog onClose={onClose} open="true" fullWidth>
+        // Dialog component for renaming course
+        <Dialog onClose={onClose} open={true} fullWidth>
             <DialogTitle>Rename Course</DialogTitle>
             <DialogContent>
+                {/* Empty space */}
                 <Box sx={{ height: 12 }} />
 
+                {/* Form control for entering new course title */}
                 <FormControl fullWidth>
                     <TextField
                         label="Course Title"
@@ -30,12 +38,14 @@ export const RenameCourseDialog = ({ onClose, courseTitle, handleRename }) => {
                 </FormControl>
             </DialogContent>
             <DialogActions sx={{ padding: 2 }}>
+                {/* Button to cancel renaming */}
                 <Button
                     onClick={onClose}
                     variant="outlined"
                 >
                     Cancel
                 </Button>
+                {/* Button to confirm renaming */}
                 <Button
                     onClick={handleRenameCourse}
                     variant="contained"
@@ -47,3 +57,4 @@ export const RenameCourseDialog = ({ onClose, courseTitle, handleRename }) => {
         </Dialog>
     );
 };
+
