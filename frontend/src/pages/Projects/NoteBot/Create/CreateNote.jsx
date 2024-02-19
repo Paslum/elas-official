@@ -1,34 +1,18 @@
 import React, {useEffect, useState} from "react";
-import {Grid, ThemeProvider, Typography, Divider, IconButton, Tooltip} from "@mui/material";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import FolderIcon from "@mui/icons-material/Folder";
-import EditIcon from "@mui/icons-material/Edit";
-import SaveIcon from "@mui/icons-material/Save";
-import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
-import DialogActions from "@mui/material/DialogActions";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
-import InputAdornment from '@mui/material/InputAdornment';
+import {useNavigate, useParams} from "react-router-dom";
+//MaterialUI Components
+import {Grid, ThemeProvider, Typography, Divider, IconButton, Tooltip, Button, TextField,
+        Dialog, DialogTitle, DialogContent, DialogActions, InputAdornment, MenuItem, Select
+} from "@mui/material";
+//MaterialUI Icons
+import { Folder as FolderIcon, Edit as EditIcon, Save as SaveIcon, Favorite as FavoriteIconFilled, FavoriteBorderOutlined as FavoriteIcon
+} from "@mui/icons-material";
 import noteBotLogo from "../../../../assets/images/noteBot-logo.png";
 import theme, {colors} from "../theme.js";
-import {
-  getCoursesByUserId,
-  getUserInfo,
-  createNote,
-  getNoteContentById,
-  remFavNote,
-  addFavNote,
-  isFavNote,
+import { getCoursesByUserId, getUserInfo, createNote, getNoteContentById, remFavNote, addFavNote, isFavNote,
 } from "../utils/api.js";
-import {useNavigate} from "react-router-dom";
-import {enqueueSnackbar} from "notistack";
 import Sections from "./sections/app.jsx";
-import { useParams } from "react-router-dom";
-import FavoriteIconFilled from "@mui/icons-material/Favorite.js";
-import FavoriteIcon from "@mui/icons-material/FavoriteBorderOutlined.js";
+import {enqueueSnackbar} from "notistack";
 
 export default function CreateNote() {
   const { noteId } = useParams();
