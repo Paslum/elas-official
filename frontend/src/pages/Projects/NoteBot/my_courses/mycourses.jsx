@@ -7,76 +7,79 @@ import {deleteCourse, updateCourse} from "../utils/api.js";
 import { RenameCourseDialog } from "./rename.jsx";
 import {enqueueSnackbar} from "notistack";
 
-// Component for rendering user's courses
-export default function MyCourses({ course, removeCourses, updateCourses}) {
-  // State for managing the dialog state for renaming course
+export default function mycourses({ course, removeCourses, updateCourses}) {
+  const useDialogState = (initialState = false) => {
+    const [open, setOpen] = useState(initialState);
+
+    const handleOpen = () => {
+      setOpen(true);
+    };
+
+    const handleClose = () => {
+      setOpen(false);
+    };
+
+    return {
+      open,
+      handleOpen,
+      handleClose,
+    };
+  };
+
   const renameCourse = useDialogState();
 
-  // State for managing the course title
   const [courseTitle, setCourseTitle] = useState({
     title: course.title,
   });
 
-  // Function to handle renaming of the course
   const handleRename = async (title) => {
     try {
-      // Update course title
       await updateCourse(course.courseId, title);
       setCourseTitle(prevState => ({
         ...prevState,
         title: title,
       }));
-      // Display success message
-      enqueueSnackbar(`Course "${courseTitle.title}" renamed`, {
+      enqueueSnackbar(`Course \"${courseTitle.title}\" renamed`, {
         variant: "success",
         autoHideDuration: 2000,
       });
     } catch(error){
-      // Display error message if failed to rename course
-      enqueueSnackbar(`Failed to rename "${courseTitle.title}"`, {
+      enqueueSnackbar(`Failed to rename \"${courseTitle.title}\"`, {
         variant: "error",
         autoHideDuration: 2000,
       });
     }
   }
 
-  // Function to handle deletion of the course
   const handleDelete = async () => {
+    //Hier vor fehlt noch ein confirmation PopUp
     try {
-      // Delete the course
       await deleteCourse(course.courseId);
       removeCourses(course.courseId);
-      // Display success message
-      enqueueSnackbar(`Course "${courseTitle.title}" deleted`, {
+      enqueueSnackbar(`Course \"${courseTitle.title}\" deleted`, {
         variant: "success",
         autoHideDuration: 2000,
       });
     } catch(error){
-      // Display error message if failed to delete course
-      enqueueSnackbar(`Failed to delete "${courseTitle.title}"`, {
+      enqueueSnackbar(`Failed to delete \"${courseTitle.title}\"`, {
         variant: "error",
         autoHideDuration: 2000,
       });
     };
   };
-
   return (
     <Box>
       <Divider />
-      {/* Container for course details */}
       <Grid container alignItems="center" justifyContent="space-between"  sx={{ height: 60 }}>
         <Grid item>
-          {/* Container for edit and course title */}
           <Grid container alignItems="center">
             <Grid item>
-              {/* Button to open rename course dialog */}
               <Tooltip title="Rename Course" enterDelay={500}>
                 <IconButton onClick={() => {renameCourse.handleOpen()}}>
                   <EditIcon />
                 </IconButton>
               </Tooltip>
               <Grid item>
-                {/* Render RenameCourseDialog if open */}
                 {renameCourse.open && (
                     <RenameCourseDialog
                         onClose={renameCourse.handleClose}
@@ -87,7 +90,6 @@ export default function MyCourses({ course, removeCourses, updateCourses}) {
               </Grid>
             </Grid>
             <Grid item>
-              {/* Display course title */}
               <Typography variant="bigMain">
                 {courseTitle.title}
               </Typography>
@@ -95,10 +97,8 @@ export default function MyCourses({ course, removeCourses, updateCourses}) {
           </Grid>
         </Grid>
         <Grid item>
-          {/* Container for number of notes and delete button */}
           <Grid container alignItems="center">
             <Grid item>
-              {/* Display number of notes in the course */}
               <Tooltip title="Notes in this Course" enterDelay={500}>
                 <Typography variant="normal">
                   {course.notes?.length ?? 0}
@@ -106,7 +106,6 @@ export default function MyCourses({ course, removeCourses, updateCourses}) {
               </Tooltip>
             </Grid>
             <Grid item>
-              {/* Button to delete the course */}
               <Tooltip title="Delete Course" enterDelay={500}>
                 <IconButton onClick={handleDelete}>
                   <DeleteIcon />
