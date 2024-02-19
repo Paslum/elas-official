@@ -21,9 +21,9 @@ NoteBot was initially developed by [Hla Abuhamra](https://github.com/HlaHusain),
 
 <p align="center"> 
 
-  <img src="https://github.com/Paslum/elas-official/blob/dev-notebot/frontend/src/assets/images/NoteBot%20Images/technical_architecture.png" width="350" title="hover text"> 
+  <img src="https://github.com/Paslum/elas-official/blob/dev-notebot/frontend/src/assets/images/NoteBot%20Images/technical_architecture.png" width="800" title="hover text"> 
 
-  <img src="https://github.com/Paslum/elas-official/blob/dev-notebot/frontend/src/assets/images/NoteBot%20Images/sitemap_components.png" width="350" alt="accessibility text"> 
+  <img src="https://github.com/Paslum/elas-official/blob/dev-notebot/frontend/src/assets/images/NoteBot%20Images/sitemap_components.png" width="800" alt="accessibility text"> 
 
 </p>
 
