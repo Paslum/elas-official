@@ -1,7 +1,7 @@
 import * as React from "react";
-import Note from "./note"; // Importing the Note component
-import { Stack } from "@mui/material"; // Importing Stack component from Material-UI
-import { useState } from "react"; // Importing useState hook from React
+import Note from "./note"; 
+import { Stack } from "@mui/material"; 
+import { useState } from "react"; 
 
 export default function App({ notesInfo, uid }) {
     // Initializing state for notes using useState hook
