@@ -3,18 +3,17 @@ const controller = require("../controllers/course.controller");
 /***************** START: INITIALIZE ROUTER MODULE *****************
  * @documentation
  * The code `let courseRouter = require("express").Router();`
- * is creating a new instance of the Express Router.
- * The 'userRouter' in this example is acting like
- * a middleware function that allows you to define routes
- * for your application. Make sure to define the middleware,
- * in this case 'userRouter.use()' function is used to
- * define middleware.
+ * creates a new instance of the Express Router named 'courseRouter'.
+ * This instance acts as a middleware function allowing the definition
+ * of routes for the application. Middleware can be defined using
+ * 'courseRouter.use()' function, as shown here.
  */
 let courseRouter = require("express").Router();
 
 courseRouter.use(function (req, res, next) {
+    // Middleware function to set Access-Control-Allow-Headers header
     res.header("Access-Control-Allow-Headers", "Origin, Content-Type, Accept");
-    next();
+    next(); // Passing control to the next middleware
 });
 
 /***************** END: INITIALIZE ROUTER MODULE *****************/
@@ -24,23 +23,23 @@ courseRouter.use(function (req, res, next) {
  * When creating a route, you need to define the HTTP method
  * and the path. The HTTP method can be any of the following:
  * GET, POST, PUT, DELETE, PATCH, HEAD, OPTIONS.
- * In the example below, 'userRouter' is used to define the
- * routes. The 'userRouter.get()' method is used to define a
- * GET route. The first parameter '/users/:userId' is the path and
- * the second parameter 'controller.saveUser' is the controller
- * function. ":userId" is a parameter send through the url
- * The controller function is define in the 'user.controller.js'
- * file under controllers folder.
+ * In this example, 'courseRouter' is used to define the routes.
+ * Various HTTP methods are used to define routes for different
+ * functionalities related to courses.
+ * The controller functions are defined in the 'course.controller.js'
+ * file under the controllers folder.
  */
 courseRouter.get('/courses', controller.getAllCourses); // Currently not used
 courseRouter.get('/course/:user_id', controller.getCoursesByUserId); // Get all Courses by UserId
 courseRouter.get('/course/search/:searchParam', controller.getCoursesByTitle); // Search Courses by Title
 
-courseRouter.post('/course', controller.createCourse); // AddCourse buttons
+courseRouter.post('/course', controller.createCourse); // Create a new course
 
-courseRouter.put('/course/update', controller.updateCourse) //Change Course title
+courseRouter.put('/course/update', controller.updateCourse); // Update course title
 
-courseRouter.delete('/course/delete/:course_id', controller.deleteCourse); // Deleting a Course by _id
+courseRouter.delete('/course/delete/:course_id', controller.deleteCourse); // Delete a course by course_id
 
-//export the router
+/***************** END: CREATE ROUTES ****************************/
+
+// Export the router
 module.exports = courseRouter;
