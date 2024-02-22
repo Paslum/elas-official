@@ -2,13 +2,18 @@ const db = require("../models");
 const noteModel = db.note;
 const courseModel = db.course;
 
-/**
+/***************** START: NOTE MANAGEMENT API *****************
+ * @documentation
+ *
  * @function getNotesByUserId
- * @async
- * @param {Object} req - Express request object
- * @param {Object} res - Express response object
- * @returns {Promise<void>} - Promise representing the result of the operation
- * @description Fetches notes from the database based on the provided userId.
+ * The `getNotesByUserId` function is an asynchronous function that retrieves
+ * notes associated with a specific user ID from the database. It queries the
+ * database for notes with the specified user ID and sends a response with the
+ * found notes if available, or a message indicating that no notes were found.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A response object with a status code and a message.
+ * If notes are found, it includes the notes in the response.
  */
 export const getNotesByUserId = async (req, res) => {
     // Extract user ID from request parameters
@@ -37,13 +42,17 @@ export const getNotesByUserId = async (req, res) => {
         return res.status(500).send({ message: `Error fetching notes from the database` });
     }
 };
+
 /**
  * @function getNoteById
- * @async
- * @param {Object} req - Express request object
- * @param {Object} res - Express response object
- * @returns {Promise<void>} - Promise representing the result of the operation
- * @description Fetches a single note from the database based on the provided note ID.
+ * The `getNoteById` function is an asynchronous function that retrieves
+ * a single note from the database based on the provided note ID. It queries
+ * the database for a note with the specified ID and sends a response with
+ * the found note if available, or a message indicating that no note was found.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A response object with a status code and a message.
+ * If a note is found, it includes the note in the response.
  */
 export const getNoteById = async (req, res) => {
     // Extract note ID from request parameters
@@ -72,13 +81,18 @@ export const getNoteById = async (req, res) => {
         return res.status(500).send({ message: `Error fetching note from the database` });
     }
 };
+
 /**
  * @function deleteNote
- * @async
- * @param {Object} req - Express request object
- * @param {Object} res - Express response object
- * @returns {Promise<void>} - Promise representing the result of the operation
- * @description Deletes a note from the database based on the provided note ID.
+ * The `deleteNote` function is an asynchronous function that deletes a
+ * note from the database based on the provided note ID. It also updates
+ * associated courses to remove the reference to the deleted note. It sends
+ * a success message if the deletion is successful, or an error message
+ * if the note is not found or if there are issues during deletion.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A response object with a status code and
+ * a message indicating the success or failure of the operation.
  */
 export const deleteNote = async (req, res) => {
     // Extract note ID from request parameters
@@ -107,13 +121,18 @@ export const deleteNote = async (req, res) => {
         return res.status(500).send({ message: `Couldn't delete Note!` });
     }
 };
+
 /**
  * @function createNote
- * @async
- * @param {Object} req - Express request object
- * @param {Object} res - Express response object
- * @returns {Promise<void>} - Promise representing the result of the operation
- * @description Creates a new note and associates it with a user and a course (if provided).
+ * The `createNote` function is an asynchronous function that creates
+ * a new note and saves it to the database. It associates the note with
+ * a user and a course if provided. It sends a success message if the
+ * creation is successful, or an error message if there are issues during
+ * creation.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A response object with a status code and
+ * a message indicating the success or failure of the operation.
  */
 export const createNote = async (req, res) => {
     try {
@@ -154,6 +173,17 @@ export const createNote = async (req, res) => {
     }
 };
 
+/**
+ * @function getSections
+ * The `getSections` function is an asynchronous function that retrieves
+ * sections associated with a specific note by its ID. It queries the
+ * database for a note with the specified ID and sends a response with
+ * the sections if found, or a message indicating that no sections were found.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A response object with a status code and
+ * a message. If sections are found, it includes the sections in the response.
+ */
 export const getSections = async (req, res) => {
     try {
         const noteId = req.params.noteId;
@@ -162,19 +192,31 @@ export const getSections = async (req, res) => {
         const foundNote = await noteModel.findOne({ _id: noteId });
         // Check if a note was found
         if (foundNote.sections.length > 0) {
-            // Send a success response with the found note
+            // Send a success response with the found sections
             return res.status(200).send({
                 message: `Section(s) found!`,
                 sections: foundNote.sections,
             });
         }
-        // Send a response indicating no note was found
+        // Send a response indicating no sections were found
         return res.status(200).send({ message: `No Section found!` });
     } catch (Error) {
         return res.status(500).send({ message: `Error fetching Sections` });
     }
 };
 
+/**
+ * @function updateNote
+ * The `updateNote` function is an asynchronous function that updates
+ * the details of a note in the database based on the provided note ID.
+ * It updates the note's title. It sends a success message if the update
+ * is successful, or an error message if the note is not found or if there
+ * are issues during the update.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A response object with a status code and
+ * a message indicating the success or failure of the operation.
+ */
 export const updateNote = async (req, res) => {
     const noteId = req.body.noteId;
     try {
