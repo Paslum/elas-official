@@ -6,18 +6,18 @@ export const getWidget = async (req, res) => {
     try {
         const widget = req.params.widget;
 
-        // Query the database for a note with the specified ID
+        // Query the database for a widget with the specified ID
         const foundWidget = await widgetModel.findOne({ _id: widget });
-        // Check if a note was found
+        // Check if a widget was found
         if (foundWidget) {
-            // Send a success response with the found note
+            // Send a success response with the found widget
             return res.status(200).send({
                 message: `Widgets found!`,
                 type: foundWidget.type,
                 data: foundWidget.data,
             });
         }
-        // Send a response indicating no note was found
+        // Send a response indicating no widget was found
         return res.status(200).send({ message: `No Data found!` });
     } catch (Error) {
         return res.status(500).send({ message: `Error fetching Data` });
@@ -27,22 +27,22 @@ export const getWidget = async (req, res) => {
 export const addWidget = async (req, res) => {
     try {
 
-        // Create a new note instance with user ID and title
+        // Create a new widget instance
         let widget = new widgetModel({
             type: req.body.type,
             data: req.body.data,
         });
-        // Save the new note to the database
+        // Save the new widget to the database
         await widget.save();
         try {
             const foundSection = await sectionModel.findOne({ _id: req.body.section });
-            // If the course exists, update it to include the new note
+            // If Section exists, update it and add widgetId
             if (foundSection) {
                 await sectionModel.updateOne({ _id: req.body.section }, { $push: { widgets: widget._id.toString() } });
             }
 
         } catch (err) {
-            // Handle errors related to saving the note to a course
+            // Handle errors related to saving the widget to Section
             return res.status(500).send({ message: `Widget saved but error saving widget to section` });
         }
 
@@ -51,7 +51,7 @@ export const addWidget = async (req, res) => {
             message: `Widget ${widget} created successfully!`,
         });
     } catch (err) {
-        // Handle errors related to saving the note to the database
+        // Handle errors related to saving the widget to the database
         return res.status(500).send({ message: `Error saving widget to DB` });
     }
 };
@@ -60,7 +60,7 @@ export const deleteWidget = async (req, res) => {
     try {
         const foundWidget = await widgetModel.findOne({ _id: req.params.widget });
 
-        // If the course exists, update it to include the new note
+        // If the widget exists, delete it
         if (foundWidget) {
             await widgetModel.deleteOne({ _id: req.params.widget });
 
@@ -70,7 +70,7 @@ export const deleteWidget = async (req, res) => {
         }
         return res.status(500).send({ message: `Widget not found` });
     } catch (err) {
-        // Handle errors related to saving the note to a course
+        // Handle errors related to deleting Widget from Section
         return res.status(500).send({ message: `Widget couldn't be deleted` });
     }
 };
