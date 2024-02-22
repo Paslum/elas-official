@@ -3,18 +3,17 @@ const controller = require("../controllers/note.controller");
 /***************** START: INITIALIZE ROUTER MODULE *****************
  * @documentation
  * The code `let noteRouter = require("express").Router();`
- * is creating a new instance of the Express Router.
- * The 'userRouter' in this example is acting like
- * a middleware function that allows you to define routes
- * for your application. Make sure to define the middleware,
- * in this case 'userRouter.use()' function is used to
- * define middleware.
+ * creates a new instance of the Express Router named 'noteRouter'.
+ * This instance acts as a middleware function allowing the definition
+ * of routes for the application. Middleware can be defined using
+ * 'noteRouter.use()' function, as shown here.
  */
 let noteRouter = require("express").Router();
 
 noteRouter.use(function (req, res, next) {
+    // Middleware function to set Access-Control-Allow-Headers header
     res.header("Access-Control-Allow-Headers", "Origin, Content-Type, Accept");
-    next();
+    next(); // Passing control to the next middleware
 });
 
 /***************** END: INITIALIZE ROUTER MODULE *****************/
@@ -24,28 +23,23 @@ noteRouter.use(function (req, res, next) {
  * When creating a route, you need to define the HTTP method
  * and the path. The HTTP method can be any of the following:
  * GET, POST, PUT, DELETE, PATCH, HEAD, OPTIONS.
- * In the example below, 'userRouter' is used to define the
- * routes. The 'userRouter.get()' method is used to define a
- * GET route. The first parameter '/users/:userId' is the path and
- * the second parameter 'controller.saveUser' is the controller
- * function. ":userId" is a parameter send through the url
- * The controller function is define in the 'user.controller.js'
- * file under controllers folder.
+ * In this example, 'noteRouter' is used to define the routes.
+ * Various HTTP methods are used to define routes for different
+ * functionalities related to notes.
+ * The controller functions are defined in the 'note.controller.js'
+ * file under the controllers folder.
  */
+noteRouter.get('/notes/:userId', controller.getNotesByUserId); // Get all Notes by UserId
+noteRouter.get('/note/:noteId', controller.getNoteById); // Get a single Note by NoteId
+noteRouter.get('/sections/:noteId', controller.getSections); // Get sections of a note
 
-//noteRouter.get('/notes', controller.getAllNotes); //Currently not used
-noteRouter.get('/notes/:userId', controller.getNotesByUserId); //Get all Notes by UserId
-noteRouter.get('/note/:noteId', controller.getNoteById);
-noteRouter.get('/sections/:noteId', controller.getSections);
+noteRouter.post('/note', controller.createNote); // Create a new note
 
-//noteRouter.get('/notes/search/:searchParam', controller.getNotesByTitle); //Search Notes by title
+noteRouter.put('/note/update', controller.updateNote); // Update note title
 
-noteRouter.post('/note', controller.createNote); // AddNote buttons
+noteRouter.delete('/note/delete/:noteId', controller.deleteNote); // Delete a note by NoteId
 
-noteRouter.put('/note/update', controller.updateNote) //Change Note title
+/***************** END: CREATE ROUTES ****************************/
 
-
-noteRouter.delete('/note/delete/:noteId', controller.deleteNote); // Deleting a Note by _id
-
-//export the router
+// Export the router
 module.exports = noteRouter;
