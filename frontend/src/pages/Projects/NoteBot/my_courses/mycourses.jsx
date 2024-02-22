@@ -7,7 +7,9 @@ import {deleteCourse, updateCourse} from "../utils/api.js";
 import { RenameCourseDialog } from "./rename.jsx";
 import {enqueueSnackbar} from "notistack";
 
-export default function mycourses({ course, removeCourses, updateCourses}) {
+// Component for rendering individual courses
+export default function MyCourses({ course, removeCourses, updateCourses }) {
+  // State for managing dialog state
   const useDialogState = (initialState = false) => {
     const [open, setOpen] = useState(initialState);
 
@@ -26,12 +28,13 @@ export default function mycourses({ course, removeCourses, updateCourses}) {
     };
   };
 
+  // State for managing course title
   const renameCourse = useDialogState();
-
   const [courseTitle, setCourseTitle] = useState({
     title: course.title,
   });
 
+  // Function to handle renaming of the course
   const handleRename = async (title) => {
     try {
       await updateCourse(course.courseId, title);
@@ -51,8 +54,8 @@ export default function mycourses({ course, removeCourses, updateCourses}) {
     }
   }
 
+  // Function to handle deletion of the course
   const handleDelete = async () => {
-    //Hier vor fehlt noch ein confirmation PopUp
     try {
       await deleteCourse(course.courseId);
       removeCourses(course.courseId);
@@ -67,18 +70,22 @@ export default function mycourses({ course, removeCourses, updateCourses}) {
       });
     };
   };
+
   return (
     <Box>
       <Divider />
+      {/* Grid container for course details */}
       <Grid container alignItems="center" justifyContent="space-between"  sx={{ height: 60 }}>
         <Grid item>
           <Grid container alignItems="center">
             <Grid item>
+              {/* Button to open rename course dialog */}
               <Tooltip title="Rename Course" enterDelay={500}>
                 <IconButton onClick={() => {renameCourse.handleOpen()}}>
                   <EditIcon />
                 </IconButton>
               </Tooltip>
+              {/* Render rename course dialog */}
               <Grid item>
                 {renameCourse.open && (
                     <RenameCourseDialog
@@ -90,6 +97,7 @@ export default function mycourses({ course, removeCourses, updateCourses}) {
               </Grid>
             </Grid>
             <Grid item>
+              {/* Course title */}
               <Typography variant="bigMain">
                 {courseTitle.title}
               </Typography>
@@ -99,6 +107,7 @@ export default function mycourses({ course, removeCourses, updateCourses}) {
         <Grid item>
           <Grid container alignItems="center">
             <Grid item>
+              {/* Number of notes in the course */}
               <Tooltip title="Notes in this Course" enterDelay={500}>
                 <Typography variant="normal">
                   {course.notes?.length ?? 0}
@@ -106,6 +115,7 @@ export default function mycourses({ course, removeCourses, updateCourses}) {
               </Tooltip>
             </Grid>
             <Grid item>
+              {/* Button to delete the course */}
               <Tooltip title="Delete Course" enterDelay={500}>
                 <IconButton onClick={handleDelete}>
                   <DeleteIcon />

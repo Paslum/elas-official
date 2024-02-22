@@ -1,10 +1,8 @@
 import React, {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
-//MaterialUI Components
 import {Grid, ThemeProvider, Typography, Divider, IconButton, Tooltip, Button, TextField,
         Dialog, DialogTitle, DialogContent, DialogActions, InputAdornment, MenuItem, Select
 } from "@mui/material";
-//MaterialUI Icons
 import { Folder as FolderIcon, Edit as EditIcon, Save as SaveIcon, Favorite as FavoriteIconFilled, FavoriteBorderOutlined as FavoriteIcon
 } from "@mui/icons-material";
 import noteBotLogo from "../../../../assets/images/noteBot-logo.png";
@@ -14,13 +12,18 @@ import { getCoursesByUserId, getUserInfo, createNote, getNoteContentById, remFav
 import Sections from "./sections/app.jsx";
 import {enqueueSnackbar} from "notistack";
 
+// CreateNote component responsible for creating a new note
 export default function CreateNote() {
+  // Extract noteId from URL params
   const { noteId } = useParams();
   const [isLoading, setIsLoading] = useState(true);
 
+  // Initialize noteIdValue as null or noteId from URL
   const noteIdValue = noteId ? noteId : null;
 
   const navigate = useNavigate();
+
+  // State to manage initial note data
   const [initialNote, setInitialNote] = useState({
     title: "",
     course: "",
@@ -32,6 +35,8 @@ export default function CreateNote() {
       }]
     }],
   });
+
+  // State to manage user data
   const [user, setUser] = useState({
     message: "Server not connected",
     user: {
@@ -40,22 +45,28 @@ export default function CreateNote() {
       username: "",
     },
   });
+
+  // State to manage courses data
   const [courses, setCourses] = useState({
     message: "Server not connected",
     courses: [], // Initialize as an empty array
   });
 
+  // State to manage layout data
   const [layout, setLayout] = useState({
       layout: []
   });
 
+  // State to manage favorite status
   const [favorite, setFavorite] = useState({
     favorite: false,
   });
 
+  // Fetch initial user and courses data
   useEffect(() => {
     let elasUser = JSON.parse(sessionStorage.getItem("elas-user"));
 
+    // Function to fetch user info
     async function getUserInfoFunction() {
       let response = await getUserInfo(elasUser.id);
       setUser((prevState) => ({
@@ -71,6 +82,7 @@ export default function CreateNote() {
       getCoursesInfoFunction(response.user.uid);
     }
 
+    // Function to fetch courses info
     async function getCoursesInfoFunction(userId) {
       try {
         let response = await getCoursesByUserId(userId);
@@ -94,6 +106,7 @@ export default function CreateNote() {
 
     getUserInfoFunction();
 
+    // Function to fetch note info if noteId exists
     async function getNoteInfoFunction() {
       if (noteIdValue === null) {
         setSectionCounter(1);
@@ -133,6 +146,7 @@ export default function CreateNote() {
     };
     getNoteInfoFunction();
 
+    // Function to check if note is favorited by user
     async function checkFavorite() {
       try {
         const isFavorite = await isFavNote(user.user.uid, noteId);
@@ -150,34 +164,45 @@ export default function CreateNote() {
 
   }, []);
 
+  // State to manage note title
   const [noteTitle, setNoteTitle] = React.useState();
+  // State to manage dialog visibility
   const [isDialogOpen, setDialogOpen] = React.useState(false);
+  // State to manage selected course
   const [selectedCourse, setSelectedCourse] = React.useState([]);
+  // State to manage new course
   const [newCourse, setNewCourse] = React.useState([]);
+  // State to manage section counter
   const [sectionCounter, setSectionCounter] = React.useState(0);
+  // Function to handle title change
   const handleTitleChange = (event) => {
     setNoteTitle(event.target.value);
   };
 
+  // Function to handle dialog state
   const handleDialogState = () => {
     setDialogOpen(!isDialogOpen);
   };
 
+  // Function to handle course selection
   const handleSelectCourse = (event) => {
     setSelectedCourse(event.target.value);
   };
 
+  // Function to add course
   const handleAddToCourse = () => {
     setNewCourse(selectedCourse);
     setDialogOpen(false);
   };
 
+  // Function to add section
   const handleAddSection = () => {
     setSectionCounter(prevCounter => prevCounter + 1);
     console.log("add section");
     console.log(sectionCounter);
   };
 
+  // Function to add layout
   const handleAddLayout = (index, layout) => {
     setLayout((prevState) => ({
       ...prevState,
@@ -191,10 +216,12 @@ export default function CreateNote() {
     }));
   };
 
+  // State to manage widgets
   const [widgets, setWidgets] = React.useState({
     widget: []
   });
 
+  // Function to add widget
   const handleAddWidget = (index, type, section, data) => {
     setWidgets((prevState) => ({
       ...prevState,
@@ -210,6 +237,7 @@ export default function CreateNote() {
     }));
   };
 
+  // Function to set widget content
   const handleSetWidgetContent = (index, data, section) => {
     setWidgets(prevState => ({
       ...prevState,
@@ -227,6 +255,7 @@ export default function CreateNote() {
     }));
   };
 
+  // Function to handle note save
   const handleSave = async() => {
     let title = noteTitle;
     try {
@@ -255,6 +284,8 @@ export default function CreateNote() {
       });
     }
   };
+
+  // Function to handle note favorite
   const handleFavorite = async () => {
     try {
       if (favorite.favorite) {

@@ -29,15 +29,15 @@ widgetRouter.use(function (req, res, next) {
  * GET route. The first parameter '/users/:userId' is the path and
  * the second parameter 'controller.saveUser' is the controller
  * function. ":userId" is a parameter send through the url
- * The controller function is define in the 'user.controller.js'
+ * The controller function is define in the 'widget.controller.js'
  * file under controllers folder.
  */
 
-widgetRouter.get('/widget/:widget', controller.getWidget);
+widgetRouter.get('/widget/:widget', controller.getWidget); //Fetch a single Widget
 
-widgetRouter.post('/addWidget/', controller.addWidget);
+widgetRouter.post('/addWidget/', controller.addWidget); //Add a Widget to DB
 
-widgetRouter.delete('/widget/delete/:widget', controller.deleteWidget);
+widgetRouter.delete('/widget/delete/:widget', controller.deleteWidget); //Delete a Widget
 
 
 //export the router

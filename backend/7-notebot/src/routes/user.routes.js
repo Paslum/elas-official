@@ -37,9 +37,9 @@ userRouter.use(function (req, res, next) {
  * The controller function is define in the 'user.controller.js' 
  * file under controllers folder.
  */
-userRouter.get("/users/:userId", controller.getUserById);
-userRouter.post("/users", controller.createNewUser);
-userRouter.put("/users/:userId", controller.updateUser);
+userRouter.get("/users/:userId", controller.getUserById); //Get userInfo by userId
+userRouter.post("/users", controller.createNewUser); //Create a new user
+userRouter.put("/users/:userId", controller.updateUser); //Update userInfo by userId
 
 /***************** END: CREATE ROUTES ****************************/
 
