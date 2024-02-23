@@ -7,7 +7,7 @@ import { Folder as FolderIcon, Edit as EditIcon, Save as SaveIcon, Favorite as F
 } from "@mui/icons-material";
 import noteBotLogo from "../../../../assets/images/noteBot-logo.png";
 import theme, {colors} from "../theme.js";
-import { getCoursesByUserId, getUserInfo, createNote, getNoteContentById, remFavNote, addFavNote, isFavNote,
+import { getCoursesByUserId, getUserInfo, createNote, getNoteContentById, remFavNote, addFavNote, isFavNote, updateNote,
 } from "../utils/api.js";
 import Sections from "./sections/app.jsx";
 import {enqueueSnackbar} from "notistack";
@@ -253,32 +253,57 @@ export default function CreateNote() {
 
   // Function to handle note save
   const handleSave = async() => {
-    let title = noteTitle;
-    try {
-      if (newCourse.length === 0) {
-        enqueueSnackbar(`Please assign a course`, {
-        variant: "error",
-        autoHideDuration: 2500,
-      });}
-      else {
+    if (noteId) {
+      let title = noteTitle;
+      let course = {title: initialNote.course.title, courseId: initialNote.course.id}
+      try {
+        if (newCourse.courseId !== undefined) {
+          course = newCourse;
+        }
         if (title === "" || title === undefined) {
           const currentDate = new Date();
           const formattedDate = `${currentDate.toLocaleDateString()}, ${currentDate.toLocaleTimeString()}`;
           title = `New Note ${formattedDate}`;
         }
-        await createNote(user.user.uid, title, newCourse.courseId, layout, widgets);
-        navigate('/projects/notebot');
-        enqueueSnackbar(`Note \"${title}\" created`, {
+        await updateNote(noteId, title, course.courseId);
+        enqueueSnackbar(`Note \"${title}\" updated`, {
           variant: "success",
           autoHideDuration: 2000,
         });
+      } catch (error) {
+        enqueueSnackbar(error, {
+          variant: "error",
+          autoHideDuration: 2000,
+        });
       }
-    } catch(error){
-      enqueueSnackbar(`Failed to save \"${title}\"`, {
-        variant: "error",
-        autoHideDuration: 2000,
-      });
-    }
+    } else {
+      let title = noteTitle;
+      try {
+        if (newCourse.length === 0) {
+          enqueueSnackbar(`Please assign a course`, {
+            variant: "error",
+            autoHideDuration: 2500,
+          });
+        } else {
+          if (title === "" || title === undefined) {
+            const currentDate = new Date();
+            const formattedDate = `${currentDate.toLocaleDateString()}, ${currentDate.toLocaleTimeString()}`;
+            title = `New Note ${formattedDate}`;
+          }
+          await createNote(user.user.uid, title, newCourse.courseId, layout, widgets);
+          navigate('/projects/notebot');
+          enqueueSnackbar(`Note \"${title}\" created`, {
+            variant: "success",
+            autoHideDuration: 2000,
+          });
+        }
+      } catch (error) {
+        enqueueSnackbar(`Failed to save \"${title}\"`, {
+          variant: "error",
+          autoHideDuration: 2000,
+        });
+      }
+    };
   };
 
   // Function to handle note favorite

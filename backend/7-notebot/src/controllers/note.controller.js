@@ -219,11 +219,31 @@ export const getSections = async (req, res) => {
  */
 export const updateNote = async (req, res) => {
     const noteId = req.body.noteId;
+    const title = req.body.title;
     try {
         const foundNote = await noteModel.findOne({_id: noteId});
         if (foundNote) {
-            await noteModel.updateOne({_id: noteId}, {$set: {title: req.body.title}});
-            return res.status(200).send({message: `Note ${noteId} has been updated`});
+            await noteModel.updateOne({_id: noteId}, {$set: {title: title}});
+            try {
+                //Remove note from previous course
+                await courseModel.updateMany({}, { $pull: { notes: noteId } });
+
+                // Check if a course ID is provided in the request
+                const courseId = req.body.course;
+                // If a course ID is provided, associate the note with the course
+                if (courseId) {
+                    const foundCourse = await courseModel.findOne({ _id: courseId });
+
+                    // If the course exists, update it to include the new note
+                    if (foundCourse) {
+                        await courseModel.updateOne({ _id: courseId }, { $push: { notes: noteId } });
+                    }
+                }
+            } catch (err) {
+                // Handle errors related to saving the note to a course
+                return res.status(500).send({ message: `Note saved but error saving note to Course` });
+            }
+            return res.status(200).send({message: `Note ${noteId} has been updated successfully`});
         } return res.status(500).send({message: `Note ${noteId} does not exist`})
     } catch (err) {
         return res.status(500).send({ message: `Error updating note ${noteId}`});

@@ -247,6 +247,24 @@ export const createNote = async (userId, title, course, layout, widgets) => {
   }
 };
 
+export const updateNote = async (noteId, title, course) => {
+  try {
+    // Sending create note request to the backend
+    const response = await Backend.put(`/notebot/note/update`, { noteId: noteId, title: title, course: course });
+    const data = await response.data;
+
+    // Processing response and returning data
+    if (data.message && data.message.includes('updated successfully')) {
+      return response.data;
+    } else {
+      throw new Error('Failed to extract note information from the response.');
+    }
+  } catch (error) {
+    // Handling errors
+    throw new Error(`Failed to update a note. Error: ${error.message}`);
+  }
+};
+
 // Function to delete a note
 export const deleteNote = async (noteId) => {
   try {
