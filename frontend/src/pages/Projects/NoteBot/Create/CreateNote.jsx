@@ -58,9 +58,7 @@ export default function CreateNote() {
   });
 
   // State to manage favorite status
-  const [favorite, setFavorite] = useState({
-    favorite: false,
-  });
+  const [favorite, setFavorite] = useState(false);
 
   // Fetch initial user and courses data
   useEffect(() => {
@@ -146,23 +144,21 @@ export default function CreateNote() {
     };
     getNoteInfoFunction();
 
+    setIsLoading(false);
+
+  }, []);
+  if (noteId) {
     // Function to check if note is favorited by user
     async function checkFavorite() {
       try {
         const isFavorite = await isFavNote(user.user.uid, noteId);
-        setFavorite({
-          favorite: isFavorite,
-        });
+        setFavorite(prevState => isFavorite);
       } catch (error) {
         console.error("Error checking favorite:", error);
       }
     }
-
     checkFavorite();
-
-    setIsLoading(false);
-
-  }, []);
+  }
 
   // State to manage note title
   const [noteTitle, setNoteTitle] = React.useState();
@@ -288,12 +284,9 @@ export default function CreateNote() {
   // Function to handle note favorite
   const handleFavorite = async () => {
     try {
-      if (favorite.favorite) {
+      if (favorite) {
         await remFavNote(user.user.uid, noteId)
-        setFavorite(prevState => ({
-          ...prevState,
-          favorite: false,
-        }));
+        setFavorite(prevState => false);
         enqueueSnackbar(`Note \"${noteTitle}\" removed from Favorites`, {
           variant: "success",
           autoHideDuration: 2000,
@@ -301,10 +294,7 @@ export default function CreateNote() {
         return;
       }
       await addFavNote(user.user.uid, noteId)
-      setFavorite(prevState => ({
-        ...prevState,
-        favorite: true,
-      }));
+      setFavorite(prevState => true);
       enqueueSnackbar(`Note \"${noteTitle}\" added to Favorites`, {
         variant: "success",
         autoHideDuration: 2000,
@@ -400,7 +390,7 @@ export default function CreateNote() {
                 {initialNote.title !== "" && (
                     <Grid item>
                       <IconButton onClick={handleFavorite} aria-label="Favor Note">
-                        {favorite.favorite ? (
+                        {favorite ? (
                             <Tooltip title="Unfavorite Note" enterDelay={500}>
                               <FavoriteIconFilled sx={{ color: "red" }} />
                             </Tooltip>
