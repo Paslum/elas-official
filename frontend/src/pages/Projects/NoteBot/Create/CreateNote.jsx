@@ -194,8 +194,6 @@ export default function CreateNote() {
   // Function to add section
   const handleAddSection = () => {
     setSectionCounter(prevCounter => prevCounter + 1);
-    console.log("add section");
-    console.log(sectionCounter);
   };
 
   // Function to add layout
