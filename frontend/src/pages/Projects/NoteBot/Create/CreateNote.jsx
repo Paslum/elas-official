@@ -264,6 +264,7 @@ export default function CreateNote() {
           title = `New Note ${formattedDate}`;
         }
         await updateNote(noteId, title, course.courseId);
+        navigate('/projects/notebot');
         enqueueSnackbar(`Note \"${title}\" updated`, {
           variant: "success",
           autoHideDuration: 2000,
