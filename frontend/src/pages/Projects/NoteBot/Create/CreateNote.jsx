@@ -242,59 +242,36 @@ export default function CreateNote() {
 
   // Function to handle note save
   const handleSave = async() => {
-    if (noteId) {
-      let title = noteTitle;
-      let course = {title: initialNote.course.title, courseId: initialNote.course.id}
-      try {
-        if (newCourse.courseId !== undefined) {
-          course = newCourse;
-        }
-        if (title === "" || title === undefined) {
-          const currentDate = new Date();
-          const formattedDate = `${currentDate.toLocaleDateString()}, ${currentDate.toLocaleTimeString()}`;
-          title = `New Note ${formattedDate}`;
-        }
+    let title = noteTitle ? noteTitle : `New Note ${new Date().toLocaleString()}`;
+
+    try {
+      if(noteId) { //Editing Note
+        let course = newCourse.courseId ? newCourse : {title: initialNote.course.title, courseId: initialNote.course.id}
         await updateNote(noteId, title, course.courseId);
-        navigate('/projects/notebot');
-        enqueueSnackbar(`Note \"${title}\" updated`, {
-          variant: "success",
-          autoHideDuration: 2000,
-        });
-      } catch (error) {
-        enqueueSnackbar(error, {
-          variant: "error",
-          autoHideDuration: 2000,
-        });
       }
-    } else {
-      let title = noteTitle;
-      try {
+      else { //New Note
         if (newCourse.length === 0) {
           enqueueSnackbar(`Please assign a course`, {
             variant: "error",
             autoHideDuration: 2500,
           });
+          return;
         } else {
-          if (title === "" || title === undefined) {
-            const currentDate = new Date();
-            const formattedDate = `${currentDate.toLocaleDateString()}, ${currentDate.toLocaleTimeString()}`;
-            title = `New Note ${formattedDate}`;
-          }
           await createNote(user.user.uid, title, newCourse.courseId, layout, widgets);
-          navigate('/projects/notebot');
-          enqueueSnackbar(`Note \"${title}\" created`, {
-            variant: "success",
-            autoHideDuration: 2000,
-          });
         }
-      } catch (error) {
-        enqueueSnackbar(`Failed to save \"${title}\"`, {
-          variant: "error",
-          autoHideDuration: 2000,
-        });
       }
-    };
-  };
+    } catch (error) {
+      enqueueSnackbar(`Failed to save \"${title}\"`, {
+        variant: "error",
+        autoHideDuration: 2000,
+      });
+    } //Successfull
+    enqueueSnackbar(`Note \"${title}\" saved`, {
+      variant: "success",
+      autoHideDuration: 2000,
+    });
+    navigate('/projects/notebot');
+  }
 
   // Function to handle note favorite
   const handleFavorite = async () => {
