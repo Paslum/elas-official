@@ -202,42 +202,35 @@ export default function CreateNote() {
   };
 
   // State to manage widgets
-  const [widgets, setWidgets] = React.useState({
-    widget: []
-  });
+  const [widgets, setWidgets] = React.useState([]);
 
   // Function to add widget
   const handleAddWidget = (index, type, section, data) => {
-    setWidgets((prevState) => ({
-      ...prevState,
-      widget: [
-        ...prevState.widget,
+    setWidgets((prevState) => ([
+        ...prevState,
         {
           index: index,
           type: type,
           section: section,
           data: data,
         }
-      ],
-    }));
+      ]
+    ));
   };
 
   // Function to set widget content
   const handleSetWidgetContent = (index, data, section) => {
-    setWidgets(prevState => ({
-      ...prevState,
-      widget: prevState.widget.map(widget => {
-        if (widget && widget.index === index) {
-          if (widget.section === section) {
+    setWidgets(prevState => (
+        prevState.map(widget => {
+          if (widget.index === index && widget.section === section) {
             return {
               ...widget,
-              data: data,
+              data: data
             };
           }
-        }
-        return widget;
-      })
-    }));
+          return widget;
+        })
+    ));
   };
 
   // Function to handle note save
@@ -265,6 +258,7 @@ export default function CreateNote() {
         variant: "error",
         autoHideDuration: 2000,
       });
+      return;
     } //Successfull
     enqueueSnackbar(`Note \"${title}\" saved`, {
       variant: "success",
@@ -276,28 +270,20 @@ export default function CreateNote() {
   // Function to handle note favorite
   const handleFavorite = async () => {
     try {
-      if (favorite) {
-        await remFavNote(user.user.uid, noteId)
-        setFavorite(prevState => false);
-        enqueueSnackbar(`Note \"${noteTitle}\" removed from Favorites`, {
-          variant: "success",
-          autoHideDuration: 2000,
-        });
-        return;
-      }
-      await addFavNote(user.user.uid, noteId)
-      setFavorite(prevState => true);
-      enqueueSnackbar(`Note \"${noteTitle}\" added to Favorites`, {
+      if (favorite) {await remFavNote(user.user.uid, noteId)} //Remove from Favorites
+      else {await addFavNote(user.user.uid, noteId)} //Add to favorites
+      setFavorite(prevState => !prevState);
+      enqueueSnackbar(`Note \"${noteTitle}\" 
+      ${favorite ? `Note "${noteTitle}" removed from` : `Note "${noteTitle}" added to `} Favorites`, {
         variant: "success",
         autoHideDuration: 2000,
       });
-
-    } catch(error) {
+    } catch {
       enqueueSnackbar(`Failed to add/remove Note \"${noteTitle}\" to Favorites`, {
         variant: "error",
         autoHideDuration: 2000,
       });
-    };
+    }
   };
 
   return (
