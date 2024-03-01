@@ -226,12 +226,16 @@ export const createNote = async (userId, title, course, layout, widgets) => {
     // Sending create note request to the backend
     const response = await Backend.post(`/notebot/note`, { uid: userId, title: title, courseId: course });
     const data = await response.data;
-    for (let i = 0; i < layout.layout.length; i++) {
-      const responseSection = await Backend.post(`/notebot/addSection/${data.noteId}`, {layout: layout.layout[i].layout});
+    for (let i = 0; i < layout.length; i++) {
+      const responseSection = await Backend.post(`/notebot/addSection/${data.noteId}`, {layout: layout[i].layout});
       const dataSection = await responseSection.data;
       const filteredWidgets = widgets.widget.filter(widget => widget.section === i);
       for (let j = 0; j < filteredWidgets.length || 0; j++) {
           const responseWidget = await Backend.post(`/notebot/addWidget/`, {type: filteredWidgets[j].type, data: filteredWidgets[j].data, section: dataSection.section});
+          if (data.message && data.message.includes('created successfully')) {
+          } else {
+            throw new Error('Failed to save Widget Info');
+          }
       }
     }
 

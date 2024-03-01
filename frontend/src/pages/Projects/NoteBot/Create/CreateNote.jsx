@@ -18,9 +18,6 @@ export default function CreateNote() {
   const { noteId } = useParams();
   const [isLoading, setIsLoading] = useState(true);
 
-  // Initialize noteIdValue as null or noteId from URL
-  const noteIdValue = noteId ? noteId : null;
-
   const navigate = useNavigate();
 
   // State to manage initial note data
@@ -53,9 +50,7 @@ export default function CreateNote() {
   });
 
   // State to manage layout data
-  const [layout, setLayout] = useState({
-      layout: []
-  });
+  const [layout, setLayout] = useState([]);
 
   // State to manage favorite status
   const [favorite, setFavorite] = useState(false);
@@ -106,7 +101,7 @@ export default function CreateNote() {
 
     // Function to fetch note info if noteId exists
     async function getNoteInfoFunction() {
-      if (noteIdValue === null) {
+      if (noteId === undefined) {
         setSectionCounter(1);
         setIsLoading(false);
       } else {
@@ -121,14 +116,12 @@ export default function CreateNote() {
         setSelectedCourse(note.course);
         setSectionCounter(note.sections.length || 1);
         let indexCounter = 0;
-        setLayout((prevState) => ({
-          layout: [
+        setLayout((prevState) => ([
             ...note.sections.map(section => ({
               index: indexCounter++,
               layout: section.layout,
-            })),
-          ],
-        }));
+            })),]
+        ));
         let indexWidgetCounter = 0;
         setWidgets((prevState) => ({
           widget: [
@@ -198,16 +191,14 @@ export default function CreateNote() {
 
   // Function to add layout
   const handleAddLayout = (index, layout) => {
-    setLayout((prevState) => ({
-      ...prevState,
-      layout: [
-        ...prevState.layout,
+    setLayout((prevState) => ([
+        ...prevState,
         {
           index: index,
           layout: layout,
         }
-      ],
-    }));
+      ]
+    ));
   };
 
   // State to manage widgets
@@ -411,7 +402,7 @@ export default function CreateNote() {
                 </Grid>
               </Grid>
               <Grid item container xs direction="row" justifyContent="flex-end">
-                {initialNote.title !== "" && (
+                {noteId !== undefined && (
                     <Grid item>
                       <IconButton onClick={handleFavorite} aria-label="Favor Note">
                         {favorite ? (
