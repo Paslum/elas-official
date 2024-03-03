@@ -199,6 +199,7 @@ export const getNoteContentById = async (noteId) => {
         const layoutResponse = await responseSection(section);
         return {
           layout: layoutResponse.data.layout,
+          id: section,
           widget: await Promise.all(layoutResponse.data.widgets.map(async widgetId => {
             const widgetResponse = await responseWidget(widgetId);
             return {
@@ -251,11 +252,24 @@ export const createNote = async (userId, title, course, layout, widgets) => {
   }
 };
 
-export const updateNote = async (noteId, title, course) => {
+export const updateNote = async (noteId, title, course, layout, widgets) => {
   try {
     // Sending create note request to the backend
     const response = await Backend.put(`/notebot/note/update`, { noteId: noteId, title: title, course: course });
-    const data = await response.data;
+    for (let i = 0; i <= layout.length-1; i++) {
+      const filteredWidgets = widgets.filter(widget => widget.section === i);
+      if(filteredWidgets.length > 0) {
+        const responseSection = await Backend.post(`/notebot/addSection/${noteId}`, {layout: layout[i].layout});
+        const dataSection = await responseSection.data;
+        for (let j = 0; j < filteredWidgets.length; j++) {
+          const responseWidget = await Backend.post(`/notebot/addWidget/`, {type: filteredWidgets[j].type, data: filteredWidgets[j].data, section: dataSection.section});
+          if (responseWidget.data.message && responseWidget.data.message.includes('created successfully')) {
+          } else {
+            throw new Error('Failed to save Widget Info');
+          }
+        }
+      }
+    }
 
     // Processing response and returning data
     if (data.message && data.message.includes('updated successfully')) {

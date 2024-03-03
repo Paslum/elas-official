@@ -1,13 +1,40 @@
 import React, {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
-import {Grid, ThemeProvider, Typography, Divider, IconButton, Tooltip, Button, TextField,
-        Dialog, DialogTitle, DialogContent, DialogActions, InputAdornment, MenuItem, Select
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Divider,
+  Grid,
+  IconButton,
+  InputAdornment,
+  MenuItem,
+  Select,
+  TextField,
+  ThemeProvider,
+  Tooltip,
+  Typography
 } from "@mui/material";
-import { Folder as FolderIcon, Edit as EditIcon, Save as SaveIcon, Favorite as FavoriteIconFilled, FavoriteBorderOutlined as FavoriteIcon
+import {
+  Edit as EditIcon,
+  Favorite as FavoriteIconFilled,
+  FavoriteBorderOutlined as FavoriteIcon,
+  Folder as FolderIcon,
+  Save as SaveIcon
 } from "@mui/icons-material";
 import noteBotLogo from "../../../../assets/images/noteBot-logo.png";
 import theme, {colors} from "../theme.js";
-import { getCoursesByUserId, getUserInfo, createNote, getNoteContentById, remFavNote, addFavNote, isFavNote, updateNote,
+import {
+  addFavNote,
+  createNote,
+  getCoursesByUserId,
+  getNoteContentById,
+  getUserInfo,
+  isFavNote,
+  remFavNote,
+  updateNote,
 } from "../utils/api.js";
 import Sections from "./sections/app.jsx";
 import {enqueueSnackbar} from "notistack";
@@ -123,16 +150,16 @@ export default function CreateNote() {
             })),]
         ));
         let indexWidgetCounter = 0;
-        setWidgets((prevState) => ({
-          widget: [
-            ...note.sections.map(section => ({
-              index: indexWidgetCounter++,
-              type: section.widget.type,
-              section: "",
-              data: section.widget.data,
-            })),
-          ],
-        }));
+        setWidgets((prevState) => ([
+            ...note.sections.flatMap(section =>
+              section.widget.map(widget =>  ({
+                    index: indexWidgetCounter++,
+                    section: section.id,
+                    type: widget.type,
+                    data: widget.data,
+                  })),
+            ),
+          ]));
       };
     };
     getNoteInfoFunction();
@@ -220,17 +247,20 @@ export default function CreateNote() {
 
   // Function to set widget content
   const handleSetWidgetContent = (index, data, section) => {
-    setWidgets(prevState => (
-        prevState.map(widget => {
-          if (widget.index === index && widget.section === section) {
-            return {
-              ...widget,
-              data: data
-            };
-          }
-          return widget;
-        })
-    ));
+    setWidgets(prevState => {
+      if (!Array.isArray(prevState)) {
+        return [];
+      }
+      return prevState.map(widget => {
+        if (widget.index === index && widget.section === section) {
+          return {
+            ...widget,
+            data: data
+          };
+        }
+        return widget;
+      });
+    });
   };
 
   // Function to handle note save
@@ -240,7 +270,7 @@ export default function CreateNote() {
     try {
       if(noteId) { //Editing Note
         let course = newCourse.courseId ? newCourse : {title: initialNote.course.title, courseId: initialNote.course.id}
-        await updateNote(noteId, title, course.courseId);
+        await updateNote(noteId, title, course.courseId, layout, widgets);
       }
       else { //New Note
         if (newCourse.length === 0) {
