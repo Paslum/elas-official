@@ -36,6 +36,8 @@ widgetRouter.get('/widget/:widget', controller.getWidget); // Fetch a single Wid
 
 widgetRouter.post('/addWidget/', controller.addWidget); // Add a Widget to DB
 
+widgetRouter.put('/updateWidget/', controller.updateWidgets); // Add a Widget to DB
+
 widgetRouter.delete('/widget/delete/:widget', controller.deleteWidget); // Delete a Widget
 
 /***************** END: CREATE ROUTES ****************************/

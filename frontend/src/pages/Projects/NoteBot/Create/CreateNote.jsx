@@ -157,6 +157,7 @@ export default function CreateNote() {
                     section: section.id,
                     type: widget.type,
                     data: widget.data,
+                    _id: widget._id,
                   })),
             ),
           ]));
@@ -252,7 +253,7 @@ export default function CreateNote() {
         return [];
       }
       return prevState.map(widget => {
-        if (widget.index === index && widget.section === section) {
+        if (widget.index === index && (typeof widget.section === 'string' || widget.section === section)) {
           return {
             ...widget,
             data: data

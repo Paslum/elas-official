@@ -82,6 +82,23 @@ export const addWidget = async (req, res) => {
     }
 };
 
+export const updateWidgets = async (req, res) => {
+    try {
+        const updatePromises = req.body.widgets.map(async widget => {
+            await widgetModel.updateMany({ _id: widget._id }, { data: widget.data });
+        });
+
+        try {
+            await Promise.all(updatePromises);
+            return res.status(200).send({ message: `Widget updated successfully` });
+        } catch (error) {
+            return res.status(500).send({ message: `Widget couldn't update` });
+        }
+    } catch (error) {
+
+    }
+}
+
 /**
  * @function deleteWidget
  * The `deleteWidget` function is an asynchronous function that deletes

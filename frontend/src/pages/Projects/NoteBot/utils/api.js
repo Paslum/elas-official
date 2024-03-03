@@ -205,6 +205,7 @@ export const getNoteContentById = async (noteId) => {
             return {
               data: widgetResponse.data.data,
               type: widgetResponse.data.type,
+              _id: widgetId,
             };
           })),
         };
@@ -269,6 +270,10 @@ export const updateNote = async (noteId, title, course, layout, widgets) => {
           }
         }
       }
+    }
+    const oldWidgets = widgets.filter(widget => typeof widget.section === 'string');
+    if(oldWidgets.length > 0) {
+      const responseWidget = await Backend.put(`/notebot/updateWidget/`, {widgets: oldWidgets});
     }
 
     // Processing response and returning data
