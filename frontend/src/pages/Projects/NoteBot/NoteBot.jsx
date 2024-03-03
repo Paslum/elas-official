@@ -4,9 +4,11 @@ import { getUserInfo } from "./utils/api.js";
 import Navigation from "./Navigation/navbox";
 import noteBotLogo from "../../../assets/images/noteBot-logo.png";
 import theme, {colors} from "./theme.js";
+import {useNavigate} from "react-router-dom";
 
 export default function NoteBot() {
-  // State for user data
+    const navigate = useNavigate();
+    // State for user data
   const [user, setUser] = useState({
       message: "Server not connected", // Default message if server is not connected
       user: {
@@ -37,6 +39,10 @@ export default function NoteBot() {
       getUserInfoFunction();
   }, []);
 
+  const handleNavigate = () => {
+      navigate('/projects/notebot');
+  }
+
   return (
       // Providing the theme for the NoteBot interface
       <ThemeProvider theme={theme}>
@@ -44,13 +50,14 @@ export default function NoteBot() {
           <Grid container justifyContent="center" sx={{ px: 2 }}>
               {/* Container for NoteBot logo */}
               <Grid item
-                  component="img"
-                  src={noteBotLogo}
-                  alt="NoteBot Logo"
-                  xs={12}
-                  sm={7}
-                  md={4}
-                  sx={{ width: "100%", py: 1 }}
+                    component="img"
+                    src={noteBotLogo}
+                    alt="NoteBot Logo"
+                    onClick={handleNavigate}
+                    xs={12}
+                    sm={7}
+                    md={4}
+                    sx={{ width: "100%", py: 1, cursor: "pointer"}}
               />
               {/* Container for user interface */}
               <Grid item sx={{

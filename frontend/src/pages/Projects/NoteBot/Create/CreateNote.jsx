@@ -317,6 +317,10 @@ export default function CreateNote() {
     }
   };
 
+  const handleNavigate = () => {
+    navigate('/projects/notebot');
+  }
+
   return (
       <div>
       <ThemeProvider theme={theme}>
@@ -325,10 +329,11 @@ export default function CreateNote() {
                 component="img"
                 src={noteBotLogo}
                 alt="NoteBot Logo"
+                onClick={handleNavigate}
                 xs={12}
                 sm={7}
                 md={4}
-                sx={{ width: "100%", py: 1}}
+                sx={{ width: "100%", py: 1, cursor: "pointer"}}
           />
           <Grid item container direction="column" sx={{
             width: "100%",

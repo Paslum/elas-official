@@ -277,7 +277,7 @@ export const updateNote = async (noteId, title, course, layout, widgets) => {
     }
 
     // Processing response and returning data
-    if (data.message && data.message.includes('updated successfully')) {
+    if (response.data.message && response.data.message.includes('updated successfully')) {
       return response.data;
     } else {
       throw new Error('Failed to extract note information from the response.');
