@@ -1,6 +1,6 @@
 import * as React from "react";
 import Course from "./course";
-import {Grid, Typography, Divider, Button, LinearProgress} from "@mui/material";
+import {Grid, Typography, Divider, Button, LinearProgress, Tab, Tooltip} from "@mui/material";
 import {useEffect, useState} from "react";
 import {getCoursesByUserId} from "../utils/api.js";
 import {useNavigate} from "react-router-dom";
@@ -54,18 +54,29 @@ export default function app({uid}) {
                     <Grid container spacing={1}>
                         <Grid item>
                             {/* Button for recently deleted notes (disabled) */}
-                            <Button variant="outlined" disabled="true">
+                            {/*<Button variant="outlined">
                                 Recently Deleted
-                            </Button>
+                            </Button>*/}
                         </Grid>
                         <Grid item>
                             {/* Button to add a new note */}
-                            <Button
-                                variant="contained"
-                                onClick={() => navigate("/projects/notebot/create")}
-                            >
-                                + Add Note
-                            </Button>
+                            {courses.courses.length > 0 ? (
+                                <Button
+                                    variant="contained"
+                                    onClick={() => navigate("/projects/notebot/create")}
+                                >
+                                    + Add Note
+                                </Button>
+                            ) : (
+                                <Tooltip title={"Create a Course first!"}>
+                                    <Button
+                                        variant="contained"
+                                        sx={{cursor: 'not-allowed'}}
+                                    >
+                                        + Add Note
+                                    </Button>
+                                </Tooltip>
+                            )}
                         </Grid>
                     </Grid>
                 </Grid>
