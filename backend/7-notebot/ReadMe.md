@@ -10,7 +10,7 @@
 The web application Notebot, which was developed as a part of the _“Interactive Data Exploration and Analytics”_ project, is a tool for the collaborative creation of lecture notes, supported by generative AI models.
 The aim of the project this semester was to further develop and redesign Notebot in collaboration with AI and Komedia students. In addition, Notebot has been implemented in the existing ELAS environment.
 
-NoteBot was initially developed by [Hla Abuhamra](https://github.com/HlaHusain), [Yusra Abdulrahman](https://github.com/Yusra-3033), [Hadeel Saleh](https://github.com/hadeelalzenaty-web), and [Hadil Khbaiz]() but has been further/redeveloped by three separate groups during the winter semester 2023/24.
+NoteBot was initially developed by [Hla Abuhamra](https://github.com/HlaHusain), [Yusra Abdulrahman](https://github.com/Yusra-3033), [Hadeel Saleh](https://github.com/hadeelalzenaty-web), and [Hadil Khbaiz]() and has been further/redeveloped by three separate groups during the winter semester 2023/24.
 
 
 ## 🎥 Demo 
