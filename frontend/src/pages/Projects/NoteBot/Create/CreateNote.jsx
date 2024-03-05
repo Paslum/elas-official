@@ -316,7 +316,7 @@ export default function CreateNote() {
       });
     }
   };
-
+  // Function to handle navigation to NoteBot project
   const handleNavigate = () => {
     navigate('/projects/notebot');
   }
@@ -345,6 +345,7 @@ export default function CreateNote() {
             <Grid container sx={{marginBottom: 0.25}}>
               <Grid item container xs spacing={2}>
                 <Grid item>
+                  {/* Input field for note title */}
                   <TextField
                       label="Note Title"
                       placeholder="New note"
@@ -361,6 +362,7 @@ export default function CreateNote() {
                   />
                 </Grid>
                 <Grid item>
+                  {/* Button to open dialog for selecting course */}
                   <Button
                       variant="outlined"
                       style={{
@@ -374,16 +376,19 @@ export default function CreateNote() {
                     <FolderIcon/>
                     {newCourse.title || "No Course"}
                   </Button>
+                  {/* Dialog for selecting course */}
                   <Dialog open={isDialogOpen} onClose={handleDialogState}>
                     <DialogTitle>Save To Course</DialogTitle>
                     <DialogContent>
                       <Typography>Add to a course from your course list:</Typography>
+                      {/* Dropdown for selecting course */}
                       <Select
                           value={selectedCourse}
                           placeholder="select a course"
                           onChange={handleSelectCourse}
                           sx={{ width: "100%" }}
                       >
+                        {/* List of courses */}
                         {courses.courses.length > 0 ? (
                         courses.courses.map((course) => (
                             <MenuItem value={course}>{course.title}</MenuItem>
@@ -394,6 +399,7 @@ export default function CreateNote() {
                       </Select>
                     </DialogContent>
                     <DialogActions sx={{ padding: 2 }}>
+                      {/* Buttons for cancel and add actions */}
                       <Button variant="outlined" onClick={handleDialogState}>Cancel</Button>
                       <Button variant="contained" onClick={handleAddToCourse}>Add</Button>
                     </DialogActions>
@@ -401,6 +407,7 @@ export default function CreateNote() {
                 </Grid>
               </Grid>
               <Grid item container xs direction="row" justifyContent="flex-end">
+                {/* Button to favorite/unfavorite note */}
                 {noteId !== undefined && (
                     <Grid item>
                       <IconButton onClick={handleFavorite} aria-label="Favor Note">
@@ -416,6 +423,7 @@ export default function CreateNote() {
                       </IconButton>
                     </Grid>
                 )}
+                {/* Button to save note */}
                 <Grid item>
                   <Button variant="contained" onClick={handleSave}>
                     <SaveIcon/>
@@ -426,6 +434,7 @@ export default function CreateNote() {
             </Grid>
               <Divider />
               <Grid item>
+                {/* Sections component for note content */}
                 {isLoading === false && (
                     <Sections counter={sectionCounter} addSection={handleAddSection}
                           addLayout={handleAddLayout} addWidget={handleAddWidget}
