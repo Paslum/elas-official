@@ -92,9 +92,9 @@ export default function App({ uid }) {
                 <Grid item>
                     <Grid container spacing={1}>
                         <Grid item>
-                            <Button variant="outlined" disabled>
+                            {/*<Button variant="outlined">
                                 Recently Deleted
-                            </Button>
+                            </Button>*/}
                         </Grid>
                         {/* Button to add a new course */}
                         <Grid item>
