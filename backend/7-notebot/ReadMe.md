@@ -62,6 +62,7 @@ NoteBot was initially developed by [Hla Abuhamra](https://github.com/HlaHusain),
 
 <img src="https://github.com/Paslum/elas-official/blob/dev-notebot/frontend/src/assets/images/NoteBot%20Images/Create%20Note.png" width="350" alt="Screenshot of the Create Note Page"> 
 
+<img src="https://github.com/Paslum/elas-official/blob/dev-notebot/frontend/src/assets/images/NoteBot%20Images/Favorite%20Note.png" width="350" alt="Screenshot of the Favorite Note Page">
 </p>
 
 
