@@ -7,14 +7,15 @@
 
 ## 🤓 Description
 
-The goal of the project _“Interactive Data Exploration and Analytics”_ in the winter term of 23/24 is to further develop and implement NoteBot, which is an extension of the ELAS project aimed at helping students write notes more efficiently using AI.
+The web application Notebot, which was developed as a part of the _“Interactive Data Exploration and Analytics”_ project, is a tool for the collaborative creation of lecture notes, supported by generative AI models.
+The aim of the project this semester was to further develop and redesign Notebot in collaboration with AI and Komedia students. In addition, Notebot has been implemented in the existing ELAS environment.
 
-NoteBot was initially developed by [Hla Abuhamra](https://github.com/HlaHusain), [Yusra Abdulrahman](https://github.com/Yusra-3033), [Hadeel Saleh](https://github.com/hadeelalzenaty-web), and [Hadil Khbaiz]() in the frame of the AWT course in summer semester 2023 but has been further/redeveloped by three separate groups during the winter semester 2022/23.
+NoteBot was initially developed by [Hla Abuhamra](https://github.com/HlaHusain), [Yusra Abdulrahman](https://github.com/Yusra-3033), [Hadeel Saleh](https://github.com/hadeelalzenaty-web), and [Hadil Khbaiz]() but has been further/redeveloped by three separate groups during the winter semester 2023/24.
 
 
 ## 🎥 Demo 
 
-[Watch the video](Youtube URL)
+[Watch our Demo on YouTube](Youtube URL)
 
 
 ## 🤖 Technical Architecture
@@ -28,28 +29,27 @@ NoteBot was initially developed by [Hla Abuhamra](https://github.com/HlaHusain),
 </p>
 
 
-### Database
+### 🧑🏽‍💻 Back-End
 
 
 
-* 🛢️ [MongoDB Atlas](https://www.mongodb.com/atlas)
-* 📦 [Mongoose](https://mongoosejs.com/)
+[Express](https://expressjs.com/en)
+[Nodejs](https://nodejs.org/en)
 
 
-### Back-End
-
-
-
-* ⚙️ [Express](https://expressjs.com/en)
-* ⚙️ [Nodejs](https://nodejs.org/en)
-
-
-### Front-End
+### 👩🏼‍🎨 Front-End
 
 
 
-* ⚛️ [React](https://react.dev/)
-* 🎨 [Material UI](https://vitejs.dev/)
+[React](https://react.dev/)
+[Material UI](https://mui.com/)
+
+### 📚 Database
+
+
+
+[MongoDB Atlas](https://www.mongodb.com/atlas)
+[Mongoose](https://mongoosejs.com/)
 
 
 ## 🖼️ Screenshots
